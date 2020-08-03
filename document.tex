@@ -143,7 +143,6 @@ For example, the word "Apple" has the same representation in "Apple Pie" and "Ap
 
 Around 2014, Recurrent Neural Networks (RNN) were broadly adopted in the field of natural language processing \cite{jozefowicz2016exploring}.RNN are so-called Sequene-to-Sequence models that transform sequences of data (e.g. text, audio, video) into sequences of another type. Examples for the usage of these transformations are translation or classification tasks.
 
-
 While in traditional NNs, all inputs and outputs are independent of each other, RNNs are recurrent, as it allows previous outputs to be used as inputs while having hidden states. In other words, it performs the same task for every sample of a sequence of input data, while the forwarded output being depended on the previous computations.
 After calculating an output, it is copied and sent back into the recurrent network. For making a decision, it considers the given input plus the output stored form the previous input.
 Therefore, RNNs use internal memory to process sequences of inputs, which makes them applicable to tasks such as handwriting recognition or natural language understanding.
@@ -225,6 +224,7 @@ In contrast to SA, ABSA is a more fine-grained task, which consists of two main 
     \label{sec:bert}
 In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BERT, a deep contextual language representation model. BERT is a abbreviation for Bidirectional Encoder Representations from Transformers \cite{devlin2018bert}. It is built on preceding innovations: deep contextualized word representations \cite{peters2018deep}, the Transformer architecture \cite{vaswani2017attention}, and pre-training on a language modeling task fine-tuning on a downstream task \cite{radford2018improving, howard2018universal}.
 
+
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/bert-pre-training_fine-tuning.png}
@@ -269,14 +269,76 @@ The words stored in the dictonary differs, depending on the corpus, the BERT mod
 \textbf{Token Embedding Layer}
 
 The purpose of the token embedding layer is to tokenize the input (e.g. "I like strawberries") and transform it into a vector representation of fixed dimensions (see Figure~\ref{fig:BERT_tokenEmbedding}). In case of BERT base, each word is represented as a 768-dimensional vector.
+
 \begin{figure}
-    \centering
-    \includegraphics[ width = .5\textwidth]{img/BERTtoken_embedding.jpg}
-    \caption{BERTbase Token Embedding Layer.}
-    \label{fig:BERT_tokenEmbedding}
+\centering
+    \begin{tikzpicture}[replace stretch/.style args={from #1 to #2 by #3}{%
+        /utils/exec=\pgfmathsetmacro{\offlen}{#2-#1},
+        dash pattern=on #1 off \offlen pt on 10cm,
+        postaction={#3,dash pattern=on 0pt off #1 on \offlen pt off 10cm}}]
+        
+        % nodes
+        \node[align=center] (start) [] {{\Large "I like strawberries"}\\\textit{3 words}};
+        \node[align=center] (tokenized) [below of=start, yshift=-2cm] {{\Large"[CLS]", "I", "like", "straw", "\#\#berries", "[SEP]"}\\\textit{6 tokens}};
+        \node (vectorized) [below of=tokenized, yshift=-2cm, draw, thick, minimum height=1.5cm, minimum width=3.5cm] {Token Embeddings};
+        \draw [decorate,decoration={brace,amplitude=7pt, mirror}, asymbrace=0.75]
+        (vectorized.south west) -- (vectorized.south east) node (vectorized_south)[black,midway,xshift=0.9cm, yshift=-0.5cm] {$768$};
+        \draw [decorate,decoration={brace,amplitude=7pt}]
+        (vectorized.north east) -- (vectorized.south east) node (vectorized_east)[black,midway,xshift=0.9cm, xshift=0.1cm, align=center]
+        {$30.522$\\"words"};
+        
+        % tokenized object
+        \node (0) [below of=vectorized, xshift=-5.5cm, yshift=-4.5cm, draw, thick, minimum height=1cm, minimum width=1.5cm] {\small [CLS]};
+        \node (1) [right of=0, draw, xshift=0.5cm, thick, minimum height=1cm, minimum width=1.5cm] {\small I};
+        \node (2) [right of=1, draw, xshift=0.5cm, thick, minimum height=1cm, minimum width=1.5cm] {\small love};
+        \node (3) [right of=2, draw, xshift=0.5cm, thick, minimum height=1cm, minimum width=1.5cm] {\small straw};
+        \node (4) [right of=3, draw, xshift=0.5cm, thick, minimum height=1cm, minimum width=1.5cm] {\small \#\#berries};
+        \node (5) [right of=4, draw, xshift=0.5cm, thick, minimum height=1cm, minimum width=1.5cm] {\small [SEP]};
+    
+        \draw[thick,leaveout] (0.north west) -- ++(3,3);
+        \draw[thick,leaveout] (1.north west) -- ++(3,3);
+        \draw[thick,leaveout] (2.north west) -- ++(3,3);
+        \draw[thick,leaveout] (3.north west) -- ++(3,3);
+        \draw[thick,leaveout] (4.north west) -- ++(3,3);
+        \draw[thick,leaveout] (5.north west) -- ++(3,3);
+        \draw[thick,leaveout] (5.north east) -- ++(3,3);
+        \draw[thick, replace stretch={from 2.16cm to 2.82cm by {-,draw=none}}] (5.south east) -- ++(3.03,3.03);
+        
+        \draw[thick] ([xshift=0.5cm, yshift=0.5cm] 0.north west) -- ++(9.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=1cm, yshift=1cm] 0.north west) -- ++(9.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=1.5cm, yshift=1.5cm] 0.north west) -- ++(9.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 0.north west) -- ++(9.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=2.5cm, yshift=2.5cm] 0.north west) -- ++(9.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=3cm, yshift=3cm] 0.north west) -- ++(9.05,0) -- ++(0,-1);
+        
+        \draw[thick] ([xshift=2cm, yshift=2cm] 0.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 1.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 2.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 3.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 4.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 5.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 5.south east) -- ++(-0.49,0);
+        
+        \draw [decorate,decoration={brace,amplitude=7pt, mirror}]
+        (0.south west) -- (5.south east) node (vectorized_south)[black,midway,xshift=0cm, yshift=-0.5cm] {$6$};
+        \draw [decorate,decoration={brace,amplitude=7pt, mirror}]
+        (5.south east) -- ++(3,3) node (vectorized_south)[black,midway,xshift=0.4cm, yshift=-0.4cm] {\begin{turn}{45}$768$\end{turn}};
+        \node at ([xshift=1.75cm, yshift=1.75cm] 5.south east) {\begin{turn}{45}\dots\end{turn}};
+                
+        % arrows
+        \draw[->,thick] (start) -- node[right] () {\textbf{tokenization}} (tokenized.north);
+        \draw[->,thick] (tokenized) -- node[right] () {\textbf{vector representation}} (vectorized.north);
+        \draw[->,thick] (vectorized) -- ++(0,-2cm);
+
+    \end{tikzpicture}
+\caption{BERTbase Token Embedding Layer.} 
+\label{fig:BERT_tokenEmbedding}
 \end{figure}
+
+
+
 Special tokens are needed for sentence classification. [CLS] is added in front of every input example, and [SEP] serves as a separator token.
-As described before, the  tokenization method WordPiece, is used, which in this case splits the word "strawberries" into "straw" and "berries". 
+As described before, the  tokenization method WordPiece, is used, which in this case splits the word "strawberries" into "straw" and "##berries". 
 
 %--------------Segment Embedding Layer------------------------------
 
@@ -363,6 +425,7 @@ For sequence tagging or question answering, the token representations are fed in
 %------------------------------------------------------------------
 
 \subsection{Adversarial Examples}
+\todo{redo zum Schluss}
     \label{sec:adversarial_examples}
 
 In 2013, \cite{szegedy2013intriguing}  were the first to discover the vulnerability of several machine learning models through adversarial examples: inputs crafted by adversaries with the intent of causing deep
@@ -394,21 +457,20 @@ Depending on the purpose of the adversarial attacks, they can be categorized as 
 %------------------------------------------------------------------
 
 \textbf{Adversarial Examples in Text}
+
     \label{sec:adversarial_exapmles_in_text}
 
-In recent years the research motivation to generate adversarial examples NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community\cite{Jia2017AdversarialEF}. 
-
-Since then many studies have investigated the security of NLP task machine learning models and proposed several attack methods. Many papers on the topic distinguish between causative and exploratory attacks. Ling Huang et al., define the terms as follows:
+In recent years the research motivation to generate adversarial examples NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community\cite{Jia2017AdversarialEF}. Since then many studies have investigated the security of NLP task machine learning models and proposed several attack methods. Many papers on the topic distinguish between causative and exploratory attacks. Ling Huang et al., define the terms as follows:
 
 Causative -  Causative attacks alter the training process through influence over the training data.
 
 Exploratory - Exploratory attacks do not alter the training process but use other techniques, such as probing the detector, to discover information about it or its training data.
-
 \cite{huang2011adversarial}
 
 In this thesis, we will further go into the exploratory approach, and, in the following chapter compare adversarial attacks in CV with those in NLP and study different approaches researched so far.
 
 \subsubsection{Differences in Adversarial Attacks for CV and NLP}
+\todo{redo}
     \label{sec:differences_in_adv-ex}
 
 As described in chapter~\ref{sec:word_embeddings}, the mapping from natural language into a corresponding vector is done through the generation of word embeddings.
@@ -426,51 +488,61 @@ However, that does not mean that the semantics of the words are similar, as is t
 
 
 
-\subsubsection{Adversarial Attacks in NLP}
+\subsection{Adversarial Attacks in NLP}
     \label{sec:adv-ex_in_NLP}
-
-To better compare the numours different attack methods suggested for NLP models so far, we will use the a unified definition framework provided by Morris et al., introduced in their paper on the Software Framework TextAttack for adversarial attacks in NLP \cite{morris2020textattack}. They determine four components, namely a goal function, a search method, a transformation, and an optional list of constraints. In the following chapter we will explain those components in more detail and assemble attacks form the literature, by the means of the components.
-
-\textbf{1. Goal Function}
+\subsubsection{1. Goal Function}
 The goal function determines if an attack is finished, given an input $x$. 
-The applied parameters are described in the previous sections and include e.g. the attacker's model knowledge and the target class.
+The applied parameters are described in the previous sections and include e.g., the attacker's model knowledge and the target class.
 An example would be the goal function:
 
 $G(x)$:= \{argmax$F(x)$ \neq $original\textunderscore class$\}
 
-for the attack being successful, if the prediction after attack is unequal the original prediction. 
+for the attack being successful if the prediction after the attack is unequal the original prediction. 
 
-Proposed goalfunctions in the literature include untreated \cite{ebrahimi2017hotflip, alzantot2018generating, li2018textbugger, jin2019bert, garg2020bae}, and mixed goal functions \cite{gao2018black} in the white-box setting \cite{papernot2016crafting, liang2017deep, ebrahimi2017hotflip, jin2019bert} and the black box setting \cite{gao2018black, goodman2020fastwordbug}.
+Proposed goal functions in the literature include untargeted \cite{ebrahimi2017hotflip, alzantot2018generating, li2018textbugger, jin2019bert, garg2020bae}, and mixed goal functions \cite{gao2018black} in the white-box setting \cite{papernot2016crafting, liang2017deep, ebrahimi2017hotflip, jin2019bert} and the black box setting \cite{gao2018black, goodman2020fastwordbug}.
 
-\textbf{2. Search Method}
+\subsubsection{2. Search Method}
 
 A search method's aim is to find a perturbation that generates a successful adversarial example and satisfies the constraints. There have been many different approaches introduced for this process over the years. The most popular can be categorized into:
 
     \textbf{a) Greedy with Word Importance Ranking}
     
-        Liang et al. were the first to enhance the efficiency of their attacks by firstly, identifying the text items essential for their classification by computing the cost gradient of the input (white-box), as well as generating a series of occluded test samples (black-box attack)\cite{liang2017deep}. In 2019, the pre-trained BERT model was attacked by adversarial examples for the first time by Jin et al.. They conducted a word importance ranking by analyzing the prediction change before and after deleting one word, also called Leave-One-Out Method.  The Greedy approach ranks all words of the input according some ranking system. The perturbation is then conducted either on the most important word or to one at a time in order of decreasing importance \cite{liang2017deep, gao2018black, li2018textbugger, jin2019bert, garg2020bae}. 
+        The Greedy approach ranks all words of the input according to some ranking system. The perturbation is then conducted either on the most important word or one at a time in order of decreasing importance \cite{li2018textbugger, jin2019bert, garg2020bae}.
+    
+        Liang et al. were the first to enhance their attacks' efficiency by introducing a two-step approach to generate adversarial attacks in text. They first determine the text items essential for their classification by computing the cost gradient of the input (white-box), as well as generating a series of occluded test samples (black-box attack)\cite{liang2017deep}. 
+        Since the adversary in a black-box setting does not have any indication of where the model could be prune to attacks, a two-step approach is required to enhance the efficiency by not having to try all possible modifications or to attack randomly chosen words. 
+        In their paper, Gao et al. used the two-step approach. They first determine the words critical for the model's prediction by introducing a word importance scoring function. In a second step, they generate adversarial text by making imperceptible edit operations to the word previously determined 'important' words, forcing the classifier to make wrong predictions \cite{gao2018black}.
+        In 2019, the pre-trained BERT model was attacked by adversarial examples for the first time by Jin et al. They conducted a word importance ranking by analyzing the prediction change before and after deleting one word, also called Leave-One-Out Method.  
         
-       
+        \textbf{Leave One Out Method for Important-Word-Detection}
+        
+
+Leave One Out is an interpretation method used to determine the words of a document that contribute most to the output of a model prediction. The effort to create a successful adversarial example can be minimized by targeting the attack on the word with the strongest influence on the prediction outcome. The leave one out method resembles a process that iteratively removes one word after another and predicts each sentence without the removed word. 
+This way, a document consisting of e.g., ten words, is sent through the Machine Learning Model eleven times. (Once the complete sentence is predicted, then without the first word, without the second word, and so on). The words which changed the model's prediction of the sentence, through their absence, are considered important words. 
+        
     \textbf{b) Beam Search}
     
-        Ebrahimi et al., introduced HotFlip, a method to generate adversarial examples with character substitutions, using the gradient with respect to a one-hot input representation, aiming to determine the individual change with the highest estimated loss. They use the beam search to find a set of manipulations that fool the classifier best, when conducted together \cite{ebrahimi2017hotflip}. The Beam Search initially scores transformations at all positions in the input and ascertain the top b transformation (where b is a hyperparameter known as the "beam width"). After that it iterates, looking at transformations of all sequences in the beam \cite{tillmann2003word}. 
+        Ebrahimi et al., introduced HotFlip, a method to generate adversarial examples with character substitutions, using the gradient with respect to a one-hot input representation, aiming to determine the individual change with the highest estimated loss. They use the beam search to find a set of manipulations that fool the classifier best when conducted together \cite{ebrahimi2017hotflip}. The Beam Search initially scores transformations at all positions in the input and ascertain the top b transformation (where b is a hyperparameter known as the "beam width"). After that, it iterates, looking at transformations of all sequences in the beam \cite{tillmann2003word}. 
         
     \textbf{c) Genethic Algorithm}
     
-        Alzatot et al. were the first to use the genetic algorithm as search method. Instead of relying on gradient-based optimization, they developed an attack algorthm that exploits population -based gradient-free optimization through genetic algorithms. Genetic algorithms are inspired by the process of natural selection, iteratively evolving a population towards better solutions. They determine the best solution through a combination of crossover and mutation, that way, they are able to find successful adversarial examples with fewer modifications \cite{alzantot2018generating}.
+        Alzatot et al. were the first to use the genetic algorithm as a search method. Instead of relying on gradient-based optimization, they developed an attack algorithm that exploits population-based gradient-free optimization through genetic algorithms. Genetic algorithms are inspired by the process of natural selection, iteratively evolving a population towards better solutions. They determine the best solution through a combination of crossover and mutation. That way, they can find successful adversarial examples with fewer modifications \cite{alzantot2018generating}.
+        
+        
+\subsubsection{3. Transformation}
+    The transformation takes an input and returns all potential perturbations while being agnostic of goal function and constraints. Transformation methods can be categorized according to the attacker's model knowledge (white-box and black-box).
 
-    \textbf{3. Transformation}
-        The transformation takes an input and returns all potential perturbations, while being agnostic of goal function and constraints. Transformation methods can be categorized according to the attacker's model knowledge (white-box and black-box). Papernot et al. were the first in 2016 to generate adversarial examples in text. They investigated adversarial input for RNNs processing sequential data using the Fast Gradient Sign Method to generate adversarial sequences  in the white-box setting \cite{papernot2016crafting}. They found that switching from computer vision to natural language processing applications unsing the FGSM introduced difficulties (as explained in the previeous chepter). 
-
-        Goodman et al. generated small utility-preserving text perturbations in a black-box setting by using a scoring method to identify important words that affect text classification \cite{goodman2020fastwordbug}, similar to Gao et al., who in 2018, use a scoring strategy to generate character-level transformations in the black-box setting on RNN based natural language classifiers. They conduct small edit operations to a text sequence such that a human would consider it similar to the original sequence. They do this by first targeting the important tokens in the sequence and then execute a modification on those tokens that can force the classifier to make a wrong prediction. They perturb using four methods, namely substitution of a letter in a word with a random letter, deletion of a random letter, insertion of a random letter, and swapping two adjacent letters. Their method achieves better results than FGSM  and find that the selection of words to perturb is more important than the alteration of words\cite{gao2018black}.  In 2017 Liang et al., were able to successfully fool character- and word-level DNN-based text classifiers through the conduction of three perturbation strategies, namely insertion, modification, and removal \cite{liang2017deep}. In 2019, Jin et al. were the first to attack the pre-trained BERT model. Their perturbation approach is word-level based, as they replace the original word with synonyms and use word embedding vectors to measure how well different models judge the semantic similarity between the words \cite{jin2019bert}.
-
-
-    \textbf{4. Constraints}
-        An attack is considered valid, if the input satisfies each of the attacker's constraints. Constraints include different approaches. One approach es to measure the edit distances e.g. maximum percentage of words changed \cite{ebrahimi2017hotflip} or maximum Levenshtein edit distance \cite{gao2018black}. Grammatically constraints are intended to prevent the attack from creating perturbations which introduce grammatical errors. Examples here are Part-of-speech consistency or a maximum number of grammatical errors \cite{ebrahimi2017hotflip, jin2019bert}. Semantics constraints aim for preserving the meaning between $x$ and $x\textunderscore adv$, e.g., maximum swapped word embedding distances, or using sentence encoders or language models \cite{cer2018universal, garg2020bae, jin2019bert, li2018textbugger, alzantot2018generating, ebrahimi2017hotflip}.
-
-
-
-
+    Papernot et al. were the first in 2016 to generate adversarial examples in text. They investigated on adversarial inputs for RNNs processing sequential data using the Fast Gradient Sign Method (FGSM) to generate adversarial sequences in the white-box setting \cite{papernot2016crafting}. 
+    Gradient calculations are used to determine which features have to be modified to generate an adversarial example. The method is very effective for generating adversarial examples in the field of computer vision \cite{goodfellow2014explaining}.
+    Papernot et al. found that switching from computer vision to natural language processing applications using the FGSM introduced difficulties (as explained in the previous chapter). 
+    Goodman et al. generated small utility-preserving text perturbations in a black-box setting by using a scoring method to identify important words that affect text classification \cite{goodman2020fastwordbug}, similar to Gao et al., who, in 2018, use a scoring strategy to generate character-level transformations in the black-box setting on RNN based natural language classifiers. They conduct small edit operations to a text sequence such that a human would consider it similar to the original sequence. They do this by first targeting the important tokens in the sequence and then execute a modification on those tokens that can force the classifier to make a wrong prediction. They perturb using four methods, namely substitution of a letter in a word with a random letter, deletion of a random letter, insertion of a random letter, and swapping two adjacent letters. Their method achieves better results than FGSM  and finds that the selection of words to perturb is more important than the alteration of words\cite{gao2018black}.  In 2017 Liang et al. were able to successfully fool character- and word-level DNN-based text classifiers through the conduction of three perturbation strategies, namely insertion, modification, and removal \cite{liang2017deep}. In 2019, Jin et al. were the first to attack the pre-trained BERT model. Their perturbation approach is word-level based, as they replace the original word with synonyms and use word embedding vectors to measure how well different models judge the semantic similarity between the words \cite{jin2019bert}.
+    
+    
+\subsubsection{4. Constraints}
+    When conducting modifications on a textual input sequence of an NLP model, it is likely to alter the semantic meaning or grammatical correctness. E.g.,  the FGSM method to generate modified input. There is no guarantee that words close in the embedding space are semantically similar. Therefore, this approach may replace words with semantically different others and might alter the whole sentence's semantics.
+    
+    An attack is considered valid if the input satisfies each of the attacker's constraints. 
+    Constraints include different approaches. One approach is to measure the edit distances, e.g., the maximum percentage of words changed \cite{ebrahimi2017hotflip} or maximum Levenshtein edit distance \cite{gao2018black}. Samanta et al. use saliency maps to ensure semantically meaningful adversarial examples\cite{samanta2017towards}. This approach, however, is difficult to perform automatically. Grammatically constraints are intended to prevent the attack from creating perturbations that introduce grammatical errors. Examples here are Part-of-speech consistency or a maximum number of grammatical errors \cite{ebrahimi2017hotflip, jin2019bert}. Semantics constraints aim to preserve the meaning between $x$ and $x\textunderscore adv$, e.g., maximum swapped word embedding distances, or using sentence encoders or language models \cite{cer2018universal, garg2020bae, jin2019bert, li2018textbugger, alzantot2018generating, ebrahimi2017hotflip}.
 
 
 %-------------------------------------------------------------------
@@ -481,136 +553,87 @@ A search method's aim is to find a perturbation that generates a successful adve
 
 \section{Methodology}
 
+
 - reference to theory, what the problem is
 - why it is a problem
-- what objectives
-- what I have investigated
-- how i have conducted the investigations
-
 
 Building on the theoretical foundations described in previous chapters, we will now explain how we proceeded in the practical part of our work. 
 
-
-
-I will conduct adversarial attacks on NLP da da da...
+da da da...
 
 
 
 
 \subsection{Objectives}
+- what objectives
 
 
+[from exposé]
 In my study, I want to focus on the field of ABSA and target the state-of-the-art BERT base model as well as a BERTbased ABSA Deep Learning model of the company DeepOpinion\footnote{https://deepopinion.ai/}. The thesis is supposed to determine the robustness of the BERT based NLP model for the task of ABSA against input level adversarial examples.
-Additionally, I want to investigate whether the generated adversarial examples can be transferred between models with a different degree of fine-tuning. A defense strategy against adversarial attacks is adversarial training. By training the models on the generated adversarial dataset, I want to gain knowledge about whether I can improve robustness against adversarial attacks and, as a result, improve the overall model performance.
-
-The resulting research questions answered in my thesis will be the following:
-
-How robust is BERT based NLP for the task of ABSA against input level adversarial examples?
-
-(a) How does fine-tuning influence robustness against adversarial attacks?
-
-(b) How does adversarial training influence model performance?
-
-(c) How does adversarial training influence model robustness against adversarial attacks?
 
 The aim of the work was answer the following research question:
 
 RQ1: How robust is BERT based NLP model for the task of ABSA against input level adversarial examples?
-
-
-
-\subsection{Experiments}
-\subsection{Evaluation}
-
-
-
 
 %-------------------------------------------------------------------
 %-------------------------Setup -----------------------------
 %------------------------------------------------------------------
 
 \subsection{Experimental Setup} 
+- what I have investigated
 
+As most existing approaches generate adversarial examples as attacks by finding the minimum perturbation \cite{liang2017deep, ebrahimi2017hotflip, gao2018black, li2018textbugger, alzantot2018generating, jin2019bert, garg2020bae}, the attacks tend to be conspicuous and can easily be identified by humans. Moreover, they are not likely to appear in nature, making them less relevant in practical applications. Perturbations are either word or character level based. Possible variations have been proposed in the literature and are described in chapter ~\ref{sec:adversarial_exapmles_in_text}. Examples are randomly replacing, deleting, swapping, or inserting characters. Perturbations on the word level basis use the same example approaches.  
+The disadvantage of word-level perturbations is that an unintentional change of the semantic meaning of a sentence is likely to happen. This means that the comparison of a sentence's prediction before and after the change of a word is no longer guaranteed, which poses a constraint. Various methods have been proposed to avoid this problem and are described in section \textbf{Constraints} in chapter ~\ref{sec:adversarial_exapmles_in_text}. 
+This phenomenon occurs less often when perturbing on the character level since the perturbed words remain the same. An exception is when the change of single characters randomly results in a new, existing word of the dictionary with a different semantic meaning. 
 
-As most existing approaches generate adversarial examples as attacks by finding the minimum perturbation \cite{liang2017deep, ebrahimi2017hotflip, gao2018black, li2018textbugger, alzantot2018generating, jin2019bert, garg2020bae}, the attacks can easily be identified by humans and are, therefore not that meaningful. Moreover, they are not likely to appear in nature, which makes them irrelevant in practical applications. 
-
-To prevent humans from easily identify the attacks as adversarial examples, we propose three character-level attack methods that are likely to occur in a practical scenario.
-To execute the perturbations, we focused on the input level rather than the embedding or semantic level. The experiments are conducted in the black box setting, as there is no knowledge about the model architecture or the training data needed. Since there is more realistic relevance for this scenario, non-targeted attacks will be conducted.
-
-Possible alternative variations to generate character level input perturbations have been proposed in the literature and are described in chapter ~\ref{sec:adversarial_exapmles_in_text}. Examples are randomly replacing, deleting, swapping or inserting characters. Moreover, perturbations can be done on the word-level basis using the same example approaches.  The disadvantages of word-level perturbations is that there is no way to guarantee that 
-
-Therefore we decided on the described three attack methods. 
-
+The experiments in this thesis are conducted in the black-box setting, as there is no knowledge about the model architecture or the training data needed. Since there is more practical relevance for this scenario, we will conduct non-targeted attacks and focus on the input level rather than the embedding or semantic level to execute our perturbations. 
+To prevent humans from easily identifying our attacks as adversarial examples, we propose three character-level attack methods that are likely to occur in a practical scenario.
+To limit the scope of this work, we refrain from reviewing the semantic meaning of the generated adversarial sentences.
 
 The attacks are generated on a character level basis and can be subdivided into three attack methods:
 
+
 \subsubsection{Leet speak}
-Leet speak (or '1337') is a system of modifying spelling, primarily used in online games, internet platforms as well as in the 'hacker'-community. The term 'leet' derives from the word 'elite' and describes the communities which use the language. The purpose of using leet speak can be to exclude newcomers (e.g. in an online community or game) or outsiders in general. The goal is to create language, that the average reader cannot make sense of \cite{thomas2002hacker}.   
-Leet speak is characterized by the use of non-alphabet characters to substitute one or multiple letters of one word with visually similar-looking symbols, so called homoglyphs. Commonly used homoglyphs in leet speak are numbers. 
+Leet speak (or '1337') is a system of modifying spelling, primarily used in online games, internet platforms as well as in the 'hacker'-community. The term 'leet' derives from the word 'elite' and describes the communities that use it. The purpose of using leet speak can be to exclude newcomers (e.g., in an online community or game) or outsiders in general. The goal is to create language, that the average reader cannot make sense of \cite{thomas2002hacker}.   
+Leet speak is characterized by the use of non-alphabet characters to substitute one or multiple letters of one word with visually similar-looking symbols, so-called homoglyphs. Commonly used homoglyphs in leet speak are numbers. 
 % Why leet for the attacks
-We conducted experiments to explore the effect of leet speak on the BERT model. As described in chapter~\ref{sec:the_history_of_NLP} DNN-based text classification continuously gains importance for enhancing the safety of online communication e.g. in online discussion environments through toxic content detection and other methods \cite{kumar2011natural}. This are the environments where leet speak is used primarily. The investigation of what effects the character substitution has on the used BERT models could help to increase security in such forms. 
+We conducted experiments to explore the effect of leet speak on the BERT model. As described in chapter~\ref{sec:the_history_of_NLP} DNN-based text classification continuously gains importance for enhancing the safety of online communication e.g., in online discussion environments through toxic content detection and other methods \cite{kumar2011natural}. This are the environments where leet speak is used primarily. The investigation of what effects the character substitution has on the used BERT models could help to increase security in such forms. 
 
 \subsubsection{Spelling mistakes}
-As described the BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. Since it is used for different use cases of which many include the processing of user generated data, the BERT model should be robust against spelling mistakes. Sun et al., were the first in 2020 to study the effect of spelling mistakes on the BERT model  using different methods \cite{sun2020adv}. Just like them we well make us of the list of common misspellings generated by Wikipedia\footnote{https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings} to generate adversarial examples. The difference to their work is the method for identifying the word to execute the perturbation on. 
-The words in the list are gathered by users reporting misspellings. A misspelling is considered common, and added to the list if it occurs in Wikipedia at least once a year.
+As described, the BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. Since it is used for different use cases, of which many include the processing of user-generated data, the BERT model should be robust against spelling mistakes. Sun et al., were the first in 2020 to study the effect of spelling mistakes on the BERT model using different methods \cite{sun2020adv}. Just like them, we will make use of the list of common misspellings generated by Wikipedia\footnote{https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings} to generate adversarial examples. The difference to their work is the method for identifying the word to execute the perturbation on. 
+The words in the list are gathered by users reporting misspellings. A misspelling is considered common and added to the list if it occurs in Wikipedia at least once a year.
 The list consists of 4282 entries, where one word can have multiple misspelling variations. 
 
 \subsubsection{Punctuation}
-To the best of our knowledge, there have not been any investigations on the effect of changed punctuation symbols on the robustness of a BERT model. Since we were surprisingly able to generate successful attacks by simply adding one punctuation mark, we limited ourselves to that and did no further research on different punctuation variations. Moreover, one additional comma is unobtrusive, occurs in the practical use cases and would not easily be identified as a adversarial example by a human observer.
+To the best of our knowledge, there have not been any investigations on the effect of changed punctuation symbols on the robustness of a BERT model. Since we were surprisingly able to generate successful attacks by merely adding one punctuation mark, we limited ourselves to that and did no further research on different punctuation variations. Moreover, one additional comma is unobtrusive, occurs in the practical use cases, and is not easily identified as an adversarial example by a human observer.
 
 
+
+\subsection{Experiments}
+
+\subsection{Evaluation}
 
 \subsection{todo}
 
 
-The methodology is explained, as well as the operationalization of the theoretic foundations for the study. Further, the results are shared with an emphasis on significant correlations regarding the studied relation. 
+ 
 
 In this thesis, I will primarily investigate the prominent pre-trained BERT model introduced by Google in 2018.
-I want to determine what influence the degree of fine-tuning on a target domain has on the robustness of NLP models against adversarial attacks. Fine-tuning is a concept of transfer learning, where the world knowledge gained when training a task is transferred to a related task or domain \cite{pan2009survey}. To do so, I will investigate the fine-tuned hotel-model of the company DeepOpinion.
-In the context of this thesis, I will assess the degree of fine-tuning as the difference in performance a model was able to achieve before, and after the fine-tuning process. 
-To obtain knowledge about the transferability of the generated adversarial examples, I will compare the effect of different degrees of fine-tuning on robustness against the attacks. 
+
+
+
+In the typical white-box scenario of generating adversarial attacks,  However, as mentioned above, this cannot be applied to text directly since perturbed word embeddings do not necessarily map to valid words. Other approaches are optimization-based and model-based attacks, which treat adversarial attacks as an optimization problem where the constraints are to maximize the loss of target classifiers and to minimize the difference between original and adversarial examples. While the optimization-based approach uses optimization algorithms directly, the model-based approach trains a separate model to generate adversarial examples \cite{xu2020elephant}.
 
 
 
 
-In the typical white-box scenario of generating adversarial attacks, gradient calculations are used to determine which features have to be modified in order to generate an adversarial example. The method mainly derived from the fast gradient sign method (FGSM) and is very effective in computer vision \cite{goodfellow2014explaining}. However, as mentioned above, this cannot be applied to text directly since perturbed word embeddings do not necessarily map to valid words. Other approaches are optimization-based and model-based attacks, which treat adversarial attacks as an optimization problem where the constraints are to maximize the loss of target classifiers and to minimize the difference between original and adversarial examples. While the optimization-based approach uses optimization algorithms directly, the model-based approach trains a separate model to generate adversarial examples \cite{xu2020elephant}. Successful attacks in text were conducted in the white-box setting with HotFlip \cite{ebrahimi2017hotflip} and in the black-box setting with DeepWordBug \cite{gao2018black} and TextBugger \cite{li2018textbugger}. 
 
-\cite{papernot2016crafting} used the gradient-based approach for crafting adversarial input sequences for recurrent neural network-based text classifiers and chose the word at a random position in a text input to replace it with it's nearest word embedding vector. Since there is no guarantee that words close in the embedding space are semantically similar, this approach may replace words with irrelevant, semantically different others. 
-In order to generate semantically meaningful adversarial examples, \cite{samanta2017towards} used saliency maps. This approach, however, is difficult to perform automatically. In their paper, \cite{gao2018black} introduced a two-step approach to generate adversarial attacks in text. Unlike \cite{papernot2016crafting}, \cite{gao2018black} deviate the process of generating adversarial text into two main steps. They first determine which words are critical for the model's prediction by introducing a word importance scoring function. In a second step, they generate adversarial text by making imperceptible edit operations to a text sequence, which forces the classifier to make wrong predictions.
 
-In my thesis, I want to make use of their two-step approach, including important word detection. That way, I want to determine the word which has a critical influence on the model's prediction in order to maximize the loss of the target classifiers and minimize the input modification effort as well as the difference between original and adversarial examples. 
-To rank words by importance for the prediction, its effect on the output classification has to be measured. As already explained, it is difficult to measure a word's perturbation by calculating gradients viably. 
-For that reason, I will make use of \cite{jin2019bert}'s method of removing each word of a sentence one by one and let the model predict the incomplete sentences. 
- Comparing the prediction before and after a word is removed reflects how the word influences the classification result. This procedure allows me to enhance the efficiency of my attacks.
-
-To execute the perturbations, I will focus on the input level rather than the embedding or semantic level. The examples will be generated on a character level basis and can be subdivided into three steps:
-(i) Investigation of the influence of additional or missing punctuation marks,
-(ii) with the aid of the Birkbeck file, a list of common typos documented by the Oxford Text Archive, the robustness of the models on misspellings will be tested. The file contains 36,133 misspellings of 6,136 words.
-(iii) By replacing letters with visually similar-looking symbols, e.g., @ for a or 0 for o, the effect of 'Leet Speech' on the different NLP models will be explored.
-Perturbations (ii) and (iii) will be applied to the beforehand detected important words.
-
-The attacks will be executed on the target models individually.
-The result will be datasets with generated adversarial examples. To test the transferability, I will predict the datasets with the respective other models. The accuracy of the predictions will provide information about whether and to what extent the examples are transferable.
-The final part of my work will be adversarial training. 
-The first step here will be the modification of a different dataset which the models were not trained on before and modify it in order to create adversarial examples. After that I will use the generated adversarial examples of the original dataset as a training set for both models and explore, using the unseen adversarial examples, whether adversarial training influences the robustness against these attacks. Additionally, I will predict a regular dataset and investigate whether adversarial training has improved the overall model performance.
+##### hello
 
 
 
 
-\subsubsection{Leave One Out for Important Word Detection}
-
-Leave One out is an interpretation method used to determine the word of a document that contributes most to a prediction. 
-In this thesis this method is used on the test set, find the word 
-
-By being able to identify which word has the most influence on the prediction of a document, the effort to create an adversarial example that switches the prediction can be minimized by targeting the attack on this detected important word.
-The leave one out method resembles a process that iteratively removes one word after the other and predicts each sentence without the removed word. 
-This way, a document consisting of e.g. 10 words is sent through the Machine Learning Model eleven times. (Once the complete sentence is predicted, then without the first word, without the second word, and so on).
-The words which through their absence changed the model’s prediction of the sentence are considered important words. Later on, we will try to generate examples by modifying these words.
-The prediction is considered changed as soon as one of the three output categories (entity, attribute, or sentiment) is changed by omitting a word.
-
-Let x = [x1, x2, … xn] be the input sentence represented as a list of words with the predicted probability of a label y, and y = argmaxy%^% p(%^%yjx). The important word is defined as g(xi) = p(yjx) − p(yjx−i).
-Meaning, the importance of a word is determined by the prediction probability towards the original label y of a sentence containing the word x minus the prediction probability of the same sentence without the word x.
-We apply this formula for every word x in a sentence to determine all words influential to the prediction. 
 
 
 %-------------------------------------------------------------------
@@ -624,6 +647,33 @@ We apply this formula for every word x in a sentence to determine all words infl
 %------------------------------------------------------------------
 
 \subsubsection{Attacks}
+
+- how i have conducted the investigations
+
+
+
+In my thesis, I want to make use of their two-step approach, including important word detection. That way, I want to determine the word which has a critical influence on the model's prediction in order to maximize the loss of the target classifiers and minimize the input modification effort as well as the difference between original and adversarial examples. 
+To rank words by importance for the prediction, its effect on the output classification has to be measured. As already explained, it is difficult to measure a word's perturbation by calculating gradients viably. 
+For that reason, I will make use of \cite{jin2019bert}'s method of removing each word of a sentence one by one and let the model predict the incomplete sentences. 
+ Comparing the prediction before and after a word is removed reflects how the word influences the classification result. This procedure allows me to enhance the efficiency of my attacks.
+
+
+
+
+
+The attacks will be executed on the target models individually.
+The result will be datasets with generated adversarial examples. To test the transferability, I will predict the datasets with the respective other models. The accuracy of the predictions will provide information about whether and to what extent the examples are transferable.
+The final part of my work will be adversarial training. 
+The first step here will be the modification of a different dataset which the models were not trained on before and modify it in order to create adversarial examples. After that I will use the generated adversarial examples of the original dataset as a training set for both models and explore, using the unseen adversarial examples, whether adversarial training influences the robustness against these attacks. Additionally, I will predict a regular dataset and investigate whether adversarial training has improved the overall model performance.
+
+
+Later on, we will try to generate examples by modifying these words.
+The prediction is considered changed as soon as one of the three output categories (entity, attribute, or sentiment) is changed by omitting a word.
+
+% Important word detection
+Let ${x = [x1, x2,}$ \dots${xn]}$ be the input sentence represented as a list of word tokens with the predicted probability of a label $y$, and ${y = argmaxy}^{p(}^{yjx)}$. The important word is defined as ${g(xi) = p(yjx) - p(yjx−i)}$.
+Meaning, the importance of a word is determined by the prediction probability towards the original label $y$ of a sentence containing the word $x$ minus the prediction probability of the same sentence without the word $x$.
+We apply this formula for every word x in a sentence to determine all words influential to the prediction. 
 
 In this thesis, we have limited ourselves to the replacement of letters by numbers to generate leet speak. Chapter xy provides a technical description of how the substitution was conducted in the experiment.
 

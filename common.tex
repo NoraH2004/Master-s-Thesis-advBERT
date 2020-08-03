@@ -1,0 +1,46 @@
+\usepackage{eurosym}
+\usepackage{natbib}
+\usepackage{bibentry}
+
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+
+
+% library("colorspace")
+% qualitative_hcl(5, palette= "Dark 3")
+\definecolor{p1color}{HTML}{E16A86}
+\definecolor{p2color}{HTML}{AA9000}
+\definecolor{p3color}{HTML}{00AA5A}
+\definecolor{p4color}{HTML}{00A6CA}
+\definecolor{p5color}{HTML}{B675E0}
+
+\definecolor{QuantCastColor}{HTML}{E16A86}
+\definecolor{OneTrustColor}{HTML}{AA9000}
+\definecolor{CookieBotColor}{HTML}{00AA5A}
+\definecolor{TrustArcColor}{HTML}{00A6CA}
+\definecolor{EvidonColor}{HTML}{B675E0}
+\colorlet{CrownpeakColor}{EvidonColor} % evidon got bought be crownpeak
+
+\tikzset{>=stealth}
+%\setlength{\abovecaptionskip}{0pt} 
+
+\newcommand{\cookietimeaxis}{
+	\draw[->] (18,0) -- (20+5/12,0);% node[midway,below] {\small Time};
+	\foreach \year in {18,19,20} {
+		% centering the year doesn't work for 2020
+		\draw (\year,-13pt) node [right] {\scriptsize20\year~$\rightarrow$};
+		\foreach \imonth/\month in {0/J,1/F,2/M,3/A,4/M,5/J,6/J,7/A,8/S,9/O,10/N,11/D}{
+			\pgfmathparse{(\year > 18 || \imonth >= 0) && (\year < 20 || \imonth < 5)}
+			\ifnum \pgfmathresult > 0
+			\draw (\year + \imonth/12,0)++(1/24,0) node [below] {\scriptsize \month};
+			\ifnum\imonth>0
+			\draw (\year + \imonth/12,0) -- ++(0,-3pt); 
+			\fi
+			\fi
+		}
+		%\ifnum\year>18
+		\draw (\year,0) -- ++(0,-6pt); 
+		%\fi
+	}
+}
+\providecommand{\cookieroot}{../..}

@@ -129,3 +129,22 @@
 %
 %%
 \bibliographystyle{apacite}
+
+
+
+
+
+
+
+\documentclass[class=acmart,10pt,sigconf,letterpaper,anonymous]{standalone}
+\input{common}
+\usetikzlibrary{shapes.misc}
+\usepackage{rotating}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzset{
+asymbrace/.style={decorate,decoration={brace,aspect=#1}},
+leaveout/.style={replace stretch={from 2.13cm to 2.82cm by {-,draw=none}}}
+}
