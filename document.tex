@@ -1,4 +1,9 @@
 %TC:incbib
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:group table 0 1
+%TC:group tabular 1 1
 
 %-------------------------------------------------------------------
 %-------------------------------------------------------------------
@@ -92,9 +97,7 @@ For that reason, more advanced word embedding methods were introduced, based on 
  
 \textbf{DNN-based Language Models}
     \label{sec:DNN-based_Language_models}
-
-
-
+    
 Around 2000, Bengio et al. first introduced prediction-based, neuronal network language models \cite{bengio2003neural}. A language model is a probability distribution of sequences of tokens in a language. For every given sequence of tokens, the model determines the probability of that sequence to occur in the given language. Moreover, the language modeling task aims to predict the next word of a sentence, given the previous words. The difficulty here lies in the \textit{curse of dimensionality} of natural language: a sequence of words used to test the model is most likely different from the sequences used in training.  Bengio et al.'s neural network language model consisted of a one-hidden layer feed-forward neural network and word feature vector embedding.
 They used a vector representation of the previous words as input for the model. The previous words are looked up in a table that is learned simultaneously within the model. 
 Figure~\ref{fig:Bengio} illustrates the model architecture.
@@ -195,24 +198,154 @@ Figure ~\ref{fig:NLP-Tasks-Taxonomy} illustrates the categorization of different
     \label{fig:NLP-Tasks-Taxonomy}
 \end{figure}
 Examples for semantic tasks are SA and Aspect-based Sentiment Analysis (ABSA). 
-SA is an active field of research in NLP that aims to detect opinions in (mostly user-generated) text. The perceived sentiment, which occurs in user comments, feedback questionnaires, or critiques, provides valuable information for various purposes. Sentiment is usually expressed in either two categories: positive and negative, or on an $n$-point scale (e.g., very good, good, satisfactory, sufficient, insufficient). Thus, a sentiment analysis task can be interpreted as a classification task, where each class represents a sentiment \cite{prabowo2009sentiment}.
+SA is an active field of research in NLP that aims to detect opinions in (mostly user-generated) text. The perceived sentiment, which occurs in user comments, feedback questionnaires, or critiques, provides valuable information for various purposes. Sentiment is usually expressed in either two categories: positive and negative, or on an $n$-point scale (e.g., very good, good, satisfactory, sufficient, insufficient). Thus, a sentiment analysis task can be interpreted as a classification task, where each class represents a sentiment \cite{prabowo2009sentiment}. Figure ~\ref{fig:SA} shows an example of the sentiment analysis task using a BERT language model.
 
-In contrast to SA, ABSA is a more fine-grained task, which consists of two main subtasks, namely Aspect-Category Detection, and Aspect-Category Sentiment Classification. In the first (multi-label classification \footnote{in single-label classification one sample in the data contains exactly one output label, while in the multi-label classification task, one sample can contain n output labels.}) task, a sentence is associated with a set of predefined single- and multi-word aspect terms (e.g., "operation performance", "battery"). The second task, the Aspect-Category Sentiment Classification, deals with the detection of sentiment associated with its aspect (e.g. "positive", "neutral", "negative") \cite{pavlopoulos2014aspect}.
+\begin{figure}
+    \centering
 
-% todo Examples for both tasks (SA and ABSA)
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
-\todo{.... eher raus}
-\begin{lstlisting}[language=xml]
-<sentence id="79:1">
-    <text>It takes a long time to get on the Web and to change
-    Web Sites.</text>
-    <Opinions>
-        <Opinion category="OPERATION_PERFORMANCE" 
-        polarity="negative"/>
-    </Opinions>
-</sentence>
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,218); %set diagram left start at 0, and has height of 218
 
-\end{lstlisting}
+%Shape: Rectangle [id:dp7006294352286838] 
+\draw  [fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (14.5,104.13) -- (194.3,104.13) -- (194.3,177.13) -- (14.5,177.13) -- cycle ;
+%Straight Lines [id:da6575723888982618] 
+\draw    (212.23,143.13) -- (251.23,143.13) ;
+\draw [shift={(253.23,143.13)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Rounded Rect [id:dp8363863646203258] 
+\draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (261,113) .. controls (261,105.27) and (267.27,99) .. (275,99) -- (317,99) .. controls (324.73,99) and (331,105.27) .. (331,113) -- (331,168.13) .. controls (331,175.87) and (324.73,182.13) .. (317,182.13) -- (275,182.13) .. controls (267.27,182.13) and (261,175.87) .. (261,168.13) -- cycle ;
+%Straight Lines [id:da9521339561624853] 
+\draw    (339.23,143.13) -- (378.23,143.13) ;
+\draw [shift={(380.23,143.13)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Rounded Rect [id:dp0334875358297424] 
+\draw  [fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ] (393,113) .. controls (393,105.27) and (399.27,99) .. (407,99) -- (449,99) .. controls (456.73,99) and (463,105.27) .. (463,113) -- (463,168.13) .. controls (463,175.87) and (456.73,182.13) .. (449,182.13) -- (407,182.13) .. controls (399.27,182.13) and (393,175.87) .. (393,168.13) -- cycle ;
+%Straight Lines [id:da2921180358184613] 
+\draw    (474.73,143.13) -- (513.73,143.13) ;
+\draw [shift={(515.73,143.13)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Rectangle [id:dp439847396677838] 
+\draw  [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ] (528,114.93) -- (550.4,114.93) -- (550.4,133) -- (528,133) -- cycle ;
+%Shape: Rectangle [id:dp6078072626477552] 
+\draw  [fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (528,133) -- (550.4,133) -- (550.4,151.07) -- (528,151.07) -- cycle ;
+%Shape: Rectangle [id:dp7563474548449828] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (528,151.07) -- (550.4,151.07) -- (550.4,169.13) -- (528,169.13) -- cycle ;
+
+% Text Node
+\draw (63,51) node [anchor=north west][inner sep=0.75pt]   [align=left] {Input\\\textcolor[rgb]{0.25,0.46,0.02}{Features}};
+% Text Node
+\draw (21,124) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize This is my favourite laptop. }\\{\scriptsize I would recomment it to anyone!}};
+% Text Node
+\draw (269,116) node [anchor=north west][inner sep=0.75pt]   [align=left] {BERT \\{\tiny language model}};
+% Text Node
+\draw (396,113) node [anchor=north west][inner sep=0.75pt]   [align=left] {Classifier};
+% Text Node
+\draw (555,114) node [anchor=north west][inner sep=0.75pt]   [align=left] {POS};
+% Text Node
+\draw (555,133) node [anchor=north west][inner sep=0.75pt]   [align=left] {NEU};
+% Text Node
+\draw (556,154) node [anchor=north west][inner sep=0.75pt]   [align=left] {NEG};
+% Text Node
+\draw (519,50) node [anchor=north west][inner sep=0.75pt]   [align=left] {Output\\\textcolor[rgb]{0.25,0.46,0.02}{Prediction}};
+% Text Node
+\draw (397,132) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny Feed-forward }};
+% Text Node
+\draw (396,141) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny neural network }};
+% Text Node
+\draw (397,150) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny + softmax}};
+
+\end{tikzpicture}
+    \caption{Sentiment Analysis of Laptop Reviews}
+    \label{fig:SA}
+\end{figure}
+
+
+In contrast to SA, ABSA is a more fine-grained task, which consists of two main subtasks, namely Aspect-Category Detection, and Aspect-Category Sentiment Classification. In the first (multi-label classification \footnote{in single-label classification one sample in the data contains exactly one output label, while in the multi-label classification task, one sample can contain n output labels.}) task, a sentence is associated with a set of predefined single- and multi-word aspect terms (e.g., "operation performance", "battery"). The second task, the Aspect-Category Sentiment Classification, deals with the detection of sentiment associated with its aspect (e.g. "positive", "neutral", "negative") \cite{pavlopoulos2014aspect}. See Figure ~\ref{fig:ABSA} for an illustration of the ABSA task.
+
+
+\begin{figure}
+    \centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,341); %set diagram left start at 0, and has height of 341
+
+%Shape: Rectangle [id:dp7006294352286838] 
+\draw  [fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (14.5,104.13) -- (194.3,104.13) -- (194.3,177.13) -- (14.5,177.13) -- cycle ;
+%Straight Lines [id:da6575723888982618] 
+\draw    (212.23,143.13) -- (251.23,143.13) ;
+\draw [shift={(253.23,143.13)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Rounded Rect [id:dp8363863646203258] 
+\draw  [fill={rgb, 255:red, 248; green, 231; blue, 28 }  ,fill opacity=1 ] (261,113) .. controls (261,105.27) and (267.27,99) .. (275,99) -- (317,99) .. controls (324.73,99) and (331,105.27) .. (331,113) -- (331,168.13) .. controls (331,175.87) and (324.73,182.13) .. (317,182.13) -- (275,182.13) .. controls (267.27,182.13) and (261,175.87) .. (261,168.13) -- cycle ;
+%Straight Lines [id:da9521339561624853] 
+\draw    (339.23,143.13) -- (378.23,143.13) ;
+\draw [shift={(380.23,143.13)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Rounded Rect [id:dp0334875358297424] 
+\draw  [fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ] (393,113) .. controls (393,105.27) and (399.27,99) .. (407,99) -- (449,99) .. controls (456.73,99) and (463,105.27) .. (463,113) -- (463,168.13) .. controls (463,175.87) and (456.73,182.13) .. (449,182.13) -- (407,182.13) .. controls (399.27,182.13) and (393,175.87) .. (393,168.13) -- cycle ;
+%Straight Lines [id:da2921180358184613] 
+\draw    (474.73,143.13) -- (513.73,143.13) ;
+\draw [shift={(515.73,143.13)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Rectangle [id:dp439847396677838] 
+\draw  [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ] (584,91.93) -- (606.4,91.93) -- (606.4,110) -- (584,110) -- cycle ;
+%Shape: Rectangle [id:dp6078072626477552] 
+\draw  [fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (584,110) -- (606.4,110) -- (606.4,128.07) -- (584,128.07) -- cycle ;
+%Shape: Rectangle [id:dp7563474548449828] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (584,128.07) -- (606.4,128.07) -- (606.4,146.13) -- (584,146.13) -- cycle ;
+%Shape: Rectangle [id:dp25079314597811353] 
+\draw  [fill={rgb, 255:red, 126; green, 211; blue, 33 }  ,fill opacity=1 ] (584,155.93) -- (606.4,155.93) -- (606.4,174) -- (584,174) -- cycle ;
+%Shape: Rectangle [id:dp724072679501146] 
+\draw  [fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (584,174) -- (606.4,174) -- (606.4,192.07) -- (584,192.07) -- cycle ;
+%Shape: Rectangle [id:dp120836736470876] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (584,192.07) -- (606.4,192.07) -- (606.4,210.13) -- (584,210.13) -- cycle ;
+%Shape: Rectangle [id:dp6243646913162751] 
+\draw   (514.3,109) -- (578,109) -- (578,131.47) -- (514.3,131.47) -- cycle ;
+%Shape: Rectangle [id:dp06781285859521458] 
+\draw   (514.3,170) -- (578,170) -- (578,192.47) -- (514.3,192.47) -- cycle ;
+
+% Text Node
+\draw (63,51) node [anchor=north west][inner sep=0.75pt]   [align=left] {Input\\\textcolor[rgb]{0.25,0.46,0.02}{Features}};
+% Text Node
+\draw (21,124) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\scriptsize This is my favourite laptop. }\\{\scriptsize I would recomment it to anyone!}};
+% Text Node
+\draw (269,116) node [anchor=north west][inner sep=0.75pt]   [align=left] {BERT \\{\tiny language model}};
+% Text Node
+\draw (396,113) node [anchor=north west][inner sep=0.75pt]   [align=left] {Classifier};
+% Text Node
+\draw (611,91) node [anchor=north west][inner sep=0.75pt]   [align=left] {POS};
+% Text Node
+\draw (611,110) node [anchor=north west][inner sep=0.75pt]   [align=left] {NEU};
+% Text Node
+\draw (612,131) node [anchor=north west][inner sep=0.75pt]   [align=left] {NEG};
+% Text Node
+\draw (509,50) node [anchor=north west][inner sep=0.75pt]   [align=left] {Output\\\textcolor[rgb]{0.25,0.46,0.02}{Prediction}};
+% Text Node
+\draw (397,132) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny Feed-forward }};
+% Text Node
+\draw (396,141) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny neural network }};
+% Text Node
+\draw (397,150) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny + softmax}};
+% Text Node
+\draw (611,155) node [anchor=north west][inner sep=0.75pt]   [align=left] {POS};
+% Text Node
+\draw (611,174) node [anchor=north west][inner sep=0.75pt]   [align=left] {NEU};
+% Text Node
+\draw (612,195) node [anchor=north west][inner sep=0.75pt]   [align=left] {NEG};
+% Text Node
+\draw (589,218) node [anchor=north west][inner sep=0.75pt]   [align=left] {...};
+% Text Node
+\draw (547,205) node [anchor=north west][inner sep=0.75pt]   [align=left] {...};
+% Text Node
+\draw (521.3,109) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny Aspect Class 1}};
+% Text Node
+\draw (521.3,171) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\tiny Aspect Class 2}};
+
+
+\end{tikzpicture}
+    \caption{Aspect Based Sentiment Analysis of Laptop Reviews}
+    \label{fig:ABSA}
+\end{figure}
+
+
 
 %-------------------------------------------------------------------
 %----------------------------BERT-----------------------------------
@@ -251,7 +384,79 @@ An important part of producing word embeddings is tokenization. As stated before
 
 
 BERT has a fixed set of learned word embeddings, composed in a word embedding lookup-table. Every row in this table corresponds to a word one word, and every column represents a feature of one token.
-BERT large has a vocabulary of 30,522 tokens and 786 features in its embedding. For simplicity, Figure xy \todo{Figure} shows a table of only 10 words tokens and 5 features.
+BERT large has a vocabulary of 30,522 tokens and 786 features in its embedding. For simplicity, Figure ~\ref{fig:word_embedding} shows a table of only 10 words tokens and 5 features.
+
+\begin{figure}
+    \centering
+    
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,412); %set diagram left start at 0, and has height of 412
+
+%Shape: Rectangle [id:dp7006294352286838] 
+\draw  [fill={rgb, 255:red, 245; green, 166; blue, 35 }  ,fill opacity=1 ] (42.5,97.65) -- (234.5,97.65) -- (234.5,245.65) -- (42.5,245.65) -- cycle ;
+%Notched Right Arrow [id:dp3093746656409001] 
+\draw   (143.13,148.46) -- (143.68,169.75) -- (148.51,169.63) -- (139.21,184.07) -- (129.17,170.12) -- (134.01,170) -- (133.46,148.7) -- (138.42,153.42) -- cycle ;
+%Shape: Grid [id:dp4237249967627763] 
+\draw  [draw opacity=0][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ] (448,46) -- (548.45,46) -- (548.45,246.48) -- (448,246.48) -- cycle ; \draw   (448,46) -- (448,246.48)(468,46) -- (468,246.48)(488,46) -- (488,246.48)(508,46) -- (508,246.48)(528,46) -- (528,246.48)(548,46) -- (548,246.48) ; \draw   (448,46) -- (548.45,46)(448,66) -- (548.45,66)(448,86) -- (548.45,86)(448,106) -- (548.45,106)(448,126) -- (548.45,126)(448,146) -- (548.45,146)(448,166) -- (548.45,166)(448,186) -- (548.45,186)(448,206) -- (548.45,206)(448,226) -- (548.45,226)(448,246) -- (548.45,246) ; \draw    ;
+%Bend Arrow [id:dp1033529280692509] 
+\draw   (190.67,206.82) -- (190.67,206.82) .. controls (223.32,250.05) and (284.84,258.63) .. (328.08,225.98) -- (405.77,167.31) -- (408.45,170.85) -- (415.43,158.15) -- (401.3,161.38) -- (403.98,164.93) -- (326.28,223.6) .. controls (284.36,255.26) and (224.71,246.94) .. (193.04,205.02) -- (193.04,205.02) -- cycle ;
+%Shape: Grid [id:dp17330989415915177] 
+\draw  [draw opacity=0][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ] (79,332) -- (179.67,332) -- (179.67,352.82) -- (79,352.82) -- cycle ; \draw   (79,332) -- (79,352.82)(99,332) -- (99,352.82)(119,332) -- (119,352.82)(139,332) -- (139,352.82)(159,332) -- (159,352.82)(179,332) -- (179,352.82) ; \draw   (79,332) -- (179.67,332)(79,352) -- (179.67,352) ; \draw    ;
+%Shape: Grid [id:dp2416280342144621] 
+\draw  [draw opacity=0][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ] (194,332) -- (294.67,332) -- (294.67,352.82) -- (194,352.82) -- cycle ; \draw   (194,332) -- (194,352.82)(214,332) -- (214,352.82)(234,332) -- (234,352.82)(254,332) -- (254,352.82)(274,332) -- (274,352.82)(294,332) -- (294,352.82) ; \draw   (194,332) -- (294.67,332)(194,352) -- (294.67,352) ; \draw    ;
+%Shape: Grid [id:dp9264270742131507] 
+\draw  [draw opacity=0][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ] (329,332) -- (429.67,332) -- (429.67,352.82) -- (329,352.82) -- cycle ; \draw   (329,332) -- (329,352.82)(349,332) -- (349,352.82)(369,332) -- (369,352.82)(389,332) -- (389,352.82)(409,332) -- (409,352.82)(429,332) -- (429,352.82) ; \draw   (329,332) -- (429.67,332)(329,352) -- (429.67,352) ; \draw    ;
+%Shape: Grid [id:dp20800430109446355] 
+\draw  [draw opacity=0][fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ] (471,333) -- (571.67,333) -- (571.67,353.82) -- (471,353.82) -- cycle ; \draw   (471,333) -- (471,353.82)(491,333) -- (491,353.82)(511,333) -- (511,353.82)(531,333) -- (531,353.82)(551,333) -- (551,353.82)(571,333) -- (571,353.82) ; \draw   (471,333) -- (571.67,333)(471,353) -- (571.67,353) ; \draw    ;
+
+% Text Node
+\draw (104,70) node [anchor=north west][inner sep=0.75pt]   [align=left] {Dictionary};
+% Text Node
+\draw (104,121) node [anchor=north west][inner sep=0.75pt]   [align=left] {word string};
+% Text Node
+\draw (112,195) node [anchor=north west][inner sep=0.75pt]   [align=left] {word ID};
+% Text Node
+\draw (453,23) node [anchor=north west][inner sep=0.75pt]   [align=left] {Lookup Table};
+% Text Node
+\draw (432,45) node [anchor=north west][inner sep=0.75pt]   [align=left] {0};
+% Text Node
+\draw (127,303) node [anchor=north west][inner sep=0.75pt]   [align=left] {I};
+% Text Node
+\draw (450,249) node [anchor=north west][inner sep=0.75pt]   [align=left] {0 \ \ 1 \ \ 2 \ \ 3 \ \ 4 };
+% Text Node
+\draw (235,305) node [anchor=north west][inner sep=0.75pt]   [align=left] {like};
+% Text Node
+\draw (365,307) node [anchor=north west][inner sep=0.75pt]   [align=left] {straw};
+% Text Node
+\draw (487,308) node [anchor=north west][inner sep=0.75pt]   [align=left] {\#\#berries};
+% Text Node
+\draw (432,65) node [anchor=north west][inner sep=0.75pt]   [align=left] {1};
+% Text Node
+\draw (432,86) node [anchor=north west][inner sep=0.75pt]   [align=left] {2};
+% Text Node
+\draw (432,106) node [anchor=north west][inner sep=0.75pt]   [align=left] {3};
+% Text Node
+\draw (432,127) node [anchor=north west][inner sep=0.75pt]   [align=left] {4};
+% Text Node
+\draw (431,149) node [anchor=north west][inner sep=0.75pt]   [align=left] {5};
+% Text Node
+\draw (432,171) node [anchor=north west][inner sep=0.75pt]   [align=left] {6};
+% Text Node
+\draw (432,191) node [anchor=north west][inner sep=0.75pt]   [align=left] {7};
+% Text Node
+\draw (432,212) node [anchor=north west][inner sep=0.75pt]   [align=left] {8};
+% Text Node
+\draw (433,232) node [anchor=north west][inner sep=0.75pt]   [align=left] {9};
+
+
+\end{tikzpicture}
+\caption{The conversion of a sequence string into its word vector representations.}
+    \label{fig:word_embedding}
+
+\end{figure}
+
 A dictionary converts a word string into the corresponding word-id in the word embedding lookup table. 
 When feeding a sequence of words into the BERT architecture, it will fist look up the word-ids in the dictionary and then take the corresponding word embeddings to get a sequence of word embeddings.
 The Second Edition of the 20th volume Oxford English Dictionary contains entries for 171,476 words \cite{dictionary1989oxford}. In order to keep the size of the vocabulary as small as possible, not all words are included in the vocabulary. A WordPiece model breaks down unknown words into subwords \cite{wu2016google}. Given the word $embedding$. There is no representation for this word in the dictionary. The WordPiece method breaks the word down into the three word pieces $em$, $##bed$, and $##ding$, which are entries in the dictionary. That way the the sequence, the word "embedding" appears in, consists of two additional tokens. Except for the first token, subwords are marked with two hash-symbols in front of the characters. Therefore, the subword $bed$ in the word $bedding$ does not have the same vector representation as the one in the word $embedding$ since it is the first token of the word and does not contain the two hash symbols. The WordPiece representation for the word $bedding$ is $bed$, $##ding$, which conveys the information, that the word $bedding$ is related to the word $bed$.
@@ -259,13 +464,10 @@ The words stored in the dictonary differs, depending on the corpus, the BERT mod
 
 \begin{figure}
     \centering
-    \includegraphics[ width = 1\textwidth]{img/BERT-layers.jpg}
+    \includegraphics[ width = 1\textwidth]{img/bert_input_representatino.png}
     \caption{Three BERT embedding layers architecture: token, sequence, and positional embedding layers \cite{devlin2018bert}.}
     \label{fig:BERT_Layers}
-    \todo{cut caption}
 \end{figure}
-
-
 %----------------Token Embedding Layer------------------------------
 
 \textbf{Token Embedding Layer}
@@ -337,14 +539,10 @@ The purpose of the token embedding layer is to tokenize the input (e.g. "I like 
 \label{fig:BERT_tokenEmbedding}
 \end{figure}
 
-
-
 Special tokens are needed for sentence classification. [CLS] is added in front of every input example, and [SEP] serves as a separator token.
 As described before, the  tokenization method WordPiece, is used, which in this case splits the word "strawberries" into "straw" and "##berries". 
 
 %--------------Segment Embedding Layer------------------------------
-
-
 \textbf{Segment Embedding Layer}
 
 The purpose of the segment embedding layer is to enable BERT to distinguish inputs in a given sentence pair. Sentence pairs are used for example, for the task of question answering. Suppose the input sentence pair is "I like strawberries." and "I like ice-cream.". The segment embedding layer uses two indices 0 and 1 as vector representations to assign tokens to their corresponding input segment. Figure\ref{fig:BERT_segmentEmbedding} illustrates the process.
@@ -470,8 +668,6 @@ MLM and NSP are trained simultaniasly while pre-training, which allows for minim
 
 The BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. 
 
-
-
 \textbf{Language Model Fine-tuning}
 
 In fine-tuning for downstream applications, one or more fully-connected layers are added on top of the pre-trained model's final encoder layer, resulting in a good performance for a broad range of NLP tasks \cite{devlin2018bert}. 
@@ -493,8 +689,6 @@ For sequence tagging or question answering, the token representations are fed in
     \caption{Finetuning of BERT for a simple classification task detecting spam in E-Mails. Illustration from \cite{alammar2018illustrated}}
     \label{fig:BERT_NSP}
 \end{figure}
-
-
 
 \subsection{Adversarial Examples}
     \label{sec:adversarial_examples}
@@ -526,30 +720,33 @@ Depending on the purpose of the adversarial attacks, they can be categorized as 
 %-------------------------------------------------------------------
 %--------------Adversarial Examples in TEXT-----------------------
 %------------------------------------------------------------------
-
-
     \label{sec:adversarial_exapmles_in_text}
 
-
-\todo{redo differences cv nlp}
 In this thesis, we will further go into the exploratory approach, and, in the following chapter compare adversarial attacks in CV with those in NLP and study different approaches researched so far.
 
 \subsubsection{Differences in Adversarial Attacks for CV and NLP }
-
     \label{sec:differences_in_adv-ex}
 
-As described in chapter~\ref{sec:word_embeddings}, the mapping from natural language into a corresponding vector is done through the generation of word embeddings.
+Using gradient-based adversarial methods, as used in CV, for attacks in the text domain, can result in altered semantics, syntactically-incorrect sentences, or invalid words that cannot be matched with any words in the word embedding space  \cite{zhang2019adversarial}. When attacking textual DNNs, it is crucial to carefully design variants or distance measures of the perturbation.
 
-\todo{rephrase}
-When we try to use gradient-based adversarial methods, as used in CV, for attacks in the text domain, this can result in altered semantics, syntactically-incorrect sentences, or invalid words that cannot be matched with any words in the word embedding space  \cite{zhang2019adversarial}. When attacking textual DNNs, it is crucial to carefully design variants or distance measures of the perturbation.
-In an image, each pixel has a number representation within a fixed range.  A common representation is to use floating numbers in the range [0,1] or {0,1,...,255}. This indicates that the numerical representation of a pixel gives an insight into the characteristics of the image, and from this, it can be deduced that pixels with similar numerical representations are closely related in terms of their characteristics.
-The case is different with the numerical representation of word tokens. 
+There are three main differences in attacking DNN models for computer vision and natural language processing:
+
+\textbf{1. Discrete vs. continuous inputs}
+
+Typical methods to generate adversarial examples in the image domain use $L_p$ norms to measure the distance between an original data point and a perturbed data one. 
+In an image, each pixel has a number representation within a fixed range.  A common representation is to use floating numbers in the range ${[0,1]}$ or ${\{0,1,}$\dots${,255\}}$. This indicates that the numerical representation of a pixel gives an insight into the characteristics of the image, and from this, it can be deduced that pixels with similar numerical representations are closely related in terms of their characteristics. The case is different with the numerical representation of word tokens.
+Since textual data is symbolic, thus discrete, it is not possible to adapt this in the text-domain, since adopting this method from CV often results in altered semantic meaning or syntactically-incorrect sentences. . The generation of adversarial examples in the text-domain is therefore considered more challenging\cite{carlini2018audio} 
+
+\textbf{2. Semantic meaning vs. no semantic meaning}
+
+When generating adversarial images, it is very unlikely to change the picture's semantic meaning. This is different in the text domain, where a change of a sentence's semantic meaning happens easily. As described in chapter~\ref{sec:word_embeddings}, the mapping from natural language into a corresponding vector is done through the generation of word embeddings.
+Given the example sentence, "I like cats", both, the generation of an adversarial example on word-level (e.g., changed word: $cat$ - generated adversarial sentence through word-swap:  "I like dogs"), as well as on character-level (e.g., changed character: $t$ - generated adversarial example through character-swap: "I like cars"). Thus, the numerical representation of the word 'cat' might be close to that of the word "dog".
+However, that does not mean that the semantic meaning of the words are similar, as it is the case with pixels.
 
 
-% neu machen, verschiedene methoden für verschiedene word embeddings
+\textbf{3. Perceptible vs unperceivable}
 
-Thus, the numerical representation of the word 'cat' may be close to that of the word 'car'.
-However, that does not mean that the semantics of the words are similar, as is the case with pixels. The generation of adversarial examples in the text domain is therefore considered more challenging\cite{carlini2018audio} since it is not possible to craft \(x'\) through gradient calculations. 
+Small modifications of image pixels are hardly recognized by human beings, as shown in Figure ~\ref{fig:advEx}. Hence, if successful, adversarial examples will change the DNNs prediction but not human judgment. Small changes in the text, e.g., character or word modifications, however, are easily detected and, therefore, render the possibility of attack failure. Moreover, a modification can be identified not only by humans but might also be corrected by spelling- or grammar-check systems. Hence, it is not trivial to find imperceivable textual adversarial examples.
 
 
 
@@ -593,8 +790,8 @@ A search method's aim is to find a perturbation that generates a successful adve
         \textbf{Leave One Out Method for Important-Word-Detection}
         
 
-Leave One Out is an interpretation method used to determine the words of a document that contribute most to the output of a model prediction. The effort to create a successful adversarial example can be minimized by targeting the attack on the word with the strongest influence on the prediction outcome. The leave one out method resembles a process that iteratively removes one word after another and predicts each sentence without the removed word. 
-This way, a document consisting of e.g., ten words, is sent through the Machine Learning Model eleven times. (Once the complete sentence is predicted, then without the first word, without the second word, and so on). The words which changed the model's prediction of the sentence, through their absence, are considered important words. 
+        Leave One Out is an interpretation method used to determine the words of a document that contribute most to the output of a model prediction. The effort to create a successful adversarial example can be minimized by targeting the attack on the word with the strongest influence on the prediction outcome. The leave one out method resembles a process that iteratively removes one word after another and predicts each sentence without the removed word. 
+        This way, a document consisting of e.g., ten words, is sent through the Machine Learning Model eleven times. (Once the complete sentence is predicted, then without the first word, without the second word, and so on). The words which changed the model's prediction of the sentence, through their absence, are considered important words. 
         
     \textbf{b) Beam Search}
     
@@ -656,8 +853,6 @@ RQ1: How robust is BERT based NLP model for the task of ABSA against input level
 %------------------------------------------------------------------
 
 \subsection{Experimental Setup} 
-- what I have investigated
-
 As most existing approaches generate adversarial examples as attacks by finding the minimum perturbation \cite{liang2017deep, ebrahimi2017hotflip, gao2018black, li2018textbugger, alzantot2018generating, jin2019bert, garg2020bae}, the attacks tend to be conspicuous and can easily be identified by humans. Moreover, they are not likely to appear in nature, making them less relevant in practical applications. Perturbations are either word or character level based. Possible variations have been proposed in the literature and are described in chapter ~\ref{sec:adversarial_exapmles_in_text}. Examples are randomly replacing, deleting, swapping, or inserting characters. Perturbations on the word level basis use the same example approaches.  
 The disadvantage of word-level perturbations is that an unintentional change of the semantic meaning of a sentence is likely to happen. This means that the comparison of a sentence's prediction before and after the change of a word is no longer guaranteed, which poses a constraint. Various methods have been proposed to avoid this problem and are described in section \textbf{Constraints} in chapter ~\ref{sec:adversarial_exapmles_in_text}. 
 This phenomenon occurs less often when perturbing on the character level since the perturbed words remain the same. An exception is when the change of single characters randomly results in a new, existing word of the dictionary with a different semantic meaning. 
