@@ -722,12 +722,12 @@ Depending on the purpose of the adversarial attacks, they can be categorized as 
 %------------------------------------------------------------------
     \label{sec:adversarial_exapmles_in_text}
 
-In this thesis, we will further go into the exploratory approach, and, in the following chapter compare adversarial attacks in CV with those in NLP and study different approaches researched so far.
+In this thesis, we will further go into the exploratory approach, and, in the following chapter compare adversarial attacks in computer vision with those in NLP and study different approaches proposed so far.
 
-\subsubsection{Differences in Adversarial Attacks for CV and NLP }
+\subsubsection{Differences in Adversarial Attacks for computer vision and NLP }
     \label{sec:differences_in_adv-ex}
 
-Using gradient-based adversarial methods, as used in CV, for attacks in the text domain, can result in altered semantics, syntactically-incorrect sentences, or invalid words that cannot be matched with any words in the word embedding space  \cite{zhang2019adversarial}. When attacking textual DNNs, it is crucial to carefully design variants or distance measures of the perturbation.
+Using gradient-based adversarial methods, as used in computer vision, for attacks in the text domain, can result in altered semantics, syntactically-incorrect sentences, or invalid words that cannot be matched with any words in the word embedding space  \cite{zhang2019adversarial}. When attacking textual DNNs, it is crucial to carefully design variants or distance measures of the perturbation.
 
 There are three main differences in attacking DNN models for computer vision and natural language processing:
 
@@ -735,7 +735,7 @@ There are three main differences in attacking DNN models for computer vision and
 
 Typical methods to generate adversarial examples in the image domain use $L_p$ norms to measure the distance between an original data point and a perturbed data one. 
 In an image, each pixel has a number representation within a fixed range.  A common representation is to use floating numbers in the range ${[0,1]}$ or ${\{0,1,}$\dots${,255\}}$. This indicates that the numerical representation of a pixel gives an insight into the characteristics of the image, and from this, it can be deduced that pixels with similar numerical representations are closely related in terms of their characteristics. The case is different with the numerical representation of word tokens.
-Since textual data is symbolic, thus discrete, it is not possible to adapt this in the text-domain, since adopting this method from CV often results in altered semantic meaning or syntactically-incorrect sentences. . The generation of adversarial examples in the text-domain is therefore considered more challenging\cite{carlini2018audio} 
+Since textual data is symbolic, thus discrete, it is not possible to adapt this in the text-domain, since adopting this method from computer vision often results in altered semantic meaning or syntactically-incorrect sentences. The generation of adversarial examples in the text-domain is therefore considered more challenging\cite{carlini2018audio} 
 
 \textbf{2. Semantic meaning vs. no semantic meaning}
 
@@ -760,7 +760,7 @@ Causative -  Causative attacks alter the training process through influence over
 Exploratory - Exploratory attacks do not alter the training process but use other techniques, such as probing the detector, to discover information about it or its training data.
 \cite{huang2011adversarial}
 
-To better compare the numerous different attack methods suggested for NLP models so far, we will use a unified definition framework provided by Morris et al., introduced in their paper on the Software Framework TextAttack for adversarial attacks in NLP(Morris, Lifland, Yoo, & Qi, 2020). They determine four components, namely a goal function, a search method, a transformation, and an optional list of constraints. In the following chapter, we will explain those components in more detail and assemble attacks from the literature, by means of the components.
+To better compare the numerous different attack methods suggested for NLP models so far, we will use a unified definition framework provided by Morris et al., introduced in their paper on the Software Framework TextAttack for adversarial attacks in NLP\cite{morris2020textattack}. They determine four components, namely a goal function, a search method, a transformation, and an optional list of constraints. In the following chapter, we will explain those components in more detail and assemble attacks from the literature, by means of the components.
 
 
 \subsubsection{Goal Function}
@@ -831,8 +831,6 @@ A search method's aim is to find a perturbation that generates a successful adve
 - why it is a problem
 
 Building on the theoretical foundations described in previous chapters, we will now explain how we proceeded in the practical part of our work. 
-
-da da da...
 
 
 
@@ -955,6 +953,9 @@ Perturbations (ii) and (iii) will be applied to the beforehand detected importan
 %------------------------------------------------------------------
 
 \subsection{Dataset} 
+
+
+
 
 
 %-------------------------------------------------------------------
