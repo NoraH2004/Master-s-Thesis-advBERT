@@ -74,7 +74,7 @@ The following chapter will give a brief overview, reviewing the most important m
     \label{sec:the_history_of_NLP}
 The origins of NLP can be traced back to the 1960s \cite{dostert1955georgetown, Hutchins2006TheFP}\footnote{A report about the research from this time, compiled from reports and newspaper articles.}. With the introduction of DNNs, the objective of automated NLP was established. One of the first NLP tasks include machine translation (MT), a field of research that deals with translating pieces of text from one human language to another. These tasks were solved using simplistic approaches and are based on dictionary lookup and word-by-word substitution. 
 The first results in MT were disappointing as structural and lexical ambiguity of language was ignored. An example is the machine translation system developed by scientists at Georgetown University and IBM in 1955 \cite{dostert1955georgetown}, who translated the English sentence \textit{"The spirit is willing but, the flesh is weak"} into Russian and then back to English, receiving the result sentence \textit{"The vodka is good, but the meat is rotten"}.
- In the 1970s, more language processing projects emerged, one of which called ELISA \cite{weizenbaum1966eliza}, a system introduced by the computer scientist Weizenbaum that replicated the conversation of a psychologist with a patient. Although it had no understanding of conversation, it gave the appearance of intelligence by permuting the user input and using stock phrases and standard patterns. In the 1970s, computer scientists and linguistics realized that isolated solutions to natural language problems were not effective, and they started to focus on incorporating the respective fields of science in order to bridge the gap between computer science and linguistics \cite{kumar2011natural}. 
+ In the 1970s, more language processing projects emerged, one of which called ELISA, a system introduced by the computer scientist Weizenbaum that replicated the conversation of a psychologist with a  \cite{weizenbaum1966eliza}. Although it had no understanding of conversation, it gave the appearance of intelligence by permuting the user input and using stock phrases and standard patterns. In the 1970s, computer scientists and linguistics realized that isolated solutions to natural language problems were not effective, and they started to focus on incorporating the respective fields of science in order to bridge the gap between computer science and linguistics \cite{kumar2011natural}. 
  Research in the 1970s conjectured that the problem of competent automatic translation of language is equivalent to the full understanding of text \cite{carbonell1981steps}. The tremendous amount and complexity of information required for language understanding presented significant problems.  Different approaches were used to address those challenges, e.g., tokenizing text documents (segmenting text into meaningless words and punctuation). Word representations were created manually with complex hard-coded rules to assign meaning to these tokens, used to perform an in-depth analysis of linguistic \cite{catania1972chomsky}. 
  More research was carried out, and computers with faster CPUs and cheaper memory led to the first noteworthy results in Natural Language Processing.  With statistical models coming as a revolution in the field \cite{bahl1989tree}, complex, hard-coded systems were replaced. 
  These novel models overcame the complexity barrier of the handwritten, rule-based word representation models through automatic learning. The success of these models in soft, probabilistic decisions led to an increased scientific focus on the approach of word embeddings.
@@ -127,7 +127,7 @@ Moreover, they found that the training on huge corpora enabled them to automatic
 \end{figure}
 
 
-To summarize, the Word2vec is a shallow, two-layer neural network trained to generate a word embedding to represent linguistic contexts of words. It takes as an input a large text corpus and generates a vector space, consisting of several hundred dimensions, where each unique word in the corpus is assigned to a corresponding vector in the vector space. In the vector space, word vectors are positioned such that words that have common context in the corpus are located close to one another \cite{mikolov2013efficient}, as illustrated in Fig. ~\ref{fig:Word2Vec_bogdan} The problem with Word2vec models is that they are not able to represent ambiguity of words.  
+To summarize, the Word2vec is a shallow, two-layer neural network trained to generate a word embedding to represent linguistic contexts of words. It takes as an input a large text corpus and generates a vector space, consisting of several hundred dimensions, where each unique word in the corpus is assigned to a corresponding vector in the vector space. In the vector space, word vectors are positioned such that words that have common context in the corpus are located close to one another \cite{mikolov2013efficient}, as illustrated in Figure~\ref{fig:Word2Vec_bogdan}. The problem with Word2vec models is that they are not able to represent ambiguity of words.  
 For example, the word "Apple" has the same representation in "Apple Pie" and "Apple Computer". 
 
 \begin{figure}
@@ -194,15 +194,14 @@ Figure ~\ref{fig:NLP-Tasks-Taxonomy} illustrates the categorization of different
     \caption{A taxonomy of popular NLP tasks \cite{ganegedara2018natural}}
     \label{fig:NLP-Tasks-Taxonomy}
 \end{figure}
-
 Examples for semantic tasks are SA and Aspect-based Sentiment Analysis (ABSA). 
-
 SA is an active field of research in NLP that aims to detect opinions in (mostly user-generated) text. The perceived sentiment, which occurs in user comments, feedback questionnaires, or critiques, provides valuable information for various purposes. Sentiment is usually expressed in either two categories: positive and negative, or on an $n$-point scale (e.g., very good, good, satisfactory, sufficient, insufficient). Thus, a sentiment analysis task can be interpreted as a classification task, where each class represents a sentiment \cite{prabowo2009sentiment}.
 
 In contrast to SA, ABSA is a more fine-grained task, which consists of two main subtasks, namely Aspect-Category Detection, and Aspect-Category Sentiment Classification. In the first (multi-label classification \footnote{in single-label classification one sample in the data contains exactly one output label, while in the multi-label classification task, one sample can contain n output labels.}) task, a sentence is associated with a set of predefined single- and multi-word aspect terms (e.g., "operation performance", "battery"). The second task, the Aspect-Category Sentiment Classification, deals with the detection of sentiment associated with its aspect (e.g. "positive", "neutral", "negative") \cite{pavlopoulos2014aspect}.
 
 % todo Examples for both tasks (SA and ABSA)
 
+\todo{.... eher raus}
 \begin{lstlisting}[language=xml]
 <sentence id="79:1">
     <text>It takes a long time to get on the Web and to change
@@ -245,9 +244,10 @@ Like the Word2vec word embedding, BERT does map similar words closely, but it is
 To compute the input-encoding, BERT first tokenizes the given sentences into referring word pieces and then combines three input embedding layers (token, position, and segment) to obtain a fixed-length vector per token. Figure ~\ref{fig:BERT_Layers} gives an overview of the embedding layer architecture.
 
 \textbf{WordPiece Embeddings}
+
 An important part of producing word embeddings is tokenization. As stated before, a word embedding is a feature vector representation of a word. A feature vector is a list of values generated to represent one word, where the values are floating points and can be positive and negative. The distance of word embeddings displays the distance of word similarity. To give an example, the word embedding for the word "cat" could be
 
-<0.4125, -1.6098, 0.6047, ..., -1.4257, -1.231>.
+\texttt{<0.4125, -1.6098, 0.6047, ..., -1.4257, -1.231>}.
 
 
 BERT has a fixed set of learned word embeddings, composed in a word embedding lookup-table. Every row in this table corresponds to a word one word, and every column represents a feature of one token.
@@ -262,13 +262,15 @@ The words stored in the dictonary differs, depending on the corpus, the BERT mod
     \includegraphics[ width = 1\textwidth]{img/BERT-layers.jpg}
     \caption{Three BERT embedding layers architecture: token, sequence, and positional embedding layers \cite{devlin2018bert}.}
     \label{fig:BERT_Layers}
+    \todo{cut caption}
 \end{figure}
+
 
 %----------------Token Embedding Layer------------------------------
 
 \textbf{Token Embedding Layer}
 
-The purpose of the token embedding layer is to tokenize the input (e.g. "I like strawberries") and transform it into a vector representation of fixed dimensions (see Figure~\ref{fig:BERT_tokenEmbedding}). In case of BERT base, each word is represented as a 768-dimensional vector.
+The purpose of the token embedding layer is to tokenize the input (e.g. "I like strawberries") and transform it into a vector representation of fixed dimensions, as shown in Figure ~\ref{fig:BERT_tokenEmbedding}. In case of BERT base, each word is represented as a 768-dimensional vector.
 
 \begin{figure}
 \centering
@@ -345,11 +347,82 @@ As described before, the  tokenization method WordPiece, is used, which in this 
 
 \textbf{Segment Embedding Layer}
 
-The purpose of the segment embedding layer is to enable BERT to distinguish inputs in a given sentence pair. Sentence pairs are used for example, for the task of question answering. Suppose the input sentence pair is "I like strawberries." and "I like ice-cream.". The segment embedding layer uses two indices 0 and 1 as vector representations to assign tokens to their corresponding input segment (see Fig \ref{fig:BERT_segmentEmbedding}).
+The purpose of the segment embedding layer is to enable BERT to distinguish inputs in a given sentence pair. Sentence pairs are used for example, for the task of question answering. Suppose the input sentence pair is "I like strawberries." and "I like ice-cream.". The segment embedding layer uses two indices 0 and 1 as vector representations to assign tokens to their corresponding input segment. Figure\ref{fig:BERT_segmentEmbedding} illustrates the process.
 
 \begin{figure}
     \centering
-    \includegraphics[ width = .5\textwidth]{img/BERTsegment_embedding.jpg}
+\begin{tikzpicture}[replace stretch/.style args={from #1 to #2 by #3}{%
+        /utils/exec=\pgfmathsetmacro{\offlen}{#2-#1},
+        dash pattern=on #1 off \offlen pt on 10cm,
+        postaction={#3,dash pattern=on 0pt off #1 on \offlen pt off 10cm}}]
+        
+        % nodes
+        \node[align=center] (start) [] {{\Large "I like strawberries"} \\ {\Large "I like ice cream"}\\\textit{2 inputs}};
+        \node[align=center] (tokenized) [below of=start, yshift=-2cm] {{\Large"[CLS]", "I", "like", "straw", "\#\#berries", "[SEP]", "I", "like" "ice" "cream"}\\\textit{10 tokens}};
+        \node (vectorized) [below of=tokenized, yshift=-2cm, draw, thick, minimum height=1.5cm, minimum width=3.5cm] {Segment Embeddings};
+        \draw [decorate,decoration={brace,amplitude=7pt, mirror}, asymbrace=0.75]
+        (vectorized.south west) -- (vectorized.south east) node (vectorized_south)[black,midway,xshift=0.9cm, yshift=-0.5cm] {$768$};
+        \draw [decorate,decoration={brace,amplitude=7pt}]
+        (vectorized.north east) -- (vectorized.south east) node (vectorized_east)[black,midway,xshift=0.4cm, xshift=0.1cm, align=center]
+        {$2$};
+        
+        % tokenized object
+        \node (0) [below of=vectorized, xshift=-6.5cm, yshift=-4.5cm, draw, thick, minimum height=1cm, minimum width=1cm] {\small 0};
+        \node (1) [right of=0, draw, thick, minimum height=1cm, minimum width=1cm] {\small 0};
+        \node (2) [right of=1, draw, thick, minimum height=1cm, minimum width=1cm] {\small 0};
+        \node (3) [right of=2, draw, thick, minimum height=1cm, minimum width=1cm] {\small 0};
+        \node (4) [right of=3, draw, thick, minimum height=1cm, minimum width=1cm] {\small 0};
+        \node (5) [right of=4, draw, thick, minimum height=1cm, minimum width=1cm] {\small 0};
+        \node (6) [right of=5, draw, thick, minimum height=1cm, minimum width=1cm] {\small 1};
+        \node (7) [right of=6, draw, thick, minimum height=1cm, minimum width=1cm] {\small 1};
+        \node (8) [right of=7, draw, thick, minimum height=1cm, minimum width=1cm] {\small 1};
+        \node (9) [right of=8, draw, thick, minimum height=1cm, minimum width=1cm] {\small 1};
+    
+        \draw[thick,leaveout] (0.north west) -- ++(3,3);
+        \draw[thick,leaveout] (1.north west) -- ++(3,3);
+        \draw[thick,leaveout] (2.north west) -- ++(3,3);
+        \draw[thick,leaveout] (3.north west) -- ++(3,3);
+        \draw[thick,leaveout] (4.north west) -- ++(3,3);
+        \draw[thick,leaveout] (5.north west) -- ++(3,3);
+        \draw[thick,leaveout] (5.north west) -- ++(3,3);
+        \draw[thick,leaveout] (6.north west) -- ++(3,3);
+        \draw[thick,leaveout] (7.north west) -- ++(3,3);
+        \draw[thick,leaveout] (8.north west) -- ++(3,3);
+        \draw[thick,leaveout] (9.north west) -- ++(3,3);
+        \draw[thick,leaveout] (9.north east) -- ++(3,3);
+        \draw[thick, replace stretch={from 2.16cm to 2.82cm by {-,draw=none}}] (9.south east) -- ++(3.03,3.03);
+        
+        \draw[thick] ([xshift=0.5cm, yshift=0.5cm] 0.north west) -- ++(10.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=1cm, yshift=1cm] 0.north west) -- ++(10.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=1.5cm, yshift=1.5cm] 0.north west) -- ++(10.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 0.north west) -- ++(10.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=2.5cm, yshift=2.5cm] 0.north west) -- ++(10.05,0) -- ++(0,-1);
+        \draw[thick] ([xshift=3cm, yshift=3cm] 0.north west) -- ++(10.05,0) -- ++(0,-1);
+        
+        \draw[thick] ([xshift=2cm, yshift=2cm] 0.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 1.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 2.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 3.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 4.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 5.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 6.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 7.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 8.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 9.north west) -- ++(0,-0.5);
+        \draw[thick] ([xshift=2cm, yshift=2cm] 9.south east) -- ++(-0.49,0);
+        
+        \draw [decorate,decoration={brace,amplitude=7pt, mirror}]
+        (0.south west) -- (9.south east) node (vectorized_south)[black,midway,xshift=0cm, yshift=-0.5cm] {$10$};
+        \draw [decorate,decoration={brace,amplitude=7pt, mirror}]
+        (9.south east) -- ++(3,3) node (vectorized_south)[black,midway,xshift=0.4cm, yshift=-0.4cm] {\begin{turn}{45}$768$\end{turn}};
+        \node at ([xshift=1.75cm, yshift=1.75cm] 9.south east) {\begin{turn}{45}\dots\end{turn}};
+                
+        % arrows
+        \draw[->,thick] (start) -- node[right] () {\textbf{concat \& tokenize}} (tokenized.north);
+        \draw[->,thick] (tokenized) -- node[right] () {\textbf{lookup vector representation}} (vectorized.north);
+        \draw[->,thick] (vectorized) -- ++(0,-2cm);
+
+    \end{tikzpicture}
     \caption{BERTbase Segment Embedding Layer.}
     \label{fig:BERT_segmentEmbedding}
 \end{figure}
@@ -388,7 +461,7 @@ To solve this task, a [CLS] token is inserted as the first token of the first se
 \begin{figure}
     \centering
     \includegraphics[ width = .9\textwidth]{img/BERT_NSP.png}
-    \caption{The second task of the self-supervised pre-training process of BERT: Next Sentence Prediction. Illustration from \cite{alammar2018illustrated}}
+    \caption{The second task of the self-supervised pre-training process of BERT: Next Sentence Prediction. Illustration from \cite{alammar2018illustrated}.}
     \label{fig:BERT_NSP}
 \end{figure}
 
@@ -412,6 +485,8 @@ At the input, sentence A and B form the pre-training task NSP are comparable wit
 
 For sequence tagging or question answering, the token representations are fed into an output layer for token-level tasks, while for classification tasks such as entailment or sentiment analysis, the [CLS] token is fed into an ouput layer for classification \cite{devlin2018bert}. 
 
+\todo{redo adv examples (zum Schluss)}
+
 \begin{figure}
     \centering
     \includegraphics[ width = .9\textwidth]{img/BERT-Finetuning.png}
@@ -420,12 +495,8 @@ For sequence tagging or question answering, the token representations are fed in
 \end{figure}
 
 
-%-------------------------------------------------------------------
-%------------------------Adversarial Examples------------------------
-%------------------------------------------------------------------
 
 \subsection{Adversarial Examples}
-\todo{redo zum Schluss}
     \label{sec:adversarial_examples}
 
 In 2013, \cite{szegedy2013intriguing}  were the first to discover the vulnerability of several machine learning models through adversarial examples: inputs crafted by adversaries with the intent of causing deep
@@ -456,26 +527,20 @@ Depending on the purpose of the adversarial attacks, they can be categorized as 
 %--------------Adversarial Examples in TEXT-----------------------
 %------------------------------------------------------------------
 
-\textbf{Adversarial Examples in Text}
 
     \label{sec:adversarial_exapmles_in_text}
 
-In recent years the research motivation to generate adversarial examples NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community\cite{Jia2017AdversarialEF}. Since then many studies have investigated the security of NLP task machine learning models and proposed several attack methods. Many papers on the topic distinguish between causative and exploratory attacks. Ling Huang et al., define the terms as follows:
 
-Causative -  Causative attacks alter the training process through influence over the training data.
-
-Exploratory - Exploratory attacks do not alter the training process but use other techniques, such as probing the detector, to discover information about it or its training data.
-\cite{huang2011adversarial}
-
+\todo{redo differences cv nlp}
 In this thesis, we will further go into the exploratory approach, and, in the following chapter compare adversarial attacks in CV with those in NLP and study different approaches researched so far.
 
-\subsubsection{Differences in Adversarial Attacks for CV and NLP}
-\todo{redo}
+\subsubsection{Differences in Adversarial Attacks for CV and NLP }
+
     \label{sec:differences_in_adv-ex}
 
 As described in chapter~\ref{sec:word_embeddings}, the mapping from natural language into a corresponding vector is done through the generation of word embeddings.
 
-%rephrase:
+\todo{rephrase}
 When we try to use gradient-based adversarial methods, as used in CV, for attacks in the text domain, this can result in altered semantics, syntactically-incorrect sentences, or invalid words that cannot be matched with any words in the word embedding space  \cite{zhang2019adversarial}. When attacking textual DNNs, it is crucial to carefully design variants or distance measures of the perturbation.
 In an image, each pixel has a number representation within a fixed range.  A common representation is to use floating numbers in the range [0,1] or {0,1,...,255}. This indicates that the numerical representation of a pixel gives an insight into the characteristics of the image, and from this, it can be deduced that pixels with similar numerical representations are closely related in terms of their characteristics.
 The case is different with the numerical representation of word tokens. 
@@ -490,7 +555,18 @@ However, that does not mean that the semantics of the words are similar, as is t
 
 \subsection{Adversarial Attacks in NLP}
     \label{sec:adv-ex_in_NLP}
-\subsubsection{1. Goal Function}
+    
+In recent years the research motivation to generate adversarial examples NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community\cite{Jia2017AdversarialEF}. They address the reading comprahension task and showed that they could cause models to ouptput wron answeres by appending distractor sentences to the end of their input sequences. Inspired by their work, Glockner et al. conducted attacks using the entailment task on the word-level by replacing one word with either a synonym or its hypernym \cite{glockner2018breaking}. Since then many studies have investigated the security of NLP task DNNs and proposed several attack methods. Many papers on the topic distinguish between causative and exploratory attacks. Ling Huang et al., define the terms as follows:
+
+Causative -  Causative attacks alter the training process through influence over the training data.
+
+Exploratory - Exploratory attacks do not alter the training process but use other techniques, such as probing the detector, to discover information about it or its training data.
+\cite{huang2011adversarial}
+
+To better compare the numerous different attack methods suggested for NLP models so far, we will use a unified definition framework provided by Morris et al., introduced in their paper on the Software Framework TextAttack for adversarial attacks in NLP(Morris, Lifland, Yoo, & Qi, 2020). They determine four components, namely a goal function, a search method, a transformation, and an optional list of constraints. In the following chapter, we will explain those components in more detail and assemble attacks from the literature, by means of the components.
+
+
+\subsubsection{Goal Function}
 The goal function determines if an attack is finished, given an input $x$. 
 The applied parameters are described in the previous sections and include e.g., the attacker's model knowledge and the target class.
 An example would be the goal function:
@@ -501,7 +577,7 @@ for the attack being successful if the prediction after the attack is unequal th
 
 Proposed goal functions in the literature include untargeted \cite{ebrahimi2017hotflip, alzantot2018generating, li2018textbugger, jin2019bert, garg2020bae}, and mixed goal functions \cite{gao2018black} in the white-box setting \cite{papernot2016crafting, liang2017deep, ebrahimi2017hotflip, jin2019bert} and the black box setting \cite{gao2018black, goodman2020fastwordbug}.
 
-\subsubsection{2. Search Method}
+\subsubsection{Search Method}
 
 A search method's aim is to find a perturbation that generates a successful adversarial example and satisfies the constraints. There have been many different approaches introduced for this process over the years. The most popular can be categorized into:
 
@@ -529,7 +605,7 @@ This way, a document consisting of e.g., ten words, is sent through the Machine 
         Alzatot et al. were the first to use the genetic algorithm as a search method. Instead of relying on gradient-based optimization, they developed an attack algorithm that exploits population-based gradient-free optimization through genetic algorithms. Genetic algorithms are inspired by the process of natural selection, iteratively evolving a population towards better solutions. They determine the best solution through a combination of crossover and mutation. That way, they can find successful adversarial examples with fewer modifications \cite{alzantot2018generating}.
         
         
-\subsubsection{3. Transformation}
+\subsubsection{Transformation}
     The transformation takes an input and returns all potential perturbations while being agnostic of goal function and constraints. Transformation methods can be categorized according to the attacker's model knowledge (white-box and black-box).
 
     Papernot et al. were the first in 2016 to generate adversarial examples in text. They investigated on adversarial inputs for RNNs processing sequential data using the Fast Gradient Sign Method (FGSM) to generate adversarial sequences in the white-box setting \cite{papernot2016crafting}. 
@@ -538,7 +614,7 @@ This way, a document consisting of e.g., ten words, is sent through the Machine 
     Goodman et al. generated small utility-preserving text perturbations in a black-box setting by using a scoring method to identify important words that affect text classification \cite{goodman2020fastwordbug}, similar to Gao et al., who, in 2018, use a scoring strategy to generate character-level transformations in the black-box setting on RNN based natural language classifiers. They conduct small edit operations to a text sequence such that a human would consider it similar to the original sequence. They do this by first targeting the important tokens in the sequence and then execute a modification on those tokens that can force the classifier to make a wrong prediction. They perturb using four methods, namely substitution of a letter in a word with a random letter, deletion of a random letter, insertion of a random letter, and swapping two adjacent letters. Their method achieves better results than FGSM  and finds that the selection of words to perturb is more important than the alteration of words\cite{gao2018black}.  In 2017 Liang et al. were able to successfully fool character- and word-level DNN-based text classifiers through the conduction of three perturbation strategies, namely insertion, modification, and removal \cite{liang2017deep}. In 2019, Jin et al. were the first to attack the pre-trained BERT model. Their perturbation approach is word-level based, as they replace the original word with synonyms and use word embedding vectors to measure how well different models judge the semantic similarity between the words \cite{jin2019bert}.
     
     
-\subsubsection{4. Constraints}
+\subsubsection{Constraints}
     When conducting modifications on a textual input sequence of an NLP model, it is likely to alter the semantic meaning or grammatical correctness. E.g.,  the FGSM method to generate modified input. There is no guarantee that words close in the embedding space are semantically similar. Therefore, this approach may replace words with semantically different others and might alter the whole sentence's semantics.
     
     An attack is considered valid if the input satisfies each of the attacker's constraints. 
@@ -607,16 +683,10 @@ The list consists of 4282 entries, where one word can have multiple misspelling 
 \subsubsection{Punctuation}
 To the best of our knowledge, there have not been any investigations on the effect of changed punctuation symbols on the robustness of a BERT model. Since we were surprisingly able to generate successful attacks by merely adding one punctuation mark, we limited ourselves to that and did no further research on different punctuation variations. Moreover, one additional comma is unobtrusive, occurs in the practical use cases, and is not easily identified as an adversarial example by a human observer.
 
-
-
-\subsection{Experiments}
-
-\subsection{Evaluation}
-
 \subsection{todo}
 
 
- 
+ [copied from exposé]
 
 In this thesis, I will primarily investigate the prominent pre-trained BERT model introduced by Google in 2018.
 
@@ -633,20 +703,15 @@ In the typical white-box scenario of generating adversarial attacks,  However, a
 
 
 
-
-
-
-%-------------------------------------------------------------------
-%--------------Important Word Detection -----------------------
-%------------------------------------------------------------------
-
-\subsubsection{Important Word Detection} 
-
 %-------------------------------------------------------------------
 %-------------------------------Attacks --------------------------
 %------------------------------------------------------------------
 
-\subsubsection{Attacks}
+\subsubsection{Evaluation}
+
+
+\section{Experiments}
+
 
 - how i have conducted the investigations
 
@@ -680,21 +745,9 @@ In this thesis, we have limited ourselves to the replacement of letters by numbe
 By , e.g., @ for a or 0 for o, the effect of 'Leet Speech' on the different NLP models will be explored.
 Perturbations (ii) and (iii) will be applied to the beforehand detected important words.
 
-%-------------------------------------------------------------------
-%------------------------Evaluation --------------------------------
-%------------------------------------------------------------------
-
-\subsection{Evaluation} 
 
 
 
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
-%-----------------------------Experiments--------------------------
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
-
-\section{Experiments}
 
 %-------------------------------------------------------------------
 %--------------Target model -----------------------
@@ -713,26 +766,13 @@ Perturbations (ii) and (iii) will be applied to the beforehand detected importan
 %--------------------------------Realization -----------------------
 %-------------------------------------------------------------------
 
-\subsection{Realization}
+\subsection{Attacks}
 
 %-------------------------------------------------------------------
 %-----------------------Adversarial Training -----------------------
 %-------------------------------------------------------------------
 
-\subsection{Adversarial Training}
 
-
-
-
-
-
-
-
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
-%--------------------Discussion of Results--------------------------
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
 
 \subsection{Results}
 
@@ -746,8 +786,9 @@ Perturbations (ii) and (iii) will be applied to the beforehand detected importan
 %-------------------------------------------------------------------
 %-------------------------------------------------------------------
 
-\section{Limitation & further Research}
+\section{Conclusion, Limitations \& further Research}
 
+\subsection{conclusion}
 
 The idea is to implement the experiments in the running BERTbased ABSA Deep Learning Hotel Model of the company DeepOpinion. The model is already fine-tuned on user-generated reviews and trained on the ABSA text classification task. This gives me a head start, which limits the scope of my work. However, the model being the company's core technology, cannot be published in my thesis, which limits the reproducibility of my work.
 
@@ -768,71 +809,6 @@ The idea is to implement the experiments in the running BERTbased ABSA Deep Lear
  \nameref{Methodology}
 
 
-\begin{table}
-\begin{center}
- \begin{tabular}{p{2cm} c c p{2cm} c c}
-  \hline
-  &  N & \% & & N & \% \\ 
- \hline
- \textbf{Gender} &  &  & \textbf{Play Time} &  &  \\ 
- Female & 2 & 12.5 & 0-1 days & 2 & 12.5 \\
- Male & 13 & 81.3  & 2-3 days & 3 & 18.8 \\
- Other & 1 & 6.3   & 4-5 days & 3 & 18.8 \\
-    &  &  & 6-7 days & 8 & 50  \\ 
-    
-  \textbf{Age} & & & & &\\
- -19 & 2 & 12.5 &  \textbf{Money (avg)}\\
-  20-29 & 11 & 68.75 &  0 & 8 & 50\\
-  30-39 & 3 & 18.75 &  1-10 & 8 & 50\\
-                       \\
-\textbf{Education} &  &  &  &  &  \\ 
- Highschool & 3 & 18.8 &  \\
- Apprenticeship & 4 & 25 &  \\
- Bachelor & 6 & 37.5 &  \\
- Master & 2 & 12.5 &  \\
-  \hline
-\end{tabular}
-\end{center}
-\caption{TP Demographic information}
-\label{table:dem-pubg}
-\end{table}
-
-\begin{table}
-\begin{center}
- \begin{tabular}{p{2cm} c c p{2cm} c c}
-  \hline
-  &  N & \% & & N & \% \\ 
- \hline
-  \textbf{Gender} &  &  & \textbf{Play Time} &  &  \\ 
- Female & 3 & 18.8 & 0-1 days & 1 & 6.3 \\
- Male & 13 & 81.3  & 2-3 days & 4 & 25 \\
- & &  &    4-5 days & 2 & 12.5 \\
-    &  &  & 6-7 days & 9 & 56.3  \\ 
-    
-  \textbf{Age} & & & & &\\
- -19 & 6 & 37.5 &  \textbf{Money (avg)}\\
-  20-29 & 6 & 37.5 &  0 & 2 & 12.5\\
-  30-39 & 4 & 25 &  1-10 & 4 & 25\\
-   &  &  &  10-50 & 6 & 37.5\\
-  \textbf{Education} &  &  &  50-100 & 1 & 6.3\\
-   Highschool & 3 & 18.8 &  100-500 & 2 & 12.5\\
-   Apprenticeship & 2 & 12.5 &  >500 & 1 & 6.3\\
- Bachelor & 4 & 25 &  \\
- Master & 1 & 6.3 &  \\
- Other & 6 & 37.5 &  \\
- 
-  \hline
-\end{tabular}
-\end{center}
-\caption{TF Demographic information}
-\label{table:dem-fortnite}
-\end{table}
-
-
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
 %%% End:
 
 \FloatBarrier
