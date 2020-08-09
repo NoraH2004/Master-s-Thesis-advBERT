@@ -104,8 +104,8 @@ Figure~\ref{fig:Bengio} illustrates the model architecture.
 
 \begin{figure}
     \centering
-    \includegraphics[ width = .8\textwidth]{img/bengio.png}
-    \caption{The prediction-based Neural Language Model proposed by \cite{bengio2003neural}. $C_{(i)}$ is the $i^{th}$ word embedding.}
+    \includegraphics[width =.8\textwidth]{img/bengio.png}
+    \caption{The prediction-based Neural Language Model proposed by Bentio et al,. $C_{(i)}$ is the $i^{th}$ word embedding~\protect\cite{bengio2003neural}.}
     \label{fig:Bengio}
 \end{figure}
 
@@ -125,7 +125,7 @@ Moreover, they found that the training on huge corpora enabled them to automatic
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/Word2Vec_relations.png}
-    \caption{Word2Vec representations capturing relationships and similarities between words, such as gender relationships, tenses and country-capital relations. Illustrated by \cite{Bujokas:2020}}
+    \caption{Word2Vec representations capturing relationships and similarities between words, such as gender relationships, tenses and country-capital relations. Illustrated by~\protect\cite{Bujokas:2020}}
     \label{fig:Word2Vec}
 \end{figure}
 
@@ -136,7 +136,7 @@ For example, the word "Apple" has the same representation in "Apple Pie" and "Ap
 \begin{figure}
     \centering
     \includegraphics[ width = .7\textwidth]{img/Wod2Vec_representations_embedding.png}
-    \caption{A 2D t-SNE visualisation of Word2Vec embedding representations. \cite{Bogdan:2018}}
+    \caption{A 2D t-SNE visualisation of Word2Vec embedding representations.~\protect\cite{Bogdan:2018}}
     \label{fig:Word2Vec_bogdan}
 \end{figure}
 
@@ -194,7 +194,7 @@ Figure ~\ref{fig:NLP-Tasks-Taxonomy} illustrates the categorization of different
 \begin{figure}
     \centering
     \includegraphics[ width = .7\textwidth]{img/NLP_tasks.jpg}
-    \caption{A taxonomy of popular NLP tasks \cite{ganegedara2018natural}}
+    \caption{A taxonomy of popular NLP tasks~\protect\cite{ganegedara2018natural}}
     \label{fig:NLP-Tasks-Taxonomy}
 \end{figure}
 Examples for semantic tasks are SA and Aspect-based Sentiment Analysis (ABSA). 
@@ -354,36 +354,42 @@ In contrast to SA, ABSA is a more fine-grained task, which consists of two main 
 
 \subsection{Bidirectional Encoder Representations from Transformers - BERT}
     \label{sec:bert}
-In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BERT, a deep contextual language representation model. BERT is a abbreviation for Bidirectional Encoder Representations from Transformers \cite{devlin2018bert}. It is built on preceding innovations: deep contextualized word representations \cite{peters2018deep}, the Transformer architecture \cite{vaswani2017attention}, and pre-training on a language modeling task fine-tuning on a downstream task \cite{radford2018improving, howard2018universal}.
+In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BERT, a deep contextual language representation model. BERT is an abbreviation for Bidirectional Encoder Representations from Transformers \cite{devlin2018bert}. It is built on preceding innovations: deep contextualized word representations \cite{peters2018deep}, the Transformer architecture \cite{vaswani2017attention}, and pre-training on a language modeling task with subsequent fine-tuning on a downstream task \cite{radford2018improving, howard2018universal}.
+
+
 
 
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/bert-pre-training_fine-tuning.png}
-    \caption{The BERT workflow consists of (1) pre-training: self-supervised training on a large amount of text (books and Wikipedia) and (2) fine-tuning: supervised training on a downstream task with labeled data. Illustration from \cite{alammar2018illustrated}.}
+    \caption{The BERT workflow consists of (1) pre-training: self-supervised training on a large amount of text (books and Wikipedia) and (2) fine-tuning: supervised training on a downstream task with labeled data. Illustration from~\protect\cite{alammar2018illustrated}.}
     \label{fig:BERT}
 \end{figure}
+
 
 \subsubsection{Model Architecture}
     \label{sec:bert_architecture}
 % elaborate
-BERT is a stack of transformer encoder layers that consist of fully-connected neural networks, so-called heads. For every input token in a sequence,( e.g., a sentence), each head computes key, value, and query vectors, which are then used to create a weighted representation. The outputs of all heads in the same layer are combined and run through a fully-connected layer.
+BERT is a stack of transformer encoder layers that consist of a multi-head attention layer (heads), followed by a fully-connected neural networks.
+For every input token in a text sequence,( e.g., a sentence), each head computes key, value, and query vectors, which are then used to create a weighted representation. The outputs of all heads in the same layer are combined and run through a fully-connected layer.
 \
 
 BERT uses the self-attention mechanism introduced with the Transformer model \cite{vaswani2017attention} and described in chapter~\ref{sec:attention}. 
 %Fig xy exposes an example of how BERT uses the self-attention mechanism....
 
-Like the Word2vec word embedding, BERT does map similar words closely, but it is context-sensitive, meaning a different word vector is computed for a word if encountered in different contexts.
+
+Similar to the Word2vec word embedding, BERT does map related words closely, but it is context-sensitive, meaning a different word vector is computed for a word if encountered in different contexts. In other terms, related words have a smaller distance in the word embedding than unrelated words, but can be  discriminated by their context as BERT makes use of the information of the tokens in the sequence surrounding the word of interest.
+
 To compute the input-encoding, BERT first tokenizes the given sentences into referring word pieces and then combines three input embedding layers (token, position, and segment) to obtain a fixed-length vector per token. Figure ~\ref{fig:BERT_Layers} gives an overview of the embedding layer architecture.
 
-\textbf{WordPiece Embeddings}
+\textbf{Vocabulary Generation}
 
 An important part of producing word embeddings is tokenization. As stated before, a word embedding is a feature vector representation of a word. A feature vector is a list of values generated to represent one word, where the values are floating points and can be positive and negative. The distance of word embeddings displays the distance of word similarity. To give an example, the word embedding for the word "cat" could be
 
 \texttt{<0.4125, -1.6098, 0.6047, ..., -1.4257, -1.231>}.
 
 
-BERT has a fixed set of learned word embeddings, composed in a word embedding lookup-table. Every row in this table corresponds to a word one word, and every column represents a feature of one token.
+BERT has a fixed set of learned word embeddings, composed in a word embedding lookup-table. Every row in this table corresponds to one word, and every column represents a feature of one token.
 BERT large has a vocabulary of 30,522 tokens and 786 features in its embedding. For simplicity, Figure ~\ref{fig:word_embedding} shows a table of only 10 words tokens and 5 features.
 
 \begin{figure}
@@ -459,8 +465,8 @@ BERT large has a vocabulary of 30,522 tokens and 786 features in its embedding. 
 
 A dictionary converts a word string into the corresponding word-id in the word embedding lookup table. 
 When feeding a sequence of words into the BERT architecture, it will fist look up the word-ids in the dictionary and then take the corresponding word embeddings to get a sequence of word embeddings.
-The Second Edition of the 20th volume Oxford English Dictionary contains entries for 171,476 words \cite{dictionary1989oxford}. In order to keep the size of the vocabulary as small as possible, not all words are included in the vocabulary. A WordPiece model breaks down unknown words into subwords \cite{wu2016google}. Given the word $embedding$. There is no representation for this word in the dictionary. The WordPiece method breaks the word down into the three word pieces $em$, $##bed$, and $##ding$, which are entries in the dictionary. That way the the sequence, the word "embedding" appears in, consists of two additional tokens. Except for the first token, subwords are marked with two hash-symbols in front of the characters. Therefore, the subword $bed$ in the word $bedding$ does not have the same vector representation as the one in the word $embedding$ since it is the first token of the word and does not contain the two hash symbols. The WordPiece representation for the word $bedding$ is $bed$, $##ding$, which conveys the information, that the word $bedding$ is related to the word $bed$.
-The words stored in the dictonary differs, depending on the corpus, the BERT model is pre-trained on.
+The Second Edition of the 20th volume Oxford English Dictionary contains entries for 171,476 words \cite{dictionary1989oxford}. In order to keep the size of the vocabulary as small as possible, not all words are included in the vocabulary. A WordPiece model breaks down unknown words into subwords \cite{wu2016google}. Given the word $embedding$. There is no representation for this word in the dictionary. The WordPiece method breaks the word down into the three word pieces $em$, $\#\#bed$, and $\#\#ding$, which are entries in the dictionary. That way the the sequence, the word "embedding" appears in, consists of two additional tokens. Except for the first token, subwords are marked with two hash-symbols in front of the characters. Therefore, the subword $bed$ in the word $bedding$ does not have the same vector representation as the one in the word $embedding$ since it is the first token of the word and does not contain the two hash symbols. The WordPiece representation for the word $bedding$ is $bed$, $\#\#ding$, which conveys the information, that the word $bedding$ is related to the word $bed$.
+The words stored in the dictionary differs, depending on the corpus, used for vocabulary generation.
 
 \begin{figure}
     \centering
@@ -470,9 +476,13 @@ The words stored in the dictonary differs, depending on the corpus, the BERT mod
 \end{figure}
 %----------------Token Embedding Layer------------------------------
 
+
+
 \textbf{Token Embedding Layer}
 
-The purpose of the token embedding layer is to tokenize the input (e.g. "I like strawberries") and transform it into a vector representation of fixed dimensions, as shown in Figure ~\ref{fig:BERT_tokenEmbedding}. In case of BERT base, each word is represented as a 768-dimensional vector.
+The purpose of the token embedding layer is to transform the tokenized input (e.g. "I like strawberries") into a vector representation of fixed dimensions, as shown in Figure ~\ref{fig:BERT_tokenEmbedding}. In case of BERT base, each word is represented as a 768-dimensional vector.
+
+Nora: Also werden quasi diese Layers Parameter random(oder nach einem Schema) initialisiert) und mitgelernt... 
 
 \begin{figure}
 \centering
@@ -539,13 +549,14 @@ The purpose of the token embedding layer is to tokenize the input (e.g. "I like 
 \label{fig:BERT_tokenEmbedding}
 \end{figure}
 
-Special tokens are needed for sentence classification. [CLS] is added in front of every input example, and [SEP] serves as a separator token.
-As described before, the  tokenization method WordPiece, is used, which in this case splits the word "strawberries" into "straw" and "##berries". 
+Special tokens are needed for sentence classification. $"[CLS]"$ is added in front of every input example, and $"[SEP]"$ serves as a separator token.
+As mentioned before, the tokenization method WordPiece, is used, which in this case splits the word "strawberries" into "straw" and "\#\#berries". 
 
 %--------------Segment Embedding Layer------------------------------
 \textbf{Segment Embedding Layer}
 
-The purpose of the segment embedding layer is to enable BERT to distinguish inputs in a given sentence pair. Sentence pairs are used for example, for the task of question answering. Suppose the input sentence pair is "I like strawberries." and "I like ice-cream.". The segment embedding layer uses two indices 0 and 1 as vector representations to assign tokens to their corresponding input segment. Figure\ref{fig:BERT_segmentEmbedding} illustrates the process.
+The purpose of the segment embedding layer is to enable BERT to distinguish inputs of a given sentence pair. Sentence pairs are used for example for the task of question answering, where text of interest and the question are differentiated like in "[CLS] He likes strawberries [SEP] What does he like?"
+The segment embedding layer uses two indices 0 and 1 as vector representations to assign tokens to their corresponding input segment, see Figure \ref{fig:BERT_segmentEmbedding}.
 
 \begin{figure}
     \centering
@@ -635,58 +646,76 @@ The two versions of BERT (base and large), differ in the number of layers, their
 
 \subsubsection{Pre-Training and Fine-Tuning BERT}
     \label{sec:bert_pre-fine}
-The BERT workflow conventionally consists of (1) pre-training and (2) finetuning. Pre-training uses two self-supervised tasks: masked language modeling (MLM) and next sentence prediction (NSP) for training deep bidirectional word representations from unlabeled text data.
+The BERT workflow conventionally consists of (1) pre-training and (2) finetuning. Pre-training uses two self-supervised tasks: masked language modeling (MLM) and next sentence prediction (NSP) for learning deep bidirectional word representations from unlabeled text data.
 
-As explained, the original Transformer models consist of an encoder, reading in the text input, and a decoder, generating predictions for a generative sequence to sequence task. The BERT model only contains the encoder since the goal is to generate a language model, solely for classification tasks.
+As explained, the original Transformer model consists of an encoder, reading in the text input, and a decoder, generating predictions for a generative sequence to sequence task. The BERT model only contains the encoder since the goal is to generate a language model, solely for classification tasks.
+
 The input for the Transformer encoder is a sequence of symbol representations or tokens, first embedded into vectors, and then processed in the network. For each input sequence vector, BERT generates an output sequence vector with the same index.
 
 The B in BERT represents the word bidirectional and refers to the reading of the text input. While directional models read text sequentially, meaning left to right, or right to left \cite{peters2018deep, radford2018improving}, bidirectional models take an entire sequence of words into consideration for their prediction, what allows them to learn the context of a word, based on those around it in the sequence.
 
-\textbf{Pre-Training}
-When solving the MLM task, 15\% of the words in a sequence is replaced with a [MASK] token. Based on the context of the remaining words, the model tries to predict the original value of the masked words. To do so, a classification layer is added on top of the encoder output, multiplying the output vector with the embedding matrix. The product of the calculation is represented in a vocabulary dimension. After that, the probability for each word in the vocabulary is calculated using the softmax.
+\textbf{Pre-Training - MLM}
+
+Pre-Training is performed using a Masked Language Modeling task (MLM).
+When solving the MLM task, 15\% of the words in a sequence are replaced with a [MASK] token. Based on the context of the remaining words, the model tries to predict the original value of the masked words. To do so, a classification layer is added on top of the encoder output, multiplying the output vector with the embedding matrix. The product of the calculation is represented in a vocabulary dimension. After that, the probability for each word in the vocabulary is calculated using the softmax.
 
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/BERT-MLM_3.png}
-    \caption{The first task of the self-supervised pre-training process of BERT: Masked Language Modelling. Illustration from \cite{alammar2018illustrated}}
+    \caption{The first task of the self-supervised pre-training process of BERT: Masked Language Modelling. Illustration from~\protect\cite{alammar2018illustrated}}
     \label{fig:BERT_MLM}
 \end{figure}
 
-Note that the loss function here only takes the prediction of the masked values into consideration, which results in slower convergence but outstrips the accuracy of unidirectional models already before 100.000 training steps, well before convergence.
 
-For the task of NSP, the model gets two pairs on sentences as input and attempts to predict if the second sentence is subsequent to the first one. In 50\% of the cases, the second sentence of the input pair is the correct subsequent sentence, while in the other 50\%, it is a random sentence from the text corpus.
+\textbf{Pre-Training - NSP}
+
+In addition to MLM, NSP is used to further improve model pre-training.
+For the task of NSP, the model takes two pairs of sentences as input and attempts to predict if the second sentence is subsequent to the first one. In 50\% of the cases, the second sentence of the input pair is the correct subsequent sentence, while in the other 50\%, it is a random sentence from the text corpus.
 To solve this task, a [CLS] token is inserted as the first token of the first sentence and a [SEP] token at the end of both sentences. A sentence embedding\footnote{a dictionary of sentence: index letter (A and B)} with a size of 2 (for the two sentences) is used to give information about the sentence order. Moreover, to indicate the position of the token in the sequence, a positional embedding is used. Fig~\ref{fig:BERT_NSP} displays the processes best.
 \begin{figure}
     \centering
     \includegraphics[ width = .9\textwidth]{img/BERT_NSP.png}
-    \caption{The second task of the self-supervised pre-training process of BERT: Next Sentence Prediction. Illustration from \cite{alammar2018illustrated}.}
+    \caption{The second task of the self-supervised pre-training process of BERT: Next Sentence Prediction. Illustration from~\protect\cite{alammar2018illustrated}.}
     \label{fig:BERT_NSP}
 \end{figure}
 
 When solving the NSP task, the model first feeds the entire input sequence into the Transformer model, then shapes the output of the [CLS] token into a 2x1 shaped vector and calculates the probability of two sentences being subsequent using the softmax layer.
 MLM and NSP are trained simultaniasly while pre-training, which allows for minimizing the combined loss function.
 
-The BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. 
+The BERTbase model is pre-trained on a Wikipedia dump and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. 
 
+Improved versions of BERT vary pre-training tasks and have shown to achieve better performances in certain areas. E.g. the RoBERTa model is pre-trained on the MLM task only \cite{liu2019roberta}. 
+ 
 \textbf{Language Model Fine-tuning}
 
-In fine-tuning for downstream applications, one or more fully-connected layers are added on top of the pre-trained model's final encoder layer, resulting in a good performance for a broad range of NLP tasks \cite{devlin2018bert}. 
-Fine-tuning BERT for down-stream tasks is relatively inexpensive, compared to pre-training. 
-The pre-training objectives of MLM and NSP allow it be used on various sequence-pair and single sequence tasks without applying task-specific model architecture alterations. BERT can be fine-tuned on a specific downstream task by swapping out the respective task-specific inputs and outputs. The final step is fine-tuning the parameters end-to-end for an appropriate number of epochs using labeled data from the downstream task. 
-At the input, sentence A and B form the pre-training task NSP are comparable with:
-- sentence pairs in paraphrasing
-- hypothesis-premise pairs in entailment
-- quenstion.passage pairs in question answering
--a degenerate text -$\emptyset$ pair in text classification or seqnece tagging.
+In fine-tuning for downstream tasks, one or more fully-connected layers are added on top of the pre-trained model's final encoder layer, resulting in a good performance for a broad range of NLP tasks \cite{devlin2018bert}. 
 
-For sequence tagging or question answering, the token representations are fed into an output layer for token-level tasks, while for classification tasks such as entailment or sentiment analysis, the [CLS] token is fed into an ouput layer for classification \cite{devlin2018bert}. 
+Fine-tuning BERT for down-stream tasks is computationally inexpensive, compared to pre-training. 
+The pre-training objectives of MLM and NSP allow it be used on various sequence-pair and single sequence tasks without applying task-specific model architecture alterations. BERT can be fine-tuned on a specific downstream task by swapping out the respective task-specific inputs and outputs. The final step is fine-tuning the parameters end-to-end for an appropriate number of epochs using labeled data from the downstream task. Figure ~\ref{fig:BERT_downstream} shows the fine-tuning of BERT on different downstream tasks. 
+At the input, sentence A and B form the pre-training task NSP are comparable with:
+\begin{itemize}
+\item sentence pairs in paraphrasing
+\item hypothesis-premise pairs in entailment
+\item question-passage pairs in question answering
+\item a degenerate text -$\emptyset$ pair in text classification or sequence tagging.
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = .9\textwidth]{img/BERT_downstream-tasks.png}
+    \caption{Fine-tuning the BERT model on multiple downstream tasks~\protect\cite{devlin2018bert}.}
+    \label{fig:BERT_downstream}
+\end{figure}
+
+
+For sequence tagging or question answering, the token representations are fed into an output layer for token-level tasks, while for classification tasks such as entailment or sentiment analysis, the [CLS] token is fed into an output layer for classification \cite{devlin2018bert}. 
 
 \todo{redo adv examples (zum Schluss)}
 
 \begin{figure}
     \centering
     \includegraphics[ width = .9\textwidth]{img/BERT-Finetuning.png}
-    \caption{Finetuning of BERT for a simple classification task detecting spam in E-Mails. Illustration from \cite{alammar2018illustrated}}
+    \caption{Finetuning of BERT for a simple classification task detecting spam in E-Mails. Illustration from~\protect\cite{alammar2018illustrated}}
     \label{fig:BERT_NSP}
 \end{figure}
 
@@ -702,13 +731,13 @@ See Figure \ref{fig:advEx} for an example of an applied adversarial perturbation
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/advExample.jpg}
-    \caption{Adversarial example in computer vision                    .     \cite{papernot2016crafting}.
-        Original image of a panda bear shown on the lift side. The right side shows the misclassified image with the added perturbation, shown in the middle.}
+    \caption{Adversarial example in computer vision.~\protect\cite{papernot2016crafting}. Original image of a panda bear shown on the lift side. The right side shows the misclassified image with the added perturbation, shown in the middle.}
     \label{fig:advEx}
 \end{figure}
 
 The notation "adversarial example" is used in follow-up research to denote all kinds of perturbation samples in a general manner. In further research, \cite{goodfellow2014explaining} found that a wide variety of models with different architectures misclassify the same adversarial example, even when trained on different subsets of training data. Those examples are called transferable adversarial examples. These findings indicate that adversarial examples pose a fundamental blind spot in machine learning algorithms.
 
+\subsubsection{Adversarial Examples in CV}
 In research, we distinguish between two types of settings.
 An attacker operates either in a black or white-box setting, depending on the degree of access, he or she has to the system. While in a black-box setting, the attacker does not have access to the target model's internal architecture or its parameters, he or she has full access to the target model, its parameters, and input feature representations in the white-box setting. The adversary cannot alter the training data or the target model itself in both cases.
 
@@ -724,7 +753,7 @@ Depending on the purpose of the adversarial attacks, they can be categorized as 
 
 In this thesis, we will further go into the exploratory approach, and, in the following chapter compare adversarial attacks in computer vision with those in NLP and study different approaches proposed so far.
 
-\subsubsection{Differences in Adversarial Attacks for computer vision and NLP }
+\subsubsection{Differences in Adversarial Attacks for CV and NLP }
     \label{sec:differences_in_adv-ex}
 
 Using gradient-based adversarial methods, as used in computer vision, for attacks in the text domain, can result in altered semantics, syntactically-incorrect sentences, or invalid words that cannot be matched with any words in the word embedding space  \cite{zhang2019adversarial}. When attacking textual DNNs, it is crucial to carefully design variants or distance measures of the perturbation.
@@ -764,17 +793,19 @@ To better compare the numerous different attack methods suggested for NLP models
 
 
 \subsubsection{Goal Function}
+\label{sec:goal_funciton}
 The goal function determines if an attack is finished, given an input $x$. 
 The applied parameters are described in the previous sections and include e.g., the attacker's model knowledge and the target class.
 An example would be the goal function:
 
-$G(x)$:= \{argmax$F(x)$ \neq $original\textunderscore class$\}
+$G(x):= \{argmax$F(x)$ \neq $original\textunderscore class$\}$
 
 for the attack being successful if the prediction after the attack is unequal the original prediction. 
 
 Proposed goal functions in the literature include untargeted \cite{ebrahimi2017hotflip, alzantot2018generating, li2018textbugger, jin2019bert, garg2020bae}, and mixed goal functions \cite{gao2018black} in the white-box setting \cite{papernot2016crafting, liang2017deep, ebrahimi2017hotflip, jin2019bert} and the black box setting \cite{gao2018black, goodman2020fastwordbug}.
 
 \subsubsection{Search Method}
+\label{sec:search_method}
 
 A search method's aim is to find a perturbation that generates a successful adversarial example and satisfies the constraints. There have been many different approaches introduced for this process over the years. The most popular can be categorized into:
 
@@ -803,6 +834,7 @@ A search method's aim is to find a perturbation that generates a successful adve
         
         
 \subsubsection{Transformation}
+\label{sec:transformation}
     The transformation takes an input and returns all potential perturbations while being agnostic of goal function and constraints. Transformation methods can be categorized according to the attacker's model knowledge (white-box and black-box).
 
     Papernot et al. were the first in 2016 to generate adversarial examples in text. They investigated on adversarial inputs for RNNs processing sequential data using the Fast Gradient Sign Method (FGSM) to generate adversarial sequences in the white-box setting \cite{papernot2016crafting}. 
@@ -812,6 +844,7 @@ A search method's aim is to find a perturbation that generates a successful adve
     
     
 \subsubsection{Constraints}
+\label{sec:constraints}
     When conducting modifications on a textual input sequence of an NLP model, it is likely to alter the semantic meaning or grammatical correctness. E.g.,  the FGSM method to generate modified input. There is no guarantee that words close in the embedding space are semantically similar. Therefore, this approach may replace words with semantically different others and might alter the whole sentence's semantics.
     
     An attack is considered valid if the input satisfies each of the attacker's constraints. 
@@ -825,34 +858,48 @@ A search method's aim is to find a perturbation that generates a successful adve
 %-------------------------------------------------------------------
 
 \section{Methodology}
-
+\label{sec:methodology}
 
 - reference to theory, what the problem is
 - why it is a problem
 
 Building on the theoretical foundations described in previous chapters, we will now explain how we proceeded in the practical part of our work. 
 
-
-
-
-\subsection{Objectives}
+\subsection{Objectives todo}
+\label{sec:objectives}
 - what objectives
+- rq
 
-
-[from exposé]
-In my study, I want to focus on the field of ABSA and target the state-of-the-art BERT base model as well as a BERTbased ABSA Deep Learning model of the company DeepOpinion\footnote{https://deepopinion.ai/}. The thesis is supposed to determine the robustness of the BERT based NLP model for the task of ABSA against input level adversarial examples.
-
-The aim of the work was answer the following research question:
+In our thesis we wanted to determine the robustness of the famous BERT model and, hence find out if it can be fooled by minor changes. The aim of the work was answer the following research question:
 
 RQ1: How robust is BERT based NLP model for the task of ABSA against input level adversarial examples?
+
+Our experiments will result in datasets containing adversarial examples.
+
+Later on, we will try to generate examples by modifying these words.
+The prediction is considered changed as soon as one of the three output categories (entity, attribute, or sentiment) is changed by omitting a word. ]
 
 %-------------------------------------------------------------------
 %-------------------------Setup -----------------------------
 %------------------------------------------------------------------
 
 \subsection{Experimental Setup} 
+To answer our research question we conducted three input character-level adversarial attacks against the prominent pre-trained BERT model introduced by Google in 2018. 
+We evaluated the robustness of our model in an in-domain classification task, called ABSA. As described before, the ABSA task refers to the prediction of an aspect mentioned in an input sequence and the corresponding sentiment. ABSA is considered a multilabel task, since $[0,1, \dots n]$ labels can be predicted for one input sequence. To increase the practical relevance of our experiments, we conducted non-targeted attacks and focused on the input level rather than the embedding or semantic level to execute our perturbations. 
+As described, adversarial attacks in computer vision differ from the ones in the text domain and are therefor considered more challenging. We adapted the two-step approach introduced in the literature and were able to enhance efficiency. 
+
+To better illustrate our proceedings, we describe it by using the proposed framework by Morris et al,. 
+
+Our \textbf{goal function} is represented by the following formula: ${f( x_adv ) = y_adv \neq y}$. It is described in more detail in section ~\ref{sec:experiments}
+
+The \textbf{Search Method} used in this thesis is called Leave-One-Out (LOO) and explained in section ~\ref{sec:iwd_method}.
+
+\textbf{Transformations} are conducted on the character-level rather than the word-level and elaborated on in section ~\ref{sec:attacks_method}.
+
+To determine \textbf{Constraints} and how our attacks are evaluated, please see section ~\ref{sec:evaluation_tb}.
 
 \subsubsection{Attacks}
+\label{sec:attacks_method}
 As most existing approaches generate adversarial examples as attacks by finding the minimum perturbation \cite{liang2017deep, ebrahimi2017hotflip, gao2018black, li2018textbugger, alzantot2018generating, jin2019bert, garg2020bae}, the attacks tend to be conspicuous and can easily be identified by humans. Moreover, they are not likely to appear in nature, making them less relevant in practical applications. Perturbations are either word or character level based. Possible variations have been proposed in the literature and are described in chapter ~\ref{sec:adversarial_exapmles_in_text}. Examples are randomly replacing, deleting, swapping, or inserting characters. Perturbations on the word level basis use the same example approaches.  
 The disadvantage of word-level perturbations is that an unintentional change of the semantic meaning of a sentence is likely to happen. This means that the comparison of a sentence's prediction before and after the change of a word is no longer guaranteed, which poses a constraint. Various methods have been proposed to avoid this problem and are described in section \textbf{Constraints} in chapter ~\ref{sec:adversarial_exapmles_in_text}. 
 This phenomenon occurs less often when perturbing on the character level since the perturbed words remain the same. An exception is when the change of single characters randomly results in a new, existing word of the dictionary with a different semantic meaning. 
@@ -872,7 +919,7 @@ We conducted experiments to explore the effect of leet speak on the BERT model. 
 
 \textbf{Spelling mistakes}
 
-As described, the BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. Since it is used for different use cases, of which many include the processing of user-generated data, the BERT model should be robust against spelling mistakes. Sun et al., were the first in 2020 to study the effect of spelling mistakes on the BERT model using different methods \cite{sun2020adv}. Just like them, we will make use of the list of common misspellings generated by Wikipedia\footnote{https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings} to generate adversarial examples. The difference to their work is the method for identifying the word to execute the perturbation on. 
+As described, the BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. Since it is used for different use cases, of which many include the processing of user-generated data, the BERT model should be robust against spelling mistakes. Sun et al., were the first in 2020 to study the effect of spelling mistakes on the BERT model using different methods \cite{sun2020adv}. Just like them, we will make use of the list of common misspellings generated by Wikipedia\footnote{\url{https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings}} to generate adversarial examples. The difference to their work is the method for identifying the word to execute the perturbation on. 
 The words in the list are gathered by users reporting misspellings. A misspelling is considered common and added to the list if it occurs in Wikipedia at least once a year.
 The list consists of 4282 entries, where one word can have multiple misspelling variations. 
 
@@ -881,11 +928,44 @@ The list consists of 4282 entries, where one word can have multiple misspelling 
 To the best of our knowledge, there have not been any investigations on the effect of changed punctuation symbols on the robustness of a BERT model. Since we were surprisingly able to generate successful attacks by merely adding one punctuation mark, we limited ourselves to that and did no further research on different punctuation variations. Moreover, one additional comma is unobtrusive, occurs in the practical use cases, and is not easily identified as an adversarial example by a human observer.
 
 
-\sebsubsection{Target Model} 
+\subsubsection{Target Model todo} 
+\label{sec:target_model_method}
 
 BERTibert
 
+As the base for our experiments we used the uncased BERTbase model and in a first step, pre-trained it on the laptop domain and in a second step, fine-tuned in on the ABSA task. In pre-training, BERT solves the two calssification tasks MLM and NSP usually on a large corpora of unlabeled text. We use Amazon Laptop Reviews scraped by He et. al. \cite{he2016ups}. We used the Adam optimizer and 32 bit floating points computations. Adam is an optimization method used to update network weights iteratively in the training process of deep learning models. This optimizer, being a replacement for the stochastic gradient descent, is commonly used since it comes with a straight-forward configuration process and default parameters are suitable for most tasks \cite{kingma2014adam}. We pre-train our model using a batch size of 32 and set the learning rate to 3 $*$ 10$^{-5}$.
+We define a maximum input sequence length of 256 tokens, resulting in four sentences per sequence on average.  Due to the relatively low number of training data, we pre-train BERTbase for 30 epochs, so that the model sees about 30 million sentences during training. That way, a single sentence appears multiple times within the two language model tasks. Please find the code for pre-training on GitHub, to reproduce the langauge model\footnote{https://github.com/deepopinion/
+domain-adapted-atsc}. 
+
+For fine-tuning the pre-trained BERT model on the ABSA task, we, again, used 32 bit floating point computations, the Adam optimizer and set the learning rate to 3 $*$ 10$^{-5}$. We used a batch size of 32 and fine-tuned it for 20 epochs. 
+
+
+
+
+
+
+\subsubsection{Important Word Detection}
+\label{sec:iwd_method}
+
+As mentioned in section ~\ref{sec:adversarial_exapmles_in_text}, the two-step approach to conduct adversarial examples in the text domain is an effective method commonly used in research. The two steps are: firstly, determining the words which have a critical influence on the model's prediction and secondly, perturbing the identified important words. This approach allows for effective fooling of the target classifiers and minimizing the input modification effort \cite{jin2019bert}. Several methods to determine the important word have been proposed in literature.
+In 2018 Feng et al. introduced input reduction, a method to enhance the interpretation of neural models \cite{feng2018pathologies}. They aim to find a subset of the most important words of an input sequence that contributes most to a prediction by resembling a process that iteratively removes 'unimportant' words for the input until the prediction of the model changes.  The remaining set of words before the predictions changes are considered critical for the prediction output. To decide on which words to remove, they compare the prediction probability towards the original label of a sentence containing the word with the prediction probability of a sentence where the same word was removed. This method is called leave-one-out and can itself be used as an approach to determine the important word of an input sequence. However, we could not use the input reduction for our experiments, since we operate in the black box setting and do not have access to prediction probability values. 
+
+For this reason we used the leave-one-out method, introduced by Vehtari et al., to determine the important words for our prediction \cite{vehtari2017practical}.  
+
+% Important word detection
+Given an input sentence $\textbf{x}$ represented as a list of word tokens ${\textbf{x} = [x_1, x_2,}$ \dots${x_n]}$ and a predicted output label $y$. The important word is defined as 
+.....
+\todo{formula}
+
+In different terms, the importance of a word is determined by comparing the output label $y$ with the ...
+
+We apply this formula for every word token $x$ in a input sequence to determine all words influential to the prediction. Therefore, one input sequence can contain $[0,1, \dots n]$ important words. 
+
+Comparing the prediction before and after a word is removed reflects how the word influences the classification result. This procedure allows us to enhance the efficiency of our attacks.
+
+
 \subsubsection{Datasets} 
+\label{sec:datasets}
 We conduct our experiment using SemEval-2015 Task 12: Aspect Based Sentiment Analysis dataset for the laptops domain \cite{pontiki2015semeval}. An aspect category is defined as a conbination of an entity type $E$ and an attribute type $A$. E describes the reviewed entity (e.g. laptop), while A describes a particular attribute of E (e.g. durability or quality).
 To give an example:
 Given the review \textit{"They sent it back with a huge crack in it and it still didn't work; and that was the fourth time I've sent it to them to get fixed"}, E could be \textit{customer support} and A could be \textit{quality}. The third slot is used to determine the sentiment polarity towards the entity and its attribute (\textit{positive, neutral or negative}). The sentiment for the above given example would be \textit{negative}.
@@ -898,109 +978,90 @@ The three slots are linked to each other within tuples. For our thesis we decide
     \label{fig:semeval}
 \end{figure}
 
-To pre-train the BERT language model on the laptop domain, we use Amazon Laptop reviews \cite{he2016ups}. To avoid training bias for the SemEval-2015 test data, we filtered out reviews that appeared in both, the Amazon and the SemEval Test Dataset. Moreover, we removed reviews that contain less than two sentences from the training corpora, to achieve compatibility with the NSP task used for fine tuning. After the text pre-processing there are 1,007,209 sentences left in the corpus. Due to the relatively low number of training data, we finetune for 30 epochs, so that the BERT base model sees about 30 million sentences during training. That way, a single sentence appears multiple times within different language model tasks. Please find the code for fine tuning on GitHub, to reproduce the langauge model\footnote{https://github.com/deepopinion/
-domain-adapted-atsc}.
+To pre-train the BERT language model on the laptop domain, we use Amazon Laptop reviews \cite{he2016ups}. To avoid training bias for the SemEval-2015 test data, we filtered out reviews that appeared in both, the Amazon and the SemEval Test Dataset. Moreover, we removed reviews that contain less than two sentences from the training corpora, to achieve compatibility with the NSP task used for fine tuning. After the text pre-processing there are 1,007,209 sentences left in the corpus. 
 
 
 
-\subsubsection{Evaluation}
-As described in chapter ~\ref{sec:adversarial_exapmles_in_text} there are a number of methods proposed to generate adversarial examples in the text domain. Since it is not trivial to assess the quality of these different attacks, as small perturbations can lead to significant changes in semantics meaning of the textual input. In their paper, Xu et al. propose Elephant in the Room, an evaluation framework to assess the quality of adversarial examples in the text domain\cite{xu2020elephant}. Their (automatic) evaluation creteria are:
+\subsection{Evaluation todo!!}
+    \label{sec:evaluation_tb}
+As described in chapter ~\ref{sec:adversarial_exapmles_in_text} there are a number of methods proposed to generate adversarial examples in the text domain. Since it is not trivial to assess the quality of these different attacks, as small perturbations can lead to significant changes in semantics meaning of the textual input. In their paper, Xu et al. propose Elephant in the Room, an evaluation framework to assess the quality of adversarial examples in the text domain\cite{xu2020elephant}. Their (automatic) evaluation criteria are:
 (a) attacking performance (i.e. how well they fool the classifier); 
 (b) textual similarity between the original input and the adversarial input; and
 (c) fluency of the adversarial example.
 
+More approaches on the evaluation of adversarial attacks in the text domain are explained in section ~\ref{sec:constraints}. In order to guarantee the constraints, more or less effort must be made, depending on the evaluation method. Some semantic, and grammatical evaluation methods can be performed using additional DNN-based classifiers \cite{ebrahimi2017hotflip, jin2019bert, garg2020bae}.
 
-\section{Experiments}
-
- [copied from exposé]
-In this thesis, I will primarily investigate the prominent pre-trained BERT model introduced by Google in 2018.
-In the typical white-box scenario of generating adversarial attacks,  However, as mentioned above, this cannot be applied to text directly since perturbed word embeddings do not necessarily map to valid words. Other approaches are optimization-based and model-based attacks, which treat adversarial attacks as an optimization problem where the constraints are to maximize the loss of target classifiers and to minimize the difference between original and adversarial examples. While the optimization-based approach uses optimization algorithms directly, the model-based approach trains a separate model to generate adversarial examples \cite{xu2020elephant}.
+Other constraints, e.g. to ensure remaining semantic meaning, or to preserve context fitting, can be evaluated by humans only. 
+Common ways to evaluate the effectiveness of adversarial attacks are the determination of F-Scores and accuracy for whole datasets, or confidence levels for single predictions. 
 
 
+\section{Experiments todo}
+\label{sec:experiments}
+....
+
+
+
+We have the pre-trained BERTbase language model $f$: ${X \rightarrow Y}$ for the task of ABSA, where $X$ are the input text sequences, and $Y$ are the corresponding labels consisting of E entity, A attribute, and S sentiment. We generate adversarial examples ${x_adv}$ from the original input $x \in X$, and the original prediction $y \in Y$. We do this by determining the important word $i$ of a sequence and replacing it the modified word $i_adv$. Since we aim for changing the model's prediction, our goal function is the following: 
+$f$( $x_adv$ ) = $y_adv$ \neq $y$.
 
 
 - how i have conducted the investigations
-\subsubsection{Evaluation}
 
+\subsection{Pre-Processing and Important Word Detection todo}
+\label{sec:preprocessing}
 
-
-For our experiments we consider an adversarial example successful, if it fullfills two of the for beforementioned evaluation creteria by Xu et al. in 
-adversarial examples are considered Successful if
-
-For our experiments we 
-
-\subsubsection{Pre-Processing}
-\subsubsection{Important Word Detection}
-\subsubsection{Attacks}
-\subsubsection{Results}
-
-
-
-In my thesis, I want to make use of their two-step approach, including important word detection. That way, I want to determine the word which has a critical influence on the model's prediction in order to maximize the loss of the target classifiers and minimize the input modification effort as well as the difference between original and adversarial examples. 
-To rank words by importance for the prediction, its effect on the output classification has to be measured. As already explained, it is difficult to measure a word's perturbation by calculating gradients viably. 
-For that reason, I will make use of \cite{jin2019bert}'s method of removing each word of a sentence one by one and let the model predict the incomplete sentences. 
- Comparing the prediction before and after a word is removed reflects how the word influences the classification result. This procedure allows me to enhance the efficiency of my attacks.
+\textbf{Pre-Processing}
 
 
 
 
 
-The attacks will be executed on the target models individually.
-The result will be datasets with generated adversarial examples. To test the transferability, I will predict the datasets with the respective other models. The accuracy of the predictions will provide information about whether and to what extent the examples are transferable.
-The final part of my work will be adversarial training. 
-The first step here will be the modification of a different dataset which the models were not trained on before and modify it in order to create adversarial examples. After that I will use the generated adversarial examples of the original dataset as a training set for both models and explore, using the unseen adversarial examples, whether adversarial training influences the robustness against these attacks. Additionally, I will predict a regular dataset and investigate whether adversarial training has improved the overall model performance.
+
+\subsection{Attacks todo}
+\label{sec:attacks_exp}
+
+\subsection{Evaluation todo}
+    \label{sec:evaluation_meth}
+~~~vage~~
+
+We evaluate our experiments using two of Xu et al.'s proposed evaluation criteria mentioned in section ~\ref{sec:evaluation_tb}. 
+
+\textbf{Attacking Performance}
+
+We consider a an adversarial example successful, if we were able to switch the prediction of a sentence $s$, resulting in ${f(x_adv ) = y_adv \neq y}$.
+We consider ${y_adv \neq y}$ if we were able to change one, or more of the three prediction-parts for a sentence $s$: E entity, A attribute, or S sentiment. 
+A prediction can be changed in three different ways:
+\begin{itemize}
+\item a different E, A or S is predicted,
+\item the model does no longer predict a label, or
+\item the model predicts a label, when it did not predict one before.
+\end{itemize}
+
+\textbf{Textual Similarity between $x$ and $x_adv$}
+
+\textbf{Leet}
+\textbf{Typo}
+\textbf{Punctuation}
 
 
-Later on, we will try to generate examples by modifying these words.
-The prediction is considered changed as soon as one of the three output categories (entity, attribute, or sentiment) is changed by omitting a word.
-
-% Important word detection
-Let ${x = [x1, x2,}$ \dots${xn]}$ be the input sentence represented as a list of word tokens with the predicted probability of a label $y$, and ${y = argmaxy}^{p(}^{yjx)}$. The important word is defined as ${g(xi) = p(yjx) - p(yjx−i)}$.
-Meaning, the importance of a word is determined by the prediction probability towards the original label $y$ of a sentence containing the word $x$ minus the prediction probability of the same sentence without the word $x$.
-We apply this formula for every word x in a sentence to determine all words influential to the prediction. 
-
-In this thesis, we have limited ourselves to the replacement of letters by numbers to generate leet speak. Chapter xy provides a technical description of how the substitution was conducted in the experiment.
-
-By , e.g., @ for a or 0 for o, the effect of 'Leet Speech' on the different NLP models will be explored.
-Perturbations (ii) and (iii) will be applied to the beforehand detected important words.
+As described in their paper, it involves a great deal of effort to ensure (b) textual similarity between the original and adversarial input and (c) the fluency of the adversarial example.
+.. word-level
 
 
-
-
-
-%-------------------------------------------------------------------
-%--------------Target model -----------------------
-%------------------------------------------------------------------
-
-
-%-------------------------------------------------------------------
-%--------------------------------Realization -----------------------
-%-------------------------------------------------------------------
-
-\subsection{Attacks}
-
-%-------------------------------------------------------------------
-%-----------------------Adversarial Training -----------------------
-%-------------------------------------------------------------------
+\subsection{Results todo}
 
 
 
-\subsection{Results}
+[[exposé]
+
 
 
 \section{Discussion}
 
-
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
-%--------------------Limitation & further Research------------------
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
-
 \section{Conclusion, Limitations \& further Research}
 
 \subsection{conclusion}
-
+[exposé]
 The idea is to implement the experiments in the running BERTbased ABSA Deep Learning Hotel Model of the company DeepOpinion. The model is already fine-tuned on user-generated reviews and trained on the ABSA text classification task. This gives me a head start, which limits the scope of my work. However, the model being the company's core technology, cannot be published in my thesis, which limits the reproducibility of my work.
 
 %-------------------------------------------------------------------
