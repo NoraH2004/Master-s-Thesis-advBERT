@@ -885,14 +885,13 @@ The prediction is considered changed as soon as one of the three output categori
 
 \subsection{Experimental Setup} 
 To answer our research question we conducted three input character-level adversarial attacks against the prominent pre-trained BERT model introduced by Google in 2018. 
-We evaluated the robustness of our model in an in-domain classification task, called ABSA. As described before, the ABSA task refers to the prediction of an aspect mentioned in an input sequence and the corresponding sentiment. ABSA is considered a multilabel task, since $[0,1, \dots n]$ labels can be predicted for one input sequence. To increase the practical relevance of our experiments, we conducted non-targeted attacks and focused on the input level rather than the embedding or semantic level to execute our perturbations. 
-As described, adversarial attacks in computer vision differ from the ones in the text domain and are therefor considered more challenging. We adapted the two-step approach introduced in the literature and were able to enhance efficiency. 
+We evaluated the robustness of our model in an in-domain classification task, called ABSA. As described before, the ABSA task refers to the prediction of an aspect mentioned in an input sequence and the corresponding sentiment. ABSA is considered a multilabel task, since $[0,1, \dots n]$ labels can be predicted for one input sequence. 
 
-To better illustrate our proceedings, we describe it by using the proposed framework by Morris et al,. 
+To better illustrate our proceedings, we describe it by using the proposed framework by Morris et al,:
 
 Our \textbf{goal function} is represented by the following formula: ${f( x_adv ) = y_adv \neq y}$. It is described in more detail in section ~\ref{sec:experiments}
 
-The \textbf{Search Method} used in this thesis is called Leave-One-Out (LOO) and explained in section ~\ref{sec:iwd_method}.
+The \textbf{Search Method} used in this thesis is called Leave-One-Out (LOO) and discussed in section ~\ref{sec:iwd_method}.
 
 \textbf{Transformations} are conducted on the character-level rather than the word-level and elaborated on in section ~\ref{sec:attacks_method}.
 
@@ -903,12 +902,7 @@ To determine \textbf{Constraints} and how our attacks are evaluated, please see 
 As most existing approaches generate adversarial examples as attacks by finding the minimum perturbation \cite{liang2017deep, ebrahimi2017hotflip, gao2018black, li2018textbugger, alzantot2018generating, jin2019bert, garg2020bae}, the attacks tend to be conspicuous and can easily be identified by humans. Moreover, they are not likely to appear in nature, making them less relevant in practical applications. Perturbations are either word or character level based. Possible variations have been proposed in the literature and are described in chapter ~\ref{sec:adversarial_exapmles_in_text}. Examples are randomly replacing, deleting, swapping, or inserting characters. Perturbations on the word level basis use the same example approaches.  
 The disadvantage of word-level perturbations is that an unintentional change of the semantic meaning of a sentence is likely to happen. This means that the comparison of a sentence's prediction before and after the change of a word is no longer guaranteed, which poses a constraint. Various methods have been proposed to avoid this problem and are described in section \textbf{Constraints} in chapter ~\ref{sec:adversarial_exapmles_in_text}. 
 This phenomenon occurs less often when perturbing on the character level since the perturbed words remain the same. An exception is when the change of single characters randomly results in a new, existing word of the dictionary with a different semantic meaning. 
-
-The experiments in this thesis are conducted in the black-box setting, as there is no knowledge about the model architecture or the training data needed. Since there is more practical relevance for this scenario, we will conduct non-targeted attacks and focus on the input level rather than the embedding or semantic level to execute our perturbations. 
-To prevent humans from easily identifying our attacks as adversarial examples, we propose three character-level attack methods that are likely to occur in a practical scenario.
-To limit the scope of this work, we refrain from reviewing the semantic meaning of the generated adversarial sentences.
-
-The attacks are generated on a character level basis and can be subdivided into three attack methods:
+To prevent humans from easily identifying our attacks as adversarial examples, we propose three character-level attack methods that are likely to occur in a practical scenario. The attacks can be subdivided into three attack methods:
 
 
 \textbf{Leet speak}
@@ -928,29 +922,19 @@ The list consists of 4282 entries, where one word can have multiple misspelling 
 To the best of our knowledge, there have not been any investigations on the effect of changed punctuation symbols on the robustness of a BERT model. Since we were surprisingly able to generate successful attacks by merely adding one punctuation mark, we limited ourselves to that and did no further research on different punctuation variations. Moreover, one additional comma is unobtrusive, occurs in the practical use cases, and is not easily identified as an adversarial example by a human observer.
 
 
-\subsubsection{Target Model todo} 
+\subsubsection{Target Model} 
 \label{sec:target_model_method}
 
-BERTibert
-
-As the base for our experiments we used the uncased BERTbase model and in a first step, pre-trained it on the laptop domain and in a second step, fine-tuned in on the ABSA task. In pre-training, BERT solves the two calssification tasks MLM and NSP usually on a large corpora of unlabeled text. We use Amazon Laptop Reviews scraped by He et. al. \cite{he2016ups}. We used the Adam optimizer and 32 bit floating points computations. Adam is an optimization method used to update network weights iteratively in the training process of deep learning models. This optimizer, being a replacement for the stochastic gradient descent, is commonly used since it comes with a straight-forward configuration process and default parameters are suitable for most tasks \cite{kingma2014adam}. We pre-train our model using a batch size of 32 and set the learning rate to 3 $*$ 10$^{-5}$.
+As the base for our experiments we used the uncased BERTbase model\footnote{https://huggingface.co/bert-base-uncased} and in a first step, pre-trained it on the laptop domain and in a second step, fine-tuned in on the ABSA task. In pre-training, BERT solves the two calssification tasks MLM and NSP usually on a large corpora of unlabeled text. We use Amazon Laptop Reviews scraped by He et. al. \cite{he2016ups}. We used the Adam optimizer and 32 bit floating points computations. Adam is an optimization method used to update network weights iteratively in the training process of deep learning models. This optimizer, being a replacement for the stochastic gradient descent, is commonly used since it comes with a straight-forward configuration process and default parameters are suitable for most tasks \cite{kingma2014adam}. We pre-train our model using a batch size of 32 and set the learning rate to 3 $*$ 10$^{-5}$.
 We define a maximum input sequence length of 256 tokens, resulting in four sentences per sequence on average.  Due to the relatively low number of training data, we pre-train BERTbase for 30 epochs, so that the model sees about 30 million sentences during training. That way, a single sentence appears multiple times within the two language model tasks. Please find the code for pre-training on GitHub, to reproduce the langauge model\footnote{https://github.com/deepopinion/
 domain-adapted-atsc}. 
 
-For fine-tuning the pre-trained BERT model on the ABSA task, we, again, used 32 bit floating point computations, the Adam optimizer and set the learning rate to 3 $*$ 10$^{-5}$. We used a batch size of 32 and fine-tuned it for 20 epochs. 
-
-
-
-
-
+For fine-tuning the pre-trained BERT model on the ABSA task, we, again, used 32 bit floating point computations, the Adam optimizer and set the learning rate to 3 $*$ 10$^{-5}$. We used a batch size of 32 and fine-tuned it for 20 epochs and random initialization. While the training loss improved continuously, validation accuracy converges already after the xxth epoch of training. Our experiments are based on the model at the xth ... 
 
 \subsubsection{Important Word Detection}
 \label{sec:iwd_method}
-
 As mentioned in section ~\ref{sec:adversarial_exapmles_in_text}, the two-step approach to conduct adversarial examples in the text domain is an effective method commonly used in research. The two steps are: firstly, determining the words which have a critical influence on the model's prediction and secondly, perturbing the identified important words. This approach allows for effective fooling of the target classifiers and minimizing the input modification effort \cite{jin2019bert}. Several methods to determine the important word have been proposed in literature.
-In 2018 Feng et al. introduced input reduction, a method to enhance the interpretation of neural models \cite{feng2018pathologies}. They aim to find a subset of the most important words of an input sequence that contributes most to a prediction by resembling a process that iteratively removes 'unimportant' words for the input until the prediction of the model changes.  The remaining set of words before the predictions changes are considered critical for the prediction output. To decide on which words to remove, they compare the prediction probability towards the original label of a sentence containing the word with the prediction probability of a sentence where the same word was removed. This method is called leave-one-out and can itself be used as an approach to determine the important word of an input sequence. However, we could not use the input reduction for our experiments, since we operate in the black box setting and do not have access to prediction probability values. 
-
-For this reason we used the leave-one-out method, introduced by Vehtari et al., to determine the important words for our prediction \cite{vehtari2017practical}.  
+In 2018 Feng et al. introduced input reduction, a method to enhance the interpretation of neural models \cite{feng2018pathologies}. They aim to find a subset of the most important words of an input sequence that contributes most to a prediction by resembling a process that iteratively removes 'unimportant' words for the input until the prediction of the model changes. The remaining set of words before the predictions changes are considered critical for the prediction output. To decide on which words to remove, they compare the prediction probability towards the original label of a sentence containing the word with the prediction probability of a sentence where the same word was removed. This method is called Leave One Out (LOO) and can itself be used as an approach to determine the important word of an input sequence. The LOO method was introduced by Vehtari et al. to estimate pointwise out-of-sample prediction accuracy \cite{vehtari2017practical}. 
 
 % Important word detection
 Given an input sentence $\textbf{x}$ represented as a list of word tokens ${\textbf{x} = [x_1, x_2,}$ \dots${x_n]}$ and a predicted output label $y$. The important word is defined as 
@@ -959,9 +943,8 @@ Given an input sentence $\textbf{x}$ represented as a list of word tokens ${\tex
 
 In different terms, the importance of a word is determined by comparing the output label $y$ with the ...
 
-We apply this formula for every word token $x$ in a input sequence to determine all words influential to the prediction. Therefore, one input sequence can contain $[0,1, \dots n]$ important words. 
-
-Comparing the prediction before and after a word is removed reflects how the word influences the classification result. This procedure allows us to enhance the efficiency of our attacks.
+This formula is applied for every word token $x$ in a input sequence to determine all words influential to the prediction. Therefore, one input sequence can contain $[0,1, \dots n]$ important words. 
+Comparing the prediction before and after a word is removed reflects how the word influences the classification result. This procedure allows for enhanced efficiency of adversarial attacks in the text domain.
 
 
 \subsubsection{Datasets} 
@@ -997,31 +980,87 @@ Common ways to evaluate the effectiveness of adversarial attacks are the determi
 
 \section{Experiments todo}
 \label{sec:experiments}
+
+The experiments in this thesis are conducted in the black-box setting, as there is no knowledge about the model architecture or the training data needed. Since there is more practical relevance for this scenario, we will conduct non-targeted attacks and focus on the input level rather than the embedding or semantic level to execute our perturbations. 
+
+To limit the scope of this work, we refrain from reviewing the semantic meaning of the generated adversarial sentences.
+As described, adversarial attacks in computer vision differ from the ones in the text domain and are therefor considered more challenging. We adapted the two-step approach introduced in the literature and were able to enhance efficiency. 
 ....
 
-
-
+\subsection{Goal Function}
+ \label{sec:goal_function_m}
 We have the pre-trained BERTbase language model $f$: ${X \rightarrow Y}$ for the task of ABSA, where $X$ are the input text sequences, and $Y$ are the corresponding labels consisting of E entity, A attribute, and S sentiment. We generate adversarial examples ${x_adv}$ from the original input $x \in X$, and the original prediction $y \in Y$. We do this by determining the important word $i$ of a sequence and replacing it the modified word $i_adv$. Since we aim for changing the model's prediction, our goal function is the following: 
 $f$( $x_adv$ ) = $y_adv$ \neq $y$.
 
 
-- how i have conducted the investigations
+To conduct the experiments we used the described SemEval 2015 dataset conatining 1971 reviews on laptops. Before working with the data, we converted it in an adequate format and filtered for unique sequences, resulting in a dataset of 1396 items in the following format:
 
-\subsection{Pre-Processing and Important Word Detection todo}
-\label{sec:preprocessing}
-
-\textbf{Pre-Processing}
+\texttt{['This computer is absolutely AMAZING!!!', '10 plus hours of battery...']}
 
 
+\subsection{Search Method}
+\label{sec:search_method_m}
+Since we operate in the black box setting and therefore do not have access to prediction probability values, as needed for the input reduction method, we make use of the LOO-method to determine the words of a sequence critical for the output of the model's prediction. That way can ascertain which word to place our attack on, in order to achieve maximal efficiency. The theoretical basics of the method are discussed in section ~\ref{sec:iwd_method}.
+First, we predicted the 1396 original examples and stored the labels. After that we tokenized the examples by creating a list for each sequence containing the respective words. In the next step, we iterated over the lists of words in a sequence and removed the respective word in the original sentence. We repeated this step for each word in the original sentence. 
+After this process, we have as many modified sentences as we have original times the respective number of words. A word is considered important, if it's omission triggered a flip in the prediction, compared to the original sentence. 
+In 943 sequences, we were able to find 1 or more important words. The cumulative number of successful modifications caused by the LOO-method 2694. In other words, one sequence contains 1.93\footnote{2694/1396} important words on average.
+
+\subsection{Transformation}
+\label{sec:transformation_m}
+In section ~\ref{sec:attacks_method} we proposed three attack methods and discussed the theoretical background. We now elaborate on the technical implementation, carried out to generate adversarial examples.
+
+\textbf{Leet Speak}
+
+To generate leet speak, we take the important words of a sentence and apply the function below. That way we swap the letters a, e, l, o, and s with the numbers 4, 3, 1, 0, and 5 respectively. We limited ourselves to this 5 characters in order to preserve the readability. 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\begin{lstlisting}
+def to_leet(word):
+    getchar = lambda c: chars[c] if c in chars else c
+    chars = {"a":"4","e":"3","l":"1","o":"0","s":"5"}
+    return ''.join(getchar(c) for c in word)
+\end{lstlisting}
+Of a total of 943 sequences, we were able to modify 897 resulting in 2232 cumulative modified sequences. This means, in 46 sentences, the important words did not contain the letters a, e, l, o, or s, and we therefore could not swap a letter with a number.
+After the modification, we predicted the modified sequences and compared the prediction with the prediction of the original sequences. 
+
+\texttt{original\_sentence: "super fast processor and really nice graphics card..",
+modified\_sentences: 
+"super f45t processor and really nice graphics card..", 
+"super fast pr0c3550r and really nice graphics card.."]}
+
+\textbf{Spelling Mistakes}
 
 
 
 
-\subsection{Attacks todo}
-\label{sec:attacks_exp}
 
-\subsection{Evaluation todo}
-    \label{sec:evaluation_meth}
+
+\textbf{Punctuation}
+
+
+
+
+
+\subsection{Constraints and Evaluation}
+    \label{sec:constraints_m}
 ~~~vage~~
 
 We evaluate our experiments using two of Xu et al.'s proposed evaluation criteria mentioned in section ~\ref{sec:evaluation_tb}. 
@@ -1049,10 +1088,6 @@ As described in their paper, it involves a great deal of effort to ensure (b) te
 
 
 \subsection{Results todo}
-
-
-
-[[exposé]
 
 
 
