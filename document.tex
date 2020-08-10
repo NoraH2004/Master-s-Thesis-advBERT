@@ -39,7 +39,20 @@ In this section, the state of the art research related to the respective researc
 Deep neural networks are neural networks (NN) inspired by the biological neural network of a human brain to learn from examples and build knowledge. 
 DNNs perform a  non-linear data transformation and can be used for multiple purposes, e.g., image-recognition, text-classification, audio-transcription, and more \cite{rawat2017deep}.
 The input of a DNN consists of multiple data points that are transformed into a meaningful output by the model. The key concept is that the DNN learns the data distribution by means of self found features.
-In the training process of a Deep Neural Network, a model is repeatedly fed with samples of a training-dataset $x \in X$ and the respective expected output $y$. \todo{explain data transformations - neurons - weights - feed-forward} The model improves by consciously adjusting the model in the process of transforming the input $x$ to the output $y$.  This process runs until the mapping from input to output no longer improves. 
+In the training process of a Deep Neural Network, a model is repeatedly fed with samples of a training-dataset $x \in X$ and the respective expected output $y$.
+
+\textbf{The learning process}
+
+A DNN consists of neurons, that receive an input $x$, process it and generate an output. The output is either a final output $y$ or fed to 
+the neurons of the next layer for further processing. When processing an input, the neuron multiplies it with a weight. Given an input $x$ and an associated weight $W\textsuperscript{(1)}$,the output of $L_1$ is $x*W\textsuperscript{(1)}$. Weights are initialized randomly before training and are updated during the training process of the model. After training, the network determines the importance of each single input and assigns weights accordingly. A weight of zero denotes a insignificant feature. Beside weights, biases are another linear component applied to the input. After the input is multiplied with the weight, the bias is added: $(a*$W\textsuperscript{(1)}$+bias)$. 
+The bias is the final linear component of the input transformation. After the bias is added to the input, the non-linear activation function is applied to the linear combination. The activation function transforms the input into output. This looks like this: 
+$f(a*$W\textsuperscript{(1)}$+bias)$, $f()$ being the activation function. 
+There are three common types of activation functions. The first one is the Sigmoid transformation function, that generates a smooth range of values between 0 and 1. This function makes it easy to observe changes in the output. The ReLU function (Rectified Linear Units) generates an output $X$ where $X>0$ and 0 for $X<= 0$. The ReLU function constantly derives values of all inputs greater than 0, which helps the network train faster. 
+The third activation function is called Softmax and commonly used in the output layer of models trained on a classification task. It is comparable to the Sigmoid function, with the difference, that it normalizes the output to sum up to 1. While the Sigmoid function generates binary output, the Softmax function assigns values to each class representing the confidence levels as probabilities.
+
+
+
+\todo{explain data transformations - neurons - weights - feed-forward} The model improves by consciously adjusting the model in the process of transforming the input $x$ to the output $y$.  This process runs until the mapping from input to output no longer improves. 
 
 \todo{In more detail!}
 The accuracy of the mapping during training is calculated through the loss function, which measures the distance between expected output $y$ and predicted output $\hat{y}$.
@@ -49,7 +62,353 @@ Therefore, the accuracy then has to be calculated on a second test-dataset, whic
 
 DNN models contain intermediate, so-called hidden layers, which perform non-linear transformations to the inputs. Each layer forwards data point matrices and can adjust the values and dimensions in the matrix. Every layer consist of neurons with associated weights and biases. A neuron receives a data point forwarded from a previous layer, multiplies it with the associated weight, and adds the bias. The resulting value is passed on to an activation function, which creates a new activation value that is forwarded to the connected neuron of the following layer until the output layer is reached.
 
-Figure xy shows a representation of a deep neural network. The inputs $x_1, \dots, x_n$ are forwarded to the connected layers, where the activation function calculates the neuron's respective activation value using the weight and the bias.
+
+\begin{figure}
+    \centering
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt      
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,341); %set diagram left start at 0, and has height of 341
+
+%Shape: Circle [id:dp9036507142879056] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,69.97) .. controls (112.07,64.46) and (116.53,60) .. (122.03,60) .. controls (127.54,60) and (132,64.46) .. (132,69.97) .. controls (132,75.47) and (127.54,79.93) .. (122.03,79.93) .. controls (116.53,79.93) and (112.07,75.47) .. (112.07,69.97) -- cycle ;
+%Shape: Circle [id:dp392140696827049] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,159.97) .. controls (112.07,154.46) and (116.53,150) .. (122.03,150) .. controls (127.54,150) and (132,154.46) .. (132,159.97) .. controls (132,165.47) and (127.54,169.93) .. (122.03,169.93) .. controls (116.53,169.93) and (112.07,165.47) .. (112.07,159.97) -- cycle ;
+%Shape: Circle [id:dp5092562841379737] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,129.97) .. controls (112.07,124.46) and (116.53,120) .. (122.03,120) .. controls (127.54,120) and (132,124.46) .. (132,129.97) .. controls (132,135.47) and (127.54,139.93) .. (122.03,139.93) .. controls (116.53,139.93) and (112.07,135.47) .. (112.07,129.97) -- cycle ;
+%Shape: Circle [id:dp741575646956142] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,99.97) .. controls (112.07,94.46) and (116.53,90) .. (122.03,90) .. controls (127.54,90) and (132,94.46) .. (132,99.97) .. controls (132,105.47) and (127.54,109.93) .. (122.03,109.93) .. controls (116.53,109.93) and (112.07,105.47) .. (112.07,99.97) -- cycle ;
+%Shape: Circle [id:dp8747893475728183] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (152.07,49.97) .. controls (152.07,44.46) and (156.53,40) .. (162.03,40) .. controls (167.54,40) and (172,44.46) .. (172,49.97) .. controls (172,55.47) and (167.54,59.93) .. (162.03,59.93) .. controls (156.53,59.93) and (152.07,55.47) .. (152.07,49.97) -- cycle ;
+%Straight Lines [id:da7388391985482041] 
+\draw [line width=0.75]    (132,69.97) -- (152.07,49.97) ;
+%Straight Lines [id:da07594424125920374] 
+\draw [line width=0.75]    (132,69.97) -- (152.07,80.97) ;
+%Straight Lines [id:da32078114159480653] 
+\draw [line width=0.75]    (132,69.97) -- (152.07,110.97) ;
+%Straight Lines [id:da6110475522563447] 
+\draw [line width=0.75]    (132,69.97) -- (152.07,139.97) ;
+%Straight Lines [id:da041179344816883456] 
+\draw [line width=0.75]    (132,69.97) -- (152.07,169.97) ;
+%Straight Lines [id:da2602448175108121] 
+\draw [line width=0.75]    (132,99.97) -- (152.07,49.97) ;
+%Straight Lines [id:da008093692172857048] 
+\draw [line width=0.75]    (132,129.97) -- (152.07,80.97) ;
+%Straight Lines [id:da6407207321117384] 
+\draw    (132,99.97) -- (152.07,110.97) ;
+%Straight Lines [id:da14218645121820817] 
+\draw    (132,99.97) -- (152.07,139.97) ;
+%Straight Lines [id:da5086959379820909] 
+\draw    (132,99.97) -- (152.07,169.97) ;
+%Straight Lines [id:da27535229192580724] 
+\draw    (132,129.97) -- (152.07,49.97) ;
+%Straight Lines [id:da14037699589827302] 
+\draw    (132,129.97) -- (152.07,110.97) ;
+%Straight Lines [id:da0004577781898109645] 
+\draw    (132,129.97) -- (152.07,139.97) ;
+%Straight Lines [id:da021283898277069335] 
+\draw    (132,129.97) -- (152.07,169.97) ;
+%Straight Lines [id:da11277756016216589] 
+\draw    (132,159.97) -- (152.07,169.97) ;
+%Straight Lines [id:da07695362342089163] 
+\draw    (132,159.97) -- (152.07,139.97) ;
+%Straight Lines [id:da7003177955335873] 
+\draw    (132,159.97) -- (152.07,80.97) ;
+%Straight Lines [id:da13003755544947393] 
+\draw    (132,159.97) -- (152.07,49.97) ;
+%Straight Lines [id:da0258965022860157] 
+\draw    (132,99.97) -- (152.07,80.97) ;
+%Straight Lines [id:da5272455432469216] 
+\draw    (172,49.97) -- (192.07,49.97) ;
+%Straight Lines [id:da7176795652766319] 
+\draw    (192.07,80.97) -- (172,49.97) ;
+%Straight Lines [id:da44709081360312275] 
+\draw    (192.07,110.97) -- (172,49.97) ;
+%Straight Lines [id:da5060111738899119] 
+\draw    (192.07,139.97) -- (172,49.97) ;
+%Straight Lines [id:da18932391727567288] 
+\draw    (192.07,169.97) -- (172,49.97) ;
+%Straight Lines [id:da22011251193586712] 
+\draw    (192.07,49.97) -- (172,80.97) ;
+%Straight Lines [id:da28163631108589815] 
+\draw    (192.07,80.97) -- (172,80.97) ;
+%Straight Lines [id:da8595703022713812] 
+\draw    (192.07,110.97) -- (172,80.97) ;
+%Straight Lines [id:da8985095100702133] 
+\draw    (192.07,139.97) -- (172,80.97) ;
+%Straight Lines [id:da2411640053472085] 
+\draw    (192.07,169.97) -- (172,80.97) ;
+%Straight Lines [id:da8971565419225193] 
+\draw    (192.07,49.97) -- (172,110.97) ;
+%Straight Lines [id:da43547451815310456] 
+\draw    (192.07,80.97) -- (172,110.97) ;
+%Straight Lines [id:da8113804544355533] 
+\draw    (192.07,110.97) -- (172,110.97) ;
+%Straight Lines [id:da023773670154593307] 
+\draw    (192.07,139.97) -- (172,110.97) ;
+%Straight Lines [id:da29220340496627095] 
+\draw    (192.07,169.97) -- (172,110.97) ;
+%Straight Lines [id:da46359790510412235] 
+\draw    (192.07,49.97) -- (172,139.97) ;
+%Straight Lines [id:da5966045171406014] 
+\draw    (192.07,80.97) -- (172,139.97) ;
+%Straight Lines [id:da1384195920973581] 
+\draw    (192.07,110.97) -- (172,139.97) ;
+%Straight Lines [id:da3215894260857254] 
+\draw    (192.07,139.97) -- (172,139.97) ;
+%Straight Lines [id:da8400489001252476] 
+\draw    (192.07,169.97) -- (172,139.97) ;
+%Straight Lines [id:da3221803153234972] 
+\draw    (192.07,49.97) -- (172,169.97) ;
+%Straight Lines [id:da7688605830945641] 
+\draw    (192.07,80.97) -- (172,169.97) ;
+%Straight Lines [id:da9165480220941868] 
+\draw    (192.07,110.97) -- (172,169.97) ;
+%Straight Lines [id:da3215336892666468] 
+\draw    (192.07,139.97) -- (172,169.97) ;
+%Straight Lines [id:da5525341830680578] 
+\draw    (192.07,169.97) -- (172,169.97) ;
+%Straight Lines [id:da1261118309670728] 
+\draw    (212,49.97) -- (232.07,49.97) ;
+%Straight Lines [id:da11900162455233043] 
+\draw    (232.07,80.97) -- (212,49.97) ;
+%Straight Lines [id:da5368627726392105] 
+\draw    (232.07,110.97) -- (212,49.97) ;
+%Straight Lines [id:da8605152876282114] 
+\draw    (232.07,139.97) -- (212,49.97) ;
+%Straight Lines [id:da4815832562914505] 
+\draw    (232.07,169.97) -- (212,49.97) ;
+%Straight Lines [id:da17003748064618818] 
+\draw    (232.07,49.97) -- (212,80.97) ;
+%Straight Lines [id:da1480484348333101] 
+\draw    (232.07,80.97) -- (212,80.97) ;
+%Straight Lines [id:da2124086159740538] 
+\draw    (232.07,110.97) -- (212,80.97) ;
+%Straight Lines [id:da8479733865567239] 
+\draw    (232.07,139.97) -- (212,80.97) ;
+%Straight Lines [id:da5278087829516401] 
+\draw    (232.07,169.97) -- (212,80.97) ;
+%Straight Lines [id:da31210020478505274] 
+\draw    (232.07,49.97) -- (212,110.97) ;
+%Straight Lines [id:da8124121959107438] 
+\draw    (232.07,80.97) -- (212,110.97) ;
+%Straight Lines [id:da7256728672602327] 
+\draw    (232.07,110.97) -- (212,110.97) ;
+%Straight Lines [id:da4579977059630831] 
+\draw    (232.07,139.97) -- (212,110.97) ;
+%Straight Lines [id:da4553391144095986] 
+\draw    (232.07,169.97) -- (212,110.97) ;
+%Straight Lines [id:da7122744544190456] 
+\draw    (232.07,49.97) -- (212,139.97) ;
+%Straight Lines [id:da8556567438522781] 
+\draw    (232.07,80.97) -- (212,139.97) ;
+%Straight Lines [id:da4566333841323885] 
+\draw    (232.07,110.97) -- (212,139.97) ;
+%Straight Lines [id:da5987581471646565] 
+\draw    (232.07,139.97) -- (212,139.97) ;
+%Straight Lines [id:da6269621991811268] 
+\draw    (232.07,169.97) -- (212,139.97) ;
+%Straight Lines [id:da6451496592431717] 
+\draw    (232.07,49.97) -- (212,169.97) ;
+%Straight Lines [id:da1496571288127746] 
+\draw    (232.07,80.97) -- (212,169.97) ;
+%Straight Lines [id:da9155668903600209] 
+\draw    (232.07,110.97) -- (212,169.97) ;
+%Straight Lines [id:da7832007038396517] 
+\draw    (232.07,139.97) -- (212,169.97) ;
+%Straight Lines [id:da6430768734831682] 
+\draw    (232.07,169.97) -- (212,169.97) ;
+%Straight Lines [id:da502353093987252] 
+\draw    (252,50.97) -- (272.07,50.97) ;
+%Straight Lines [id:da962031096991036] 
+\draw    (272.07,81.97) -- (252,50.97) ;
+%Straight Lines [id:da269614537255464] 
+\draw    (272.07,111.97) -- (252,50.97) ;
+%Straight Lines [id:da06353430327255638] 
+\draw    (272.07,140.97) -- (252,50.97) ;
+%Straight Lines [id:da13730470406815432] 
+\draw    (272.07,170.97) -- (252,50.97) ;
+%Straight Lines [id:da4524270736830083] 
+\draw    (272.07,50.97) -- (252,81.97) ;
+%Straight Lines [id:da9801938127403164] 
+\draw    (272.07,81.97) -- (252,81.97) ;
+%Straight Lines [id:da15200177386551716] 
+\draw    (272.07,111.97) -- (252,81.97) ;
+%Straight Lines [id:da819342894818783] 
+\draw    (272.07,140.97) -- (252,81.97) ;
+%Straight Lines [id:da961969476032104] 
+\draw    (272.07,170.97) -- (252,81.97) ;
+%Straight Lines [id:da4605571032482948] 
+\draw    (272.07,50.97) -- (252,111.97) ;
+%Straight Lines [id:da3325926047277312] 
+\draw    (272.07,81.97) -- (252,111.97) ;
+%Straight Lines [id:da9190202484946008] 
+\draw    (272.07,111.97) -- (252,111.97) ;
+%Straight Lines [id:da5757807552216108] 
+\draw    (272.07,140.97) -- (252,111.97) ;
+%Straight Lines [id:da31627284665396105] 
+\draw    (272.07,170.97) -- (252,111.97) ;
+%Straight Lines [id:da3543230253141595] 
+\draw    (272.07,50.97) -- (252,140.97) ;
+%Straight Lines [id:da9638413022900825] 
+\draw    (272.07,81.97) -- (252,140.97) ;
+%Straight Lines [id:da5744945840591497] 
+\draw    (272.07,111.97) -- (252,140.97) ;
+%Straight Lines [id:da46298335493097875] 
+\draw    (272.07,140.97) -- (252,140.97) ;
+%Straight Lines [id:da963474757022725] 
+\draw    (272.07,170.97) -- (252,140.97) ;
+%Straight Lines [id:da6330401371775292] 
+\draw    (272.07,50.97) -- (252,170.97) ;
+%Straight Lines [id:da5996286002388257] 
+\draw    (272.07,81.97) -- (252,170.97) ;
+%Straight Lines [id:da412529317044946] 
+\draw    (272.07,111.97) -- (252,170.97) ;
+%Straight Lines [id:da6167493426794559] 
+\draw    (272.07,140.97) -- (252,170.97) ;
+%Straight Lines [id:da9155797500498795] 
+\draw    (272.07,170.97) -- (252,170.97) ;
+%Shape: Circle [id:dp9260210835392857] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (332.73,140.63) .. controls (332.83,146.13) and (328.44,150.67) .. (322.94,150.76) .. controls (317.43,150.85) and (312.9,146.46) .. (312.8,140.96) .. controls (312.71,135.46) and (317.1,130.92) .. (322.6,130.83) .. controls (328.11,130.74) and (332.64,135.12) .. (332.73,140.63) -- cycle ;
+%Shape: Circle [id:dp4331085521150484] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (331.73,80.63) .. controls (331.82,86.14) and (327.43,90.67) .. (321.93,90.77) .. controls (316.43,90.86) and (311.89,86.47) .. (311.8,80.97) .. controls (311.71,75.46) and (316.09,70.93) .. (321.6,70.84) .. controls (327.1,70.74) and (331.64,75.13) .. (331.73,80.63) -- cycle ;
+%Shape: Circle [id:dp3743672592545707] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (332.23,110.63) .. controls (332.32,116.13) and (327.94,120.67) .. (322.43,120.76) .. controls (316.93,120.85) and (312.39,116.47) .. (312.3,110.96) .. controls (312.21,105.46) and (316.6,100.92) .. (322.1,100.83) .. controls (327.6,100.74) and (332.14,105.13) .. (332.23,110.63) -- cycle ;
+%Straight Lines [id:da1506829248270687] 
+\draw    (292,51.97) -- (311.8,80.97) ;
+%Straight Lines [id:da3048311510472882] 
+\draw    (292,51.97) -- (312.3,110.96) ;
+%Straight Lines [id:da15082332561192868] 
+\draw    (292,51.97) -- (312.8,140.96) ;
+%Straight Lines [id:da16040780327570636] 
+\draw    (292,82.97) -- (311.8,80.97) ;
+%Straight Lines [id:da21903521854428198] 
+\draw    (292,112.97) -- (311.8,80.97) ;
+%Straight Lines [id:da5012655564753412] 
+\draw    (292,111.97) -- (312.3,110.96) ;
+%Straight Lines [id:da7219622968472209] 
+\draw    (292,112.97) -- (312.8,140.96) ;
+%Straight Lines [id:da9995650526933821] 
+\draw    (292,141.97) -- (311.8,80.97) ;
+%Straight Lines [id:da3902600091687223] 
+\draw    (292,141.97) -- (312.3,110.96) ;
+%Straight Lines [id:da2503346740038974] 
+\draw    (292,141.97) -- (312.8,140.96) ;
+%Straight Lines [id:da19110169967835922] 
+\draw    (292,170.97) -- (312.8,140.96) ;
+%Straight Lines [id:da663166954945558] 
+\draw    (292,170.97) -- (312.3,110.96) ;
+%Straight Lines [id:da03383526862017594] 
+\draw    (292,170.97) -- (311.8,80.97) ;
+%Straight Lines [id:da304205093315273] 
+\draw    (292,82.97) -- (312.3,110.96) ;
+%Straight Lines [id:da6109581685450142] 
+\draw    (292,81.97) -- (312.8,140.96) ;
+%Straight Lines [id:da48761809810505297] 
+\draw    (331.73,80.63) -- (349.93,80.84) ;
+\draw [shift={(351.93,80.87)}, rotate = 180.66] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da8815522416855154] 
+\draw    (332.73,140.63) -- (349.93,140.84) ;
+\draw [shift={(351.93,140.87)}, rotate = 180.72] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da24476421235573498] 
+\draw    (332.23,110.63) -- (349.93,109.94) ;
+\draw [shift={(351.93,109.87)}, rotate = 537.78] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Circle [id:dp0647726642351596] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (152.07,110.97) .. controls (152.07,105.46) and (156.53,101) .. (162.03,101) .. controls (167.54,101) and (172,105.46) .. (172,110.97) .. controls (172,116.47) and (167.54,120.93) .. (162.03,120.93) .. controls (156.53,120.93) and (152.07,116.47) .. (152.07,110.97) -- cycle ;
+%Shape: Circle [id:dp263590793349345] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (152.07,80.97) .. controls (152.07,75.46) and (156.53,71) .. (162.03,71) .. controls (167.54,71) and (172,75.46) .. (172,80.97) .. controls (172,86.47) and (167.54,90.93) .. (162.03,90.93) .. controls (156.53,90.93) and (152.07,86.47) .. (152.07,80.97) -- cycle ;
+%Shape: Circle [id:dp823583650983651] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (152.07,139.97) .. controls (152.07,134.46) and (156.53,130) .. (162.03,130) .. controls (167.54,130) and (172,134.46) .. (172,139.97) .. controls (172,145.47) and (167.54,149.93) .. (162.03,149.93) .. controls (156.53,149.93) and (152.07,145.47) .. (152.07,139.97) -- cycle ;
+%Shape: Circle [id:dp836132286733146] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (152.07,169.97) .. controls (152.07,164.46) and (156.53,160) .. (162.03,160) .. controls (167.54,160) and (172,164.46) .. (172,169.97) .. controls (172,175.47) and (167.54,179.93) .. (162.03,179.93) .. controls (156.53,179.93) and (152.07,175.47) .. (152.07,169.97) -- cycle ;
+%Shape: Circle [id:dp5221253594199046] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (192.07,49.97) .. controls (192.07,44.46) and (196.53,40) .. (202.03,40) .. controls (207.54,40) and (212,44.46) .. (212,49.97) .. controls (212,55.47) and (207.54,59.93) .. (202.03,59.93) .. controls (196.53,59.93) and (192.07,55.47) .. (192.07,49.97) -- cycle ;
+%Shape: Circle [id:dp4183656064918385] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (192.07,80.97) .. controls (192.07,75.46) and (196.53,71) .. (202.03,71) .. controls (207.54,71) and (212,75.46) .. (212,80.97) .. controls (212,86.47) and (207.54,90.93) .. (202.03,90.93) .. controls (196.53,90.93) and (192.07,86.47) .. (192.07,80.97) -- cycle ;
+%Shape: Circle [id:dp017558394040142034] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (192.07,110.97) .. controls (192.07,105.46) and (196.53,101) .. (202.03,101) .. controls (207.54,101) and (212,105.46) .. (212,110.97) .. controls (212,116.47) and (207.54,120.93) .. (202.03,120.93) .. controls (196.53,120.93) and (192.07,116.47) .. (192.07,110.97) -- cycle ;
+%Shape: Circle [id:dp792774082065314] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (192.07,139.97) .. controls (192.07,134.46) and (196.53,130) .. (202.03,130) .. controls (207.54,130) and (212,134.46) .. (212,139.97) .. controls (212,145.47) and (207.54,149.93) .. (202.03,149.93) .. controls (196.53,149.93) and (192.07,145.47) .. (192.07,139.97) -- cycle ;
+%Shape: Circle [id:dp97036578695106] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (192.07,169.97) .. controls (192.07,164.46) and (196.53,160) .. (202.03,160) .. controls (207.54,160) and (212,164.46) .. (212,169.97) .. controls (212,175.47) and (207.54,179.93) .. (202.03,179.93) .. controls (196.53,179.93) and (192.07,175.47) .. (192.07,169.97) -- cycle ;
+%Shape: Circle [id:dp9155429880019643] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (232.07,50.97) .. controls (232.07,45.46) and (236.53,41) .. (242.03,41) .. controls (247.54,41) and (252,45.46) .. (252,50.97) .. controls (252,56.47) and (247.54,60.93) .. (242.03,60.93) .. controls (236.53,60.93) and (232.07,56.47) .. (232.07,50.97) -- cycle ;
+%Shape: Circle [id:dp6266987748087688] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (232.07,81.97) .. controls (232.07,76.46) and (236.53,72) .. (242.03,72) .. controls (247.54,72) and (252,76.46) .. (252,81.97) .. controls (252,87.47) and (247.54,91.93) .. (242.03,91.93) .. controls (236.53,91.93) and (232.07,87.47) .. (232.07,81.97) -- cycle ;
+%Shape: Circle [id:dp8021117419800181] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (232.07,110.97) .. controls (232.07,105.46) and (236.53,101) .. (242.03,101) .. controls (247.54,101) and (252,105.46) .. (252,110.97) .. controls (252,116.47) and (247.54,120.93) .. (242.03,120.93) .. controls (236.53,120.93) and (232.07,116.47) .. (232.07,110.97) -- cycle ;
+%Shape: Circle [id:dp21575860676222203] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (232.07,139.97) .. controls (232.07,134.46) and (236.53,130) .. (242.03,130) .. controls (247.54,130) and (252,134.46) .. (252,139.97) .. controls (252,145.47) and (247.54,149.93) .. (242.03,149.93) .. controls (236.53,149.93) and (232.07,145.47) .. (232.07,139.97) -- cycle ;
+%Shape: Circle [id:dp22123122605696] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (232.07,170.97) .. controls (232.07,165.46) and (236.53,161) .. (242.03,161) .. controls (247.54,161) and (252,165.46) .. (252,170.97) .. controls (252,176.47) and (247.54,180.93) .. (242.03,180.93) .. controls (236.53,180.93) and (232.07,176.47) .. (232.07,170.97) -- cycle ;
+%Shape: Circle [id:dp6380190169210994] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (272.07,51.97) .. controls (272.07,46.46) and (276.53,42) .. (282.03,42) .. controls (287.54,42) and (292,46.46) .. (292,51.97) .. controls (292,57.47) and (287.54,61.93) .. (282.03,61.93) .. controls (276.53,61.93) and (272.07,57.47) .. (272.07,51.97) -- cycle ;
+%Shape: Circle [id:dp33466996207411137] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (272.07,82.97) .. controls (272.07,77.46) and (276.53,73) .. (282.03,73) .. controls (287.54,73) and (292,77.46) .. (292,82.97) .. controls (292,88.47) and (287.54,92.93) .. (282.03,92.93) .. controls (276.53,92.93) and (272.07,88.47) .. (272.07,82.97) -- cycle ;
+%Shape: Circle [id:dp5422377853400728] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (272.07,112.97) .. controls (272.07,107.46) and (276.53,103) .. (282.03,103) .. controls (287.54,103) and (292,107.46) .. (292,112.97) .. controls (292,118.47) and (287.54,122.93) .. (282.03,122.93) .. controls (276.53,122.93) and (272.07,118.47) .. (272.07,112.97) -- cycle ;
+%Shape: Circle [id:dp183760852579387] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (272.07,140.97) .. controls (272.07,135.46) and (276.53,131) .. (282.03,131) .. controls (287.54,131) and (292,135.46) .. (292,140.97) .. controls (292,146.47) and (287.54,150.93) .. (282.03,150.93) .. controls (276.53,150.93) and (272.07,146.47) .. (272.07,140.97) -- cycle ;
+%Shape: Circle [id:dp26338207527673074] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (272.07,170.97) .. controls (272.07,165.46) and (276.53,161) .. (282.03,161) .. controls (287.54,161) and (292,165.46) .. (292,170.97) .. controls (292,176.47) and (287.54,180.93) .. (282.03,180.93) .. controls (276.53,180.93) and (272.07,176.47) .. (272.07,170.97) -- cycle ;
+%Shape: Circle [id:dp6377234076663962] 
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,207.97) .. controls (112.07,202.46) and (116.53,198) .. (122.03,198) .. controls (127.54,198) and (132,202.46) .. (132,207.97) .. controls (132,213.47) and (127.54,217.93) .. (122.03,217.93) .. controls (116.53,217.93) and (112.07,213.47) .. (112.07,207.97) -- cycle ;
+%Shape: Circle [id:dp7982123873550026] 
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (211.07,204.97) .. controls (211.07,199.46) and (215.53,195) .. (221.03,195) .. controls (226.54,195) and (231,199.46) .. (231,204.97) .. controls (231,210.47) and (226.54,214.93) .. (221.03,214.93) .. controls (215.53,214.93) and (211.07,210.47) .. (211.07,204.97) -- cycle ;
+%Shape: Circle [id:dp9175972472468675] 
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (331.73,205.63) .. controls (331.83,211.13) and (327.44,215.67) .. (321.94,215.76) .. controls (316.43,215.85) and (311.9,211.46) .. (311.8,205.96) .. controls (311.71,200.46) and (316.1,195.92) .. (321.6,195.83) .. controls (327.11,195.74) and (331.64,200.12) .. (331.73,205.63) -- cycle ;
+
+% Text Node
+\draw (90,59.4) node [anchor=north west][inner sep=0.75pt]    {$x_{1}$};
+% Text Node
+\draw (89,87.4) node [anchor=north west][inner sep=0.75pt]    {$x_{2}$};
+% Text Node
+\draw (89,116.4) node [anchor=north west][inner sep=0.75pt]    {$...$};
+% Text Node
+\draw (87,149.4) node [anchor=north west][inner sep=0.75pt]    {$x_{n}$};
+% Text Node
+\draw (98,220.8) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {${\textstyle Input\ Layer\ L_{1}}$};
+% Text Node
+\draw (179,219.8) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$Hidden\ Layers\ L_{2} \ ...\ L_{5}_{\ }$};
+% Text Node
+\draw (293,219.8) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$Output\ Layer\ L_{6}$};
+% Text Node
+\draw (356,70.4) node [anchor=north west][inner sep=0.75pt]    {$y_{0}$};
+% Text Node
+\draw (358,97.4) node [anchor=north west][inner sep=0.75pt]    {$...$};
+% Text Node
+\draw (356,128.4) node [anchor=north west][inner sep=0.75pt]    {$y_{n}$};
+% Text Node
+\draw (126,44.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(1)}$};
+% Text Node
+\draw (172,31.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(2)}$};
+% Text Node
+\draw (212,32.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(3)}$};
+% Text Node
+\draw (252,33.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(4)}$};
+% Text Node
+\draw (303,55.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(5)}$};
+% Text Node
+\draw (152,182.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(2)}$};
+% Text Node
+\draw (195,182.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(3)}$};
+% Text Node
+\draw (234,183.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(4)}$};
+% Text Node
+\draw (274,183.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(5)}$};
+% Text Node
+\draw (315,152.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(6)}$};
+
+
+\end{tikzpicture}
+
+    \caption{Deep neural network architecture with multiple layers.}
+    \label{fig:DNN}
+\end{figure}
+
+
+
+
+Figure ~\ref{fig:DNN} shows a representation of a deep neural network. The inputs $x_1, \dots, x_n$ are forwarded to the connected hidden layers, where the activation function calculates the neuron's respective activation value using the weight $W$ and the bias.
 %todo explain backprpagation
 \todo{explain backproagation}
 The backpropagation mechanism optimizes the weight of each neuron during training by considering a batch of samples with their expected outputs. It computes the gradient of the loss function with respect to the weights and adjusts them accordingly. 
@@ -965,7 +1324,7 @@ To pre-train the BERT language model on the laptop domain, we use Amazon Laptop 
 
 
 
-\subsection{Evaluation todo!!}
+\subsection{Evaluation criteria}
     \label{sec:evaluation_tb}
 As described in chapter ~\ref{sec:adversarial_exapmles_in_text} there are a number of methods proposed to generate adversarial examples in the text domain. Since it is not trivial to assess the quality of these different attacks, as small perturbations can lead to significant changes in semantics meaning of the textual input. In their paper, Xu et al. propose Elephant in the Room, an evaluation framework to assess the quality of adversarial examples in the text domain\cite{xu2020elephant}. Their (automatic) evaluation criteria are:
 (a) attacking performance (i.e. how well they fool the classifier); 
@@ -1048,16 +1407,42 @@ modified\_sentences:
 
 \textbf{Spelling Mistakes}
 
+To generate adversarial examples containig spelling mistakes we used the Wikipedia corpus of typos described in section ~\ref{sec:attacks_method}. We went over the important words in a sequence and checked in the dictionary, if it contained one or more entries of it. For 369 of 943 sequences we were able to find at least one modification for at least one important word, resulting in 1354  modified sequences in total.
+The example below illustrates an example. The important word determined in this sentence is "condition". The typo list contains one entry for the word "condition", being "condidtion". 
 
-
-
+\texttt{original\_sentence: "It is the best condition and has a really high quality.",
+modified\_sentence: "It is the best condidtion and has a really high quality.}
 
 
 \textbf{Punctuation}
 
+The third attack method was initially planned to be more complex, since we realized, that even a simple modification effects the classifier tremendously. For our attack, we added a comma after the important word. 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
 
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\begin{lstlisting}
+def to_punctuation(word):
+    return ''.join((word, ','))
+\end{lstlisting}
 
-
+That way we were able to modify 943 out of 943 sequences, resulting in 2555 modified sequences in total. 
 
 \subsection{Constraints and Evaluation}
     \label{sec:constraints_m}
