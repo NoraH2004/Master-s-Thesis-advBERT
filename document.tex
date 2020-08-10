@@ -52,6 +52,37 @@ The third activation function is called Softmax and commonly used in the output 
 
 
 
+\begin{tikzpicture}
+    \begin{axis}[
+        title = {sigmoid function},
+        axis on top = true,
+        axis x line = bottom,
+        axis y line = left,
+        grid = major,
+        xlabel = $Z$
+    ]
+        \addplot[
+            blue,
+            domain = -5:5,
+            samples = 100
+        ]
+            {1/(1+exp(-x))};
+    \end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        title = {ReLU function},
+        domain=-3:5,
+        ]
+        \addplot+[mark=none,red,domain=-3:0] {0};
+        \addplot+[mark=none,red,domain=0:5] {x};
+    \end{axis}
+\end{tikzpicture}
+
+
+
+
 \todo{explain data transformations - neurons - weights - feed-forward} The model improves by consciously adjusting the model in the process of transforming the input $x$ to the output $y$.  This process runs until the mapping from input to output no longer improves. 
 
 \todo{In more detail!}
