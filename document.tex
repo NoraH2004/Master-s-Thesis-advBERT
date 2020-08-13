@@ -5,23 +5,19 @@
 %TC:group table 0 1
 %TC:group tabular 1 1
 
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
-%-------------------Introduction------------------------------------
-%-------------------------------------------------------------------
-%-------------------------------------------------------------------
-
 \section{Introduction}
 
-%With the introduction of transformer models using attention layers, LSTM networks and RNNs are not necessary anymore. The Transformer is a model language architecture that aims to solve Seq2Seq tasks while handling long term dependencies. 
+With the integration of computer vision for self-driving cars, natural language processing for controlling our smart homes, and other applications of deep neural networks (DNN) in our daily lives, our reliance on technology increases and, with it, also the concerns about the security of neural networks. These security concerns grow as natural language processing (NLP) models are deployed in production systems such as fake news detectors, live translation, and speech recognition in voice assistants. NLP is a field of artificial intelligence that addresses the interaction between computers and humans using natural language.  
 
-\todo{Neu schreiben}
-With the integration of computer vision for self-driving cars, natural language processing for controlling our smart homes as well as other applications of machine learning in our daily lives, our reliance on technology increases and, with it, also the concerns about security of machine learning. These security concerns grow as natural language processing models are deployed in production systems such as fake news detectors and home assistants. Adversarial examples are small, and often imperceptible perturbations applied to the input data in an effort to fool a deep classifier to incorrect classification.
-Adversarial examples are a way to highlight model vulnerabilities and are useful for evaluation and interpretation. 
-In my Master's Thesis I want to generate adversarial text to attack a model based on the Bidirectional Encoder Representations from Transformers (BERT) used for Aspect-Based Sentiment Analysis (ABSA), a task in Natural Language Processing (NLP). NLP is a field of artificial intelligence (AI) that addresses the interaction between computers and humans using natural language. In 2018 Google achieved a breakthrough in NLP by introducing BERT, a powerful neural network architecture that leverages transfer-learning by pre-training the model on a large corpora with subsequent fine-tuning on a variety of downstream-tasks like text-classification, question answering, sentiment analysis and more. 
-Given its increasing use in security-sensitive applications such as sentiment analysis and toxic content detection it is highly concerning that the security vulnerabilities of Deep Learning models in NLP are still largely unknown and not a large field of research.
+Szegedy et al. were the first in 2013 to find that minimal, and often imperceptible perturbations of the input data can fool a DNN into incorrect classifications \cite{szegedy2013intriguing}.
+Adversarial examples are a way to highlight model vulnerabilities and are useful for the evaluation and interpretation of DNNs. 
+Since the introduction of voice assistants on mobile devices like smartphones and home assistants, the research motivation to generate adversarial examples NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community\cite{Jia2017AdversarialEF}. Since then, many studies have investigated the security of DNNs for NLP and proposed several attack methods for different target models. 
 
-\textbf{RQ1}: Is there a research question?
+In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BERT, a deep contextual language representation model that leverages transfer-learning by pre-training the model on large corpora with subsequent fine-tuning on a variety of downstream-tasks like text-classification, question answering, sentiment analysis, and more \cite{devlin2018bert}. To this day, BERT is state-of-the-art for many tasks in natural language processing and applied in various use-cases like automatic translation, google search requests, and voice assistant prompts. 
+Given its increasing use in security-sensitive applications such as sentiment analysis and toxic content detection, it highly concerns that the BERT model's security vulnerabilities are still largely unknown and not a large field of research.
+
+This thesis aims to explore the robustness of the BERT model used for Aspect-Based Sentiment Analysis (ABSA), a task in NLP. 
+
 
 %-------------------------------------------------------------------
 %-------------------------------------------------------------------
@@ -31,7 +27,7 @@ Given its increasing use in security-sensitive applications such as sentiment an
 
 \section{Theoretical Background and Related Work}
 
-In this section, the state of the art research related to the respective research area is outlined. First, the theoretical concepts of deep neural networks (DNN), NLP, and adversarial examples are recalled. Secondly, we provide an overview of the proposed attacking methods on NLP to date. These concepts, combined with the review of related work, is used as a basis for the experiments conducted in the practical part of this thesis. 
+In this section, we give an overview of the areas this thesis is build up on and the state of the art related to the respective research is outlined. First, the theoretical concepts of deep neural networks (DNN), NLP, and adversarial examples are explained. Secondly, we provide an overview of the proposed attacking methods on NLP to date. These concepts, combined with the review of related work, is used as a basis for the experiments conducted in the practical part of this thesis. 
 
 %-------------------------------DNN---------------------------------
 \subsection{Deep Learning}
@@ -419,9 +415,9 @@ Since the gradient descent modifies the weights after each step, the data shape 
 
 Figure~\ref{fig:DNN} shows a representation of a deep neural network. The inputs $x_1, \dots, x_n$ are forwarded to the connected hidden layers, where the activation function calculates the neuron's respective activation value using the weight $W$ and the bias.
 
-After the training process is complete, meaning the model does not improve anymore, it is used in inference mode, where new and unseen input data can be transformed without a known output. Weights are no longer adjusted.
-Over the last 30 years, multiple different model architectures were developed for different use-cases, varying in number, structure, and functionality of hidden layers. Design choices are made considering (amongst others) input data type, expected results, and computational resources \cite{buduma2017fundamentals}.
-In recent years, DNNs have been shown to achieve great success in many use cases, such as classification tasks, image- and text generation, and decision-making systems. Their strengths have led to the broad deployment of systems for problems in the physical world. 
+After the training process is complete, it is used in inference mode, where new and unseen input data can be transformed without a known output. Weights are no longer adjusted.
+
+Over the last 30 years, multiple different model architectures were developed for different use-cases, varying in number, structure, and functionality of hidden layers. Design choices are made considering (amongst others) input data type, expected results, and computational resources \cite{buduma2017fundamentals}. In recent years, DNNs have been shown to achieve great success in many use cases, such as classification tasks, image- and text generation, and decision-making systems. Their strengths have led to the broad deployment of systems for problems in the physical world. 
 \todo{source}
 
 %-------------------------------------------------------------------
@@ -441,10 +437,10 @@ The following chapter will give a brief overview, reviewing the most important m
 
 \subsubsection{The History of NLP}
 \label{sec:the_history_of_NLP}
-The origins of NLP can be traced back to the 1960s \cite{dostert1955georgetown, Hutchins2006TheFP}\footnote{A report about the research from this time, compiled from reports and newspaper articles.}. With the introduction of DNNs, the objective of automated NLP was established. One of the first NLP tasks include machine translation (MT), a field of research that deals with translating pieces of text from one human language to another. These tasks were solved using simplistic approaches and are based on dictionary lookup and word-by-word substitution. 
+The origins of NLP can be traced back to the 1960s \cite{dostert1955georgetown, Hutchins2006TheFP}. With the introduction of DNNs, the objective of automated NLP was established. One of the first NLP tasks include machine translation (MT), a field of research that deals with translating pieces of text from one human language to another. These tasks were solved using simplistic approaches and are based on dictionary lookup and word-by-word substitution. 
 The first results in MT were disappointing as structural and lexical ambiguity of language was ignored. An example is the machine translation system developed by scientists at Georgetown University and IBM in 1955 \cite{dostert1955georgetown}, who translated the English sentence \textit{"The spirit is willing but, the flesh is weak"} into Russian and then back to English, receiving the result sentence \textit{"The vodka is good, but the meat is rotten"}.
- In the 1970s, more language processing projects emerged, one of which called ELISA, a system introduced by the computer scientist Weizenbaum that replicated the conversation of a psychologist with a \cite{weizenbaum1966eliza}. Although it had no understanding of conversation, it gave the appearance of intelligence by permuting the user input and using stock phrases and standard patterns. In the 1970s, computer scientists and linguistics realized that isolated solutions to natural language problems were not effective, and they started to focus on incorporating the respective fields of science in order to bridge the gap between computer science and linguistics \cite{kumar2011natural}. 
- Research in the 1970s conjectured that the problem of competent automatic translation of language is equivalent to the full understanding of text \cite{carbonell1981steps}. The tremendous amount and complexity of information required for language understanding presented significant problems. Different approaches were used to address those challenges, e.g., tokenizing text documents (segmenting text into meaningless words and punctuation). Word representations were created manually with complex hard-coded rules to assign meaning to these tokens, used to perform an in-depth analysis of linguistic \cite{catania1972chomsky}. 
+ In the 1970s, more language processing projects emerged, one of which called ELISA, a system introduced by the computer scientist Weizenbaum that replicated the conversation of a psychologist with a patient \cite{weizenbaum1966eliza}. Although it had no understanding of conversation, it gave the appearance of intelligence by permuting the user input and using stock phrases and standard patterns. In the 1970s, computer scientists and linguistics realized that isolated solutions to natural language problems were not effective, and they started to focus on incorporating the respective fields of science in order to bridge the gap between computer science and linguistics \cite{kumar2011natural}. 
+ Research in the 1970s conjectured that the problem of competent automatic translation of language is equivalent to the full understanding of text \cite{carbonell1981steps}. The tremendous amount and complexity of information required for language understanding presented significant problems. Different approaches were used to address those challenges, e.g., tokenizing text documents (segmenting text into words and punctuation with no assigned meaning). Word representations were created manually with complex hard-coded rules to assign meaning to these tokens, used to perform an in-depth analysis of linguistic \cite{catania1972chomsky}. 
  More research was carried out, and computers with faster CPUs and cheaper memory led to the first noteworthy results in Natural Language Processing. With statistical models coming as a revolution in the field \cite{bahl1989tree}, complex, hard-coded systems were replaced. 
  These novel models overcame the complexity barrier of the handwritten, rule-based word representation models through automatic learning. The success of these models in soft, probabilistic decisions led to an increased scientific focus on the approach of word embeddings.
  
@@ -462,26 +458,22 @@ For that reason, more advanced word embedding methods were introduced, based on 
 \textbf{DNN-based Language Models}
 \label{sec:DNN-based_Language_models}
 
-Around 2000, Bengio et al. first introduced prediction-based, neuronal network language models \cite{bengio2003neural}. A language model is a probability distribution of sequences of tokens in a language. For every given sequence of tokens, the model determines the probability of that sequence to occur in the given language. Moreover, the language modeling task aims to predict the next word of a sentence, given the previous words. The difficulty here lies in the \textit{curse of dimensionality} of natural language: a sequence of words used to test the model is most likely different from the sequences used in training. Bengio et al.'s neural network language model consisted of a one-hidden layer feed-forward neural network and word feature vector embedding.
-They used a vector representation of the previous words as input for the model. The previous words are looked up in a table that is learned simultaneously within the model. 
-Figure~\ref{fig:Bengio} illustrates the model architecture.
+Around 2000, Bengio et al. first introduced prediction-based, neuronal network language models \cite{bengio2003neural}. A language model is a probability distribution of sequences of tokens in a language. For every given sequence of tokens, the model determines the probability of that sequence to occur in the given language. Moreover, the language modeling task aims to predict the next word of a sentence, given the previous words. The difficulty here lies in the \textit{curse of dimensionality} of natural language: a sequence of words used to test the model is most likely different from the sequences used in training. Bengio et al.'s neural network language model consisted of a one-hidden layer feed-forward neural network and word feature vector embedding. %Figure~\ref{fig:Bengio} illustrates the model architecture.
+The authors used a vector representation of the previous words as input for the model. The previous words are looked up in a table that is learned simultaneously within the model. 
+%\begin{figure}
+%    \centering
+%    \includegraphics[width =.8\textwidth]{img/bengio.png}
+%    \caption{The prediction-based Neural Language Model proposed by Bentio et al,. $C_{(i)}$ is the $i^{th}$ word embedding~\protect\cite{bengio2003neural}.}
+%    \label{fig:Bengio}
+%\end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width =.8\textwidth]{img/bengio.png}
-    \caption{The prediction-based Neural Language Model proposed by Bentio et al,. $C_{(i)}$ is the $i^{th}$ word embedding~\protect\cite{bengio2003neural}.}
-    \label{fig:Bengio}
-\end{figure}
-
-
-
-These vectors are then fed to the hidden layer, and its output is passed on to the, so-called softmax layer, which predicts the next word of the sequence. A softmax layer is the final output layer of a neural network which performs multi-class classifications. The layer receives the output from the softmax function, which takes as an input a number of scores values from the previous layer and translates them into numbers in the range between 0 and 1, where the sum equals 1, resulting in a true representation of a probability distribution \cite{buduma2017fundamentals}. 
-This method's problem lies within the size of the softmax layer, as the computing effort relies on the number of words in the vocabulary, which can be very high.
+These vectors are then fed to the hidden layer, and its output is passed on to the, so-called softmax layer, which predicts the next word of the sequence. A softmax layer is the final output layer of a neural network which performs classification calculations. The layer receives the output from the softmax function, which takes as an input a number of scores values from the previous layer and translates them into numbers in the range between 0 and 1, where the sum equals 1, resulting in a true representation of a probability distribution \cite{buduma2017fundamentals}. 
+This method's problem lies within the size of the softmax layer, as the computing effort relies on the number of words in the vocabulary, which can be very high, leading to high computation costs.
 
 \textbf{Word2vec Embeddings} 
 \label{sec:Word2vec_embeddings}
 
-A huge milestone were the, so called Word2vec embedding models introduced by Mikolov et al. in 2013 \cite{mikolov2013efficient}. 
+A huge milestone were the so called Word2vec embedding models introduced by Mikolov et al. in 2013 \cite{mikolov2013efficient}. 
 Word2vec models generate distributed word representations by using either continuous bag-of-words or the continuous skip-gram model architectures. 
 Bag-of-words models take $n$-words before and $n$-words after the target word into consideration for their prediction. The word order does not influence the prediction. Mikolov et al. managed to efficiently improve the training by removing the hidden layer and approximating the objective. That way, they could improve training speed, accuracy and the efficiency of large-scale training of word embedding on huge amounts of text data.
 Moreover, they found that the training on huge corpora enabled them to automatically capture relationships and similarities between words in text data, such as country - capital, or gender relationships, as shown in Figure~\ref{fig:Word2Vec}.
@@ -506,20 +498,8 @@ For example, the word "Apple" has the same representation in "Apple Pie" and "Ap
 
 \textbf{Recurrent Neural Networks}
     \label{sec:RNNs}
-\todo{RNNs nochmal besser beschreiben}
 
-Around 2014, Recurrent Neural Networks (RNN) were broadly adopted in the field of natural language processing \cite{jozefowicz2016exploring}.RNN are so-called Sequene-to-Sequence models that transform sequences of data (e.g. text, audio, video) into sequences of another type. Examples for the usage of these transformations are translation or classification tasks.
-
-While in a traditional neural network, all inputs and outputs are independent of each other, a RNN is recurrent, as it uses previous outputs as additional inputs for prediction. The loops within the hidden layer's neurons, illustrated in ~\ref{fig:RNN}, allow the model to store information about previous input sequences, called a sequencial momery. 
-In other words, it performs the same task for every sample of a sequence of input data, while the forwarded output being depended on the previous computations.
-After calculating an output, it is copied and sent back into the recurrent network. For making a decision, it considers the given input plus the output stored form the previous input.
-Therefore, RNNs use internal memory to process sequences of inputs, which makes them applicable to tasks such as handwriting recognition or natural language understanding.
-
-(see Fig. RR1).
-
-/ Fig RNN1 The same RNN block is applied recurrently to the input sequence. As the sequence's end is reached, the model has learned one vector that captures the meaning of the whole sentence. After that, the process is reverted in the decoder.
-
-%TODO Figure
+Around 2014, Recurrent Neural Networks (RNN) were broadly adopted in the field of natural language processing \cite{jozefowicz2016exploring}.RNNs are so-called Sequene-to-Sequence models that transform sequences of data (e.g. text, audio, video) into sequences of another type. Examples for the usage of these transformations are translation or classification tasks.
 
 In practice, RNNs have shown to have difficulties processing long sentences, since they handle sequences word by word in a sequential fashion. This makes them prone to loose memory of distant positions in the sequence \cite{mikolov2010recurrent}.
 Due to their vanishing and exploding gradient problem \cite{pascanu2013difficulty}, the RNN architecture was extended by long-short term memory networks (LSTM) \cite{hochreiter1997long, graves2005framewise}. 
@@ -547,7 +527,7 @@ An advanced approach of attention is called self-attention, which allows for obt
 In 2017 Vaswani et al. introduced the Transformer, a novel model architecture relying entirely on the attention mechanism \cite{vaswani2017attention}. They use stacked self-attention and point-wise, fully connected layers for en- and decoding. 
 The self-attention based Transformer model is not recurrent, hence the output is not fed back as input like in RNNs but uses its attention to "look back" to the crucial piece of information. Text sequences are not memorized or stored completely but rather the parts, which are considered relevant. This approach allows the Transformer to outperform RNNs and LSTM networks and makes the model more parallelizable, resulting in enhanced computational performance. Transformer models proved to improve the state-of-the-art approaches in the field \cite{vaswani2017attention}. 
 
-Famous Transformer models are ERNIE \cite{zhang2019ernie}, BERT \cite{jin2019bert}, XLnet \cite{yang2019xlnet}, RoBERTa \cite{liu2019roberta}, and DistilBERT \cite{sanh2019distilbert}. More detailed information about the Transformer Model BERT is provided in chapter~\ref{sec:bert}.
+Famous Transformer models are ERNIE \cite{zhang2019ernie}, BERT \cite{devlin2018bert}, XLnet \cite{yang2019xlnet}, RoBERTa \cite{liu2019roberta}, and DistilBERT \cite{sanh2019distilbert}. More detailed information about the Transformer Model BERT is provided in chapter~\ref{sec:bert}.
 
 \subsubsection{Tasks in NLP}
 \label{sec:tasks_in_nLP}
@@ -555,7 +535,7 @@ Famous Transformer models are ERNIE \cite{zhang2019ernie}, BERT \cite{jin2019ber
 Next to MT, there is a broad scope of tasks NLP is used for. Some prominent examples are speech recognition, language detection, part-of-speech tagging, sentiment analysis (SA), question answering, automatic summarization, text classification, character recognition, textual entailment, and many more.
 
 NLP tasks can be divided in two main fields: analysis, and generation tasks. Analysis tasks aim for analysing existing text, while the objective of generation tasks is to generate new text. The analysis task can again be divided into syntactic, a language structure-based task, semantic, a meaning based task and pragmatic, a task of open difficult problems to solve \cite{ganegedara2018natural}. 
-Figure ~\ref{fig:NLP-Tasks-Taxonomy} illustrates the categorization of different NLP task as described provided by Ganegadara. 
+Figure ~\ref{fig:NLP-Tasks-Taxonomy} illustrates the categorization of different NLP task as described by Ganegadara. 
 \begin{figure}
     \centering
     \includegraphics[ width = .7\textwidth]{img/NLP_tasks.jpg}
@@ -563,7 +543,7 @@ Figure ~\ref{fig:NLP-Tasks-Taxonomy} illustrates the categorization of different
     \label{fig:NLP-Tasks-Taxonomy}
 \end{figure}
 Examples for semantic tasks are SA and Aspect-based Sentiment Analysis (ABSA). 
-SA is an active field of research in NLP that aims to detect opinions in (mostly user-generated) text. The perceived sentiment, which occurs in user comments, feedback questionnaires, or critiques, provides valuable information for various purposes. Sentiment is usually expressed in either two categories: positive and negative, or on an $n$-point scale (e.g., very good, good, satisfactory, sufficient, insufficient). Thus, a sentiment analysis task can be interpreted as a classification task, where each class represents a sentiment \cite{prabowo2009sentiment}. Figure ~\ref{fig:SA} shows an example of the sentiment analysis task using a BERT language model.
+SA is an active field of research in NLP that aims to detect opinions in (mostly user-generated) text. The perceived sentiment, which occurs in user comments, feedback questionnaires, or critiques, provides valuable information for various purposes. Sentiment is usually expressed in either two categories: positive and negative, or on an $n$-point scale (e.g., very good, good, satisfactory, sufficient, insufficient). Thus, a sentiment analysis task can be interpreted as a classification task, where each class represents a sentiment \cite{prabowo2009sentiment}. Figure ~\ref{fig:SA} shows an example of the sentiment analysis task using a BERT language model, which will be described in section ~\ref{sec:bert}.
 
 \begin{figure}
 \centering
@@ -717,12 +697,9 @@ In contrast to SA, ABSA is a more fine-grained task, which consists of two main 
 %------------------------------------------------------------------
 
 
-\subsection{Bidirectional Encoder Representations from Transformers - BERT}
+\subsection{Bidirectional Encoder Representations from Transformers}
 \label{sec:bert}
 In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BERT, a deep contextual language representation model. BERT is an abbreviation for Bidirectional Encoder Representations from Transformers \cite{devlin2018bert}. It is built on preceding innovations: deep contextualized word representations \cite{peters2018deep}, the Transformer architecture \cite{vaswani2017attention}, and pre-training on a language modeling task with subsequent fine-tuning on a downstream task \cite{radford2018improving, howard2018universal}.
-
-
-
 
 \begin{figure}
     \centering
@@ -737,7 +714,6 @@ In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BER
 % elaborate
 BERT is a stack of transformer encoder layers that consist of a multi-head attention layer (heads), followed by a fully-connected neural networks.
 For every input token in a text sequence,( e.g., a sentence), each head computes key, value, and query vectors, which are then used to create a weighted representation. The outputs of all heads in the same layer are combined and run through a fully-connected layer.
-\
 
 BERT uses the self-attention mechanism introduced with the Transformer model \cite{vaswani2017attention} and described in chapter~\ref{sec:attention}. 
 %Fig xy exposes an example of how BERT uses the self-attention mechanism....
@@ -830,7 +806,7 @@ BERT large has a vocabulary of 30,522 tokens and 786 features in its embedding. 
 
 A dictionary converts a word string into the corresponding word-id in the word embedding lookup table. 
 When feeding a sequence of words into the BERT architecture, it will fist look up the word-ids in the dictionary and then take the corresponding word embeddings to get a sequence of word embeddings.
-The Second Edition of the 20th volume Oxford English Dictionary contains entries for 171,476 words \cite{dictionary1989oxford}. In order to keep the size of the vocabulary as small as possible, not all words are included in the vocabulary. A WordPiece model breaks down unknown words into subwords \cite{wu2016google}. Given the word $embedding$. There is no representation for this word in the dictionary. The WordPiece method breaks the word down into the three word pieces $em$, $\#\#bed$, and $\#\#ding$, which are entries in the dictionary. That way the the sequence, the word "embedding" appears in, consists of two additional tokens. Except for the first token, subwords are marked with two hash-symbols in front of the characters. Therefore, the subword $bed$ in the word $bedding$ does not have the same vector representation as the one in the word $embedding$ since it is the first token of the word and does not contain the two hash symbols. The WordPiece representation for the word $bedding$ is $bed$, $\#\#ding$, which conveys the information, that the word $bedding$ is related to the word $bed$.
+The Second Edition of the 20th volume Oxford English Dictionary contains entries for 171,476 words \cite{dictionary1989oxford}. In order to keep the size of the vocabulary as small as possible, not all words are included in the vocabulary. A WordPiece model breaks down unknown words into subwords \cite{wu2016google}. Given the word $embedding$. There is no representation for this word in the dictionary. The WordPiece method breaks the word down into the three word pieces $em$, $\#\#bed$, and $\#\#ding$, which are entries in the dictionary. That way the sequence, the word "embedding" appears in, consists of two additional tokens. Except for the first token, subwords are marked with two hash-symbols in front of the characters. Therefore, the subword $bed$ in the word $bedding$ does not have the same vector representation as the one in the word $embedding$ since it is the first token of the word and does not contain the two hash symbols. The WordPiece representation for the word $bedding$ is $bed$, $\#\#ding$, which conveys the information, that the word $bedding$ is related to the word $bed$.
 The words stored in the dictionary differs, depending on the corpus, used for vocabulary generation.
 
 \begin{figure}
@@ -846,8 +822,6 @@ The words stored in the dictionary differs, depending on the corpus, used for vo
 \textbf{Token Embedding Layer}
 
 The purpose of the token embedding layer is to transform the tokenized input (e.g. "I like strawberries") into a vector representation of fixed dimensions, as shown in Figure ~\ref{fig:BERT_tokenEmbedding}. In case of BERT base, each word is represented as a 768-dimensional vector.
-
-Nora: Also werden quasi diese Layers Parameter random(oder nach einem Schema) initialisiert) und mitgelernt... 
 
 \begin{figure}
 \centering
@@ -1005,9 +979,9 @@ The segment embedding layer uses two indices 0 and 1 as vector representations t
 
 \textbf{Position Embedding Layer}
 
-The position embedding layer leverages the encoding of positional information in an input sequence inside a Transformer. BERT processes input sequences up to a length of 512. Therefore the position embedding layer is a lookup table of size 512x768, where the each row is a vector representation of the word in the corresponding position. In an input like "I like you" and "You like me", both "I" and "You" will have identical position embeddings since they are the first token in the input sequence. 
+The position embedding layer leverages the encoding of positional information in an input sequence inside a Transformer. BERT processes input sequences up to a length of 512. Therefore the position embedding layer is a lookup table of size 512x768, where each row is a vector representation of the word in the corresponding position. In an input like "I like you" and "You like me", both "I" and "You" will have identical position embeddings since they are the first token in the input sequence. 
 
-The two versions of BERT (base and large), differ in the number of layers, their hidden size, and the number of attention heads.
+The two versions of BERT (base and large), differ in the number of layers (12 and 24 transformer blocks), their hidden size (110 million and 340 million parameters), and the number of attention heads (12 and 16, respectively).
 
 \subsubsection{Pre-Training and Fine-Tuning BERT}
 \label{sec:bert_pre-fine}
@@ -1096,7 +1070,7 @@ See Figure \ref{fig:advEx} for an example of an applied adversarial perturbation
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/advExample.jpg}
-    \caption{Adversarial example in computer vision.~\protect\cite{papernot2016crafting}. Original image of a panda bear shown on the lift side. The right side shows the misclassified image with the added perturbation, shown in the middle.}
+    \caption{Adversarial example in computer vision.~\protect\cite{papernot2016crafting}. Original image of a panda bear shown on the left side. The right side shows the misclassified image with the added perturbation, shown in the middle.}
     \label{fig:advEx}
 \end{figure}
 
@@ -1133,7 +1107,7 @@ Since textual data is symbolic, thus discrete, it is not possible to adapt this 
 
 \textbf{2. Semantic meaning vs. no semantic meaning}
 
-When generating adversarial images, it is very unlikely to change the picture's semantic meaning. This is different in the text domain, where a change of a sentence's semantic meaning happens easily. As described in chapter~\ref{sec:word_embeddings}, the mapping from natural language into a corresponding vector is done through the generation of word embeddings.
+When generating adversarial images, the picture's semantic meaning usually remains unchanged. This is different in the text domain, where a change of a sentence's semantic meaning happens easily. As described in chapter~\ref{sec:word_embeddings}, the mapping from natural language into a corresponding vector is done through the generation of word embeddings.
 Given the example sentence, "I like cats", both, the generation of an adversarial example on word-level (e.g., changed word: $cat$ - generated adversarial sentence through word-swap: "I like dogs"), as well as on character-level (e.g., changed character: $t$ - generated adversarial example through character-swap: "I like cars"). Thus, the numerical representation of the word 'cat' might be close to that of the word "dog".
 However, that does not mean that the semantic meaning of the words are similar, as it is the case with pixels.
 
@@ -1147,13 +1121,7 @@ Small modifications of image pixels are hardly recognized by human beings, as sh
 \subsection{Adversarial Attacks in NLP}
 \label{sec:adv-ex_in_NLP}
 
-In recent years the research motivation to generate adversarial examples NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community\cite{Jia2017AdversarialEF}. They address the reading comprahension task and showed that they could cause models to ouptput wron answeres by appending distractor sentences to the end of their input sequences. Inspired by their work, Glockner et al. conducted attacks using the entailment task on the word-level by replacing one word with either a synonym or its hypernym \cite{glockner2018breaking}. Since then many studies have investigated the security of NLP task DNNs and proposed several attack methods. Many papers on the topic distinguish between causative and exploratory attacks. Ling Huang et al., define the terms as follows:
-
-Causative - Causative attacks alter the training process through influence over the training data.
-
-Exploratory - Exploratory attacks do not alter the training process but use other techniques, such as probing the detector, to discover information about it or its training data.
-\cite{huang2011adversarial}
-
+In recent years the research motivation to generate adversarial examples in NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community\cite{Jia2017AdversarialEF}. They addressed the reading comprehension task and showed that they could cause models to output wrong predictions by appending distractor sentences to the end of their input sequences. Inspired by their work, Glockner et al. conducted attacks using the entailment task on the word-level by replacing one word with either a synonym or its hypernym \cite{glockner2018breaking}. Since then, many studies have investigated the security of NLP task DNNs and proposed several attack methods. 
 To better compare the numerous different attack methods suggested for NLP models so far, we will use a unified definition framework provided by Morris et al., introduced in their paper on the Software Framework TextAttack for adversarial attacks in NLP\cite{morris2020textattack}. They determine four components, namely a goal function, a search method, a transformation, and an optional list of constraints. In the following chapter, we will explain those components in more detail and assemble attacks from the literature, by means of the components.
 
 
@@ -1167,7 +1135,7 @@ $G(x):= \{argmax$F(x)$ \neq $original\textunderscore class$\}$
 
 for the attack being successful if the prediction after the attack is unequal the original prediction. 
 
-Proposed goal functions in the literature include untargeted \cite{ebrahimi2017hotflip, alzantot2018generating, li2018textbugger, jin2019bert, garg2020bae}, and mixed goal functions \cite{gao2018black} in the white-box setting \cite{papernot2016crafting, liang2017deep, ebrahimi2017hotflip, jin2019bert} and the black box setting \cite{gao2018black, goodman2020fastwordbug}.
+Proposed goal functions in the literature include untargeted goal functions \cite{ebrahimi2017hotflip, alzantot2018generating, li2018textbugger, jin2019bert, garg2020bae}, in the white-box \cite{papernot2016crafting, liang2017deep, ebrahimi2017hotflip, jin2019bert} and the black box setting \cite{gao2018black, goodman2020fastwordbug}.
 
 \subsubsection{Search Method}
 \label{sec:search_method}
@@ -1250,7 +1218,7 @@ The prediction is considered changed as soon as one of the three output categori
 To answer our research question, we conducted three input character-level adversarial attacks against the prominent pre-trained BERT model introduced by Google in 2018. 
 We evaluated the robustness of our model in an in-domain classification task, called ABSA. As described before, the ABSA task refers to the prediction of an aspect mentioned in an input sequence and the corresponding sentiment. ABSA is considered a multilabel task, since $[0,1, \dots n]$ labels can be predicted for one input sequence. 
 
-To better illustrate our proceedings, we describe it using the proposed framework by Morris et al.:
+To better illustrate our proceedings, we draw on the proposed framework by Morris et al.:
 
 Our \textbf{goal function} is represented by the following formula: ${f( x_adv ) = y_adv \neq y}$. It is described in more detail in section~\ref{sec:experiments}
 
@@ -1272,7 +1240,7 @@ To prevent humans from easily identifying our attacks as adversarial examples, w
 
 Leet speak (or '1337') is a system of modifying spelling, primarily used in online games, internet platforms as well as in the 'hacker'-community. The term 'leet' derives from the word 'elite' and describes the communities that use it. The purpose of using leet speak can be to exclude newcomers (e.g., in an online community or game) or outsiders in general. The goal is to create language, that the average reader cannot make sense of \cite{thomas2002hacker}.
 Leet speak is characterized by the use of non-alphabet characters to substitute one or multiple letters of one word with visually similar-looking symbols, so-called homoglyphs. Commonly used homoglyphs in leet speak are numbers. 
-We conducted experiments to explore the effect of leet speak on the BERT model. As described in chapter~\ref{sec:the_history_of_NLP} DNN-based text classification continuously gains importance for enhancing the safety of online communication e.g., in online discussion environments through toxic content detection and other methods \cite{kumar2011natural}. This are the environments where leet speak is used primarily. The investigation of what effects the character substitution has on the used BERT models could help to increase security in such forms. 
+We conducted experiments to explore the effect of leet speak on the BERT model. As described in chapter~\ref{sec:the_history_of_NLP} DNN-based text classification continuously gains importance for enhancing the safety of online communication e.g., in online discussion environments through toxic content detection and other methods \cite{kumar2011natural}. This are the environments where leet speak is used commonly. The investigation of what effects the character substitution has on the used BERT models could help to increase safety in such forums and other environments where users use this language. 
 
 \textbf{Spelling mistakes}
 
@@ -1283,7 +1251,7 @@ The list consists of 4282 entries, where one word can have multiple misspelling 
 
 \textbf{Punctuation}
 
-To the best of our knowledge, there have not been any investigations on the effect of changed punctuation symbols on the robustness of a BERT model. Since we were surprisingly able to generate successful attacks by merely adding one punctuation mark, we limited ourselves to that and did no further research on different punctuation variations. Moreover, one additional comma is unobtrusive, occurs in the practical use cases, and is not easily identified as an adversarial example by a human observer.
+To the best of our knowledge, there have not been any investigations on the effect of changed punctuation symbols on the robustness of a BERT model. Since we were able to generate successful attacks by merely adding one punctuation mark, we limited ourselves to that and did no further research on different punctuation variations. Moreover, one additional comma is unobtrusive, occurs in the practical use cases, and is not easily identified as an adversarial example by a human observer.
 
 
 \subsubsection{Target Model} 
@@ -1292,8 +1260,9 @@ To the best of our knowledge, there have not been any investigations on the effe
 As the base for our experiments we used the uncased BERTbase model\footnote{\url{https://huggingface.co/bert-base-uncased}}\cite{DBLP:journals/corr/abs-1810-04805}. In a first step, pre-trained it on the laptop domain and in a second step, fine-tuned in on the ABSA task. In pre-training, BERT solves the two calssification tasks MLM and NSP usually on a large corpora of unlabeled text. We use Amazon Laptop Reviews scraped by He et. al. \cite{he2016ups}. We used the Adam optimizer and 32 bit floating points computations. Adam is an optimization method used to update network weights iteratively in the training process of deep learning models. This optimizer, being a replacement for the stochastic gradient descent, is commonly used since it comes with a straight-forward configuration process and default parameters are suitable for most tasks \cite{kingma2014adam}. We pre-train our model using a batch size of 32 and set the learning rate to 3 $*$ 10$^{-5}$.
 We define a maximum input sequence length of 256 tokens, resulting in four sentences per sequence on average.  Due to the relatively low number of training data, we pre-train BERTbase for 30 epochs, so that the model sees about 30 million sentences during training. That way, a single sentence appears multiple times within the two language model tasks. Please find the code for pre-training on GitHub, to reproduce the langauge model\footnote{\url{https://github.com/deepopinion/domain-adapted-atsc}}.
 
-For fine-tuning the pre-trained BERT model on the ABSA task, we, again, used 32 bit floating point computations, the Adam optimizer and set the learning rate to 3 $*$ 10$^{-5}$. We used a batch size of 32 and fine-tuned it for 20 epochs and random initialization. While the training loss improved continuously, validation accuracy converges already after the xxth epoch of training. Our experiments are based on the model at the xth ... 
+For fine-tuning the pre-trained BERT model on the ABSA task, we, again, used 32 bit floating point computations, the Ranger optimizer and set the learning rate to 4 $*$ e$^{-5}$. We used a batch size of 32 and fine-tuned it for 20 epochs and random initialization. While the training loss improved continuously, validation accuracy converges already after the xxth epoch of training. Our experiments are based on the model at the xth ... 
 \todo{check!}
+
 
 For tokenization we used the \texttt{PreTrainedTokenizer} introduced with the BERTbase model\footnote{\url{https://huggingface.co/transformers/main_classes/tokenizer.html}}. The library includes the following methods:
 \begin{itemize}
@@ -1324,7 +1293,7 @@ Comparing the prediction before and after a word is removed reflects how the wor
 We conduct our experiment using SemEval-2015 Task 12: Aspect Based Sentiment Analysis dataset for the laptops domain \cite{pontiki2015semeval}. An aspect category is defined as a conbination of an entity type $E$ and an attribute type $A$. E describes the reviewed entity (e.g. laptop), while A describes a particular attribute of E (e.g. durability or quality).
 To give an example:
 Given the review \textit{"They sent it back with a huge crack in it and it still didn't work; and that was the fourth time I've sent it to them to get fixed"}, E could be \textit{customer support} and A could be \textit{quality}. The third slot is used to determine the sentiment polarity towards the entity and its attribute (\textit{positive, neutral or negative}). The sentiment for the above given example would be \textit{negative}.
-The three slots are linked to each other within tuples. For our thesis we decided to use only one of the three provided domains, namely Laptops. In deciding why Laptops were chosen instead of Restaurants or Hotels, there is no specific reason other than the researchers' personal interest in laptops. The Laptop dataset contains 1,739 sentences in the training data and 761 sentences in the test data set. Figure ~\ref{fig:semeval} provides a table of entity and attributes labels, used in the dataset.
+The three slots are linked to each other within tuples. For this thesis we decided to use only one of the three provided domains, namely Laptops. The Laptop dataset contains 1,739 sentences in the training data and 761 sentences in the test data set. Figure ~\ref{fig:semeval} provides a table of entity and attributes labels, used in the dataset.
 
 \begin{figure}
     \centering
@@ -1337,9 +1306,9 @@ To pre-train the BERT language model on the laptop domain, we use Amazon Laptop 
 
 
 
-\subsection{Evaluation Criteria}
+\subsection{Evaluation Criteria todo}
     \label{sec:evaluation_tb}
-As described in chapter ~\ref{sec:adversarial_exapmles_in_text} there are a number of methods proposed to generate adversarial examples in the text domain. Since it is not trivial to assess the quality of these different attacks, as small perturbations can lead to significant changes in semantics meaning of the textual input. In their paper, Xu et al. propose Elephant in the Room, an evaluation framework to assess the quality of adversarial examples in the text domain\cite{xu2020elephant}. Their (automatic) evaluation criteria are:
+As described in chapter~\ref{sec:adversarial_exapmles_in_text} there are a number of methods proposed to generate adversarial examples in the text domain. Since it is not trivial to assess the quality of these different attacks, as small perturbations can lead to significant changes in semantics meaning of the textual input. In their paper, Xu et al. propose Elephant in the Room, an evaluation framework to assess the quality of adversarial examples in the text domain\cite{xu2020elephant}. Their (automatic) evaluation criteria are:
 (a) attacking performance (i.e. how well they fool the classifier); 
 (b) textual similarity between the original input and the adversarial input; and
 (c) fluency of the adversarial example.
@@ -1348,6 +1317,8 @@ More approaches on the evaluation of adversarial attacks in the text domain are 
 
 Other constraints, e.g. to ensure remaining semantic meaning, or to preserve context fitting, can be evaluated by humans only. 
 Common ways to evaluate the effectiveness of adversarial attacks are the determination of F-Scores and accuracy for whole datasets, or confidence levels for single predictions. 
+
+by design!!!!!!!!
 
 
 \section{Experiments todo}
@@ -1366,7 +1337,7 @@ $f$( $x_adv$ ) = $y_adv$ \neq $y$.
 
 
 To conduct the experiments we used the described SemEval 2015 dataset conatining 1971 reviews on laptops. Before working with the data, we converted it in an adequate format and filtered for unique sequences, resulting in a dataset of 1396 items in the following format:
-
+\todo{same example for whole thesis}
 \texttt{['This computer is absolutely AMAZING!!!', '10 plus hours of battery...']}
 
 
@@ -1375,7 +1346,7 @@ To conduct the experiments we used the described SemEval 2015 dataset conatining
 Since we operate in the black box setting and therefore do not have access to prediction probability values, as needed for the input reduction method, we make use of the LOO-method to determine the words of a sequence critical for the output of the model's prediction. That way can ascertain which word to place our attack on, in order to achieve maximal efficiency. The theoretical basics of the method are discussed in section ~\ref{sec:iwd_method}.
 First, we predicted the 1396 original examples and stored the labels. After that we tokenized the examples by creating a list for each sequence containing the respective words. In the next step, we iterated over the lists of words in a sequence and removed the respective word in the original sentence. We repeated this step for each word in the original sentence. 
 After this process, we have as many modified sentences as we have original times the respective number of words. A word is considered important, if it's omission triggered a flip in the prediction, compared to the original sentence. 
-In 943 sequences, we were able to find 1 or more important words. The cumulative number of successful modifications caused by the LOO-method 2694. In other words, one sequence contains 1.93\footnote{2694/1396} important words on average.
+In 943 sequences, we were able to find 1 or more important words. The cumulative number of successful modifications caused by the LOO-method 2694. In other words, one sequence contains 1.93 important words on average.
 
 \subsection{Transformation}
 \label{sec:transformation_m}
@@ -1486,8 +1457,28 @@ As described in their paper, it involves a great deal of effort to ensure (b) te
 
 
 \subsection{Results todo}
+By design we chose attacks that are supposed to fool the human prediciton.
 
-
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|}
+\hline
+\rowcolor
+Perturbation Method                                      & Leet Speak           & Misspellings         & Punctuation          \\ \hline
+Tokenizer                                                & en\_core\_web\_sm    & en\_core\_web\_sm    & en\_core\_web\_sm    \\ \hline
+Model                                                    & en\_laptops\_absa    & en\_laptops\_absa    & en\_laptops\_absa    \\ \hline
+Dataset                                                  & SemEval 2015 Laptops & SemEval 2015 Laptops & SemEval 2015 Laptops \\ \hline
+Total number of original sentences                       & 943                  & 943                  & 943                  \\ \hline
+Total number of modifyable original sentences            & 897                  & 369                  & 943                  \\ \hline
+Total number of modified sentences                       & 2232                 & 1354                 & 2555                 \\ \hline
+Total number of changed predictions through modification & 1066                 & 420                  & 382                  \\ \hline
+Success Rate                                             & 0.477599             & 0.310192             & 0.149511             \\ \hline
+\end{tabular}%
+}
+\caption{Results }
+\label{tab:my-table}
+\end{table}
 
 \subsubsection{Typo}
 
@@ -1506,10 +1497,27 @@ As described in their paper, it involves a great deal of effort to ensure (b) te
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-original_sentence: "I have not have any problems."
+original sentence: 
 
-    aspect: "LAPTOP#GENERAL"
-    sentiment: "POS"
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}|l|l|l|l|@{}}
+\toprule
+ & \multicolumn{1}{c|}{\textbf{Sentence}} & \multicolumn{1}{c|}{\textbf{Entity\#Attribute}} & \multicolumn{1}{c|}{\textbf{Sentiment}} \\ \midrule
+\textbf{Original} & I have not have any problems. & LAPTOP\#GENERAL & POS \\ \midrule
+\textbf{Adversarial} & {\color[HTML]{000000} 0: I have onot have any problems} & COMPANY\#GENERAL & NEG \\
+ & 1: I have nto have any problems & LAPTOP\#GENERAL & NEG \\ \bottomrule
+\end{tabular}%
+}
+\caption{Results Misspelling}
+\label{tab:my-table}
+\end{table}
 
 0: "I have onot have any problems."
 1: "I have nto have any problems."
