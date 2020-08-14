@@ -515,7 +515,7 @@ Full understanding of text largely depends on the context it appears in.
 Deep contextual word representations have shown that they are able to model complex characteristics of word usage (e.g. syntax and semantics), and the variety of word usage in different linguistic contexts (e.g. polysemy) \cite{peters2018deep}. They generate a vector representation of each word that is based on the context (or the other words in the sentence) it appears in - to capture the word meaning in that context as well as other additional contextual information. Deep contextual word representations, first introduced by Peters et al. rely on a bidirectional LSTM, trained with a coupled language model objective on a large text corpus and are, therefore, called ELMo (Embeddings from Language Models) representations.
 Instead of using fixed embedding representations, like Word2vec or GloVe \cite{pennington2014glove} for each word, ELMo "looks" at the entire sentence before assigning it an embedding. 
 
-\textbf{Attention Mechanism}
+ \textbf{Attention Mechanism}
 \label{sec:attention}
 %Attention nochmal besser schreiben
 \todo{Attention nochmal besser beschreiben}
@@ -524,8 +524,16 @@ In 2015 various papers described the concept of "attention" in training recurren
 The models are based on an encoder-decoder structure, where the encoder maps the input sequence of character representations to a sequence of continuous representations. In the second step, the decoder creates an output, a sequence of characters. 
 
 The attention in the decoder allows it to look back at the hidden state of the source sequences, which are combined using a weighted average and then serve as an additional input to the decoder. 
-An advanced approach of attention is called self-attention, which allows for obtaining more contextually sensitive word representations by looking at nearby words in a sentence or paragraph. Google's machine translation team was the first in 2017 to use self-attention mechanisms in their paper "Attention is All You Need" to learn text representations \cite{vaswani2017attention}. To better understand self-attention one can imagine the human sight mechanism. While humans detect an object, say a banana, they will typically not scan the entire room, or scene to acquire information but rather focus on the respective object. Humans learn, that objects typically appear in a particular scene. E. g., bananas are typically in a fruit bowl. That way, they combine information from different fixations over time to build a representation and in the future, focus their attention on that particular scene, the bowl, when looking for the banana. 
+An advanced approach of attention is called self-attention, which allows for obtaining more contextually sensitive word representations by looking at nearby words in a sentence or paragraph. Google's machine translation team was the first in 2017 to use self-attention mechanisms in their paper "Attention is All You Need" to learn text representations \cite{vaswani2017attention}. To better understand self-attention one can imagine the human sight mechanism. While humans detect an object, say an apple, they will typically not scan the entire room, or scene to acquire information but rather focus on the respective object. Humans learn, that objects typically appear in a particular scene. E. g., apples are typically in a fruit bowl. That way, they combine information from different fixations over time to build a representation and in the future, focus their attention on that particular scene, the bowl, when looking for the apple. In self-attention method allows the language model to better learn contextual information about a word's semantic meaning by determining the fixations relevant. 
 
+In their paper "What Does BERT Look At?", Clark et al., propose methods for analyzing the attention mechanisms of the pre-trained BERT model. They found patterns in BERT's attention heads, e.g. heads that attend to the direct objects of verbs, determiners of nouns and objects of prepositions \cite{clark2019does}. The authors introduced an attention-based probing classifier which we use to demonstrate substantial syntactic information found in BERT's attention heads. Figure~\ref{fig:attention_clark} demonstrates that noun modifiers attend to the corresponding noun. The darkness of a line indicates the strength of the attention weight. To highlight certain parts of the attention head's behaviors, attention to and from red words is colored.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = .7\textwidth]{img/attention_clarc.png}
+    \caption{Demonstration of substantial syntactic information found in BERT attention heads ~\protect\cite{clark2019does}.}
+    \label{fig:attention_clark}
+\end{figure}
 
 
 \textbf{Transformer Models}
@@ -1695,13 +1703,44 @@ There is still little literature available for the semantic representation of pu
 
 
 \subsection{Attention}
-In 
+As stated earlier, BERT is based on the the self-attention mechanism described in section~\ref{sec:attention}. This mechanism allows the language model to better learn contextual information about a word’s semantic meaning by determining the fixations relevant for the prediction. We use Clark et al.'s proposed attention-based probing classifier to demonstrate how our perturbations modified BERT's attention heads\footnote{\url{https://huggingface.co/exbert/}}\cite{clark2019does}. 
+
+Figure~\ref{fig:attention_original} demonstrates how heads of BERT base model attend to tokens of the original sentence "It's wonderful for computer gaming.". For demonstration we chose the 8th layer, since we found that for all three attacks, the heads attended the adversarial part of the sentence most at this layer.
+The figure shows that the heads focus on the word "for" and "s"( meaning "is") when attending the word "wonderful". 
+Figures~\ref{fig:attention_leet},~\ref{fig:attention_typo}, and~\ref{fig:attention_punct} show the representation of the  BERTbase uncased model's attention heads for the modified sentences. We can see that the token representation of the word "wonderful" vanishes when using the leet speak method. We see that the model is disturbed and not able to "understand" the important word. Also other attention representations shift. When using the misspelling and punctuation method, the BERT model puts much attention to the token added by our methods. This indicates that the additional token disturbs the model and therefore classifies wrong predictions.
 
 
-- meistens so, dass das veränderte Wort einfach nicht mehr erkannt wurde. Der Rest passt aber noch. Dadurch wurde die Attention auf was anderes gelegt. Der Rest bleibt gut.
+Drawing on Clark et al., changed attention heads can have two reasons. Firstly, the token composition in a certain context is unknown to the model, which causes the heads to produce nonsense when trying to determine sections to focus on. Secondly, the model has learned that the additional tokens are relevant in other contexts and therefore attention is put on it \cite{clark2019does}.
 
 
-generell meistens mehr aspecte gefunden durch modfication
+\begin{figure}
+    \centering
+    \includegraphics[ width = .5\textwidth]{img/attention_originalpng.png}
+    \caption{Representation of BERTbase uncased attention heads for the original sentence "It's wonderful for computer gaming."\footnote{\url{https://huggingface.co/exbert/}}.}
+    \label{fig:attention_original}
+    
+\end{figure}
+
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{img/attention_leet.png}
+  \caption{Leet Speak Method: "It's w0nd3rfu1 for computer gaming."}\label{fig:attention_leet}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{img/attention_typo.png}
+  \caption{Misspelling Method:"It's wonderfull for computer gaming."}\label{fig:attention_typo}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+  \includegraphics[width=\linewidth]{img/attention_punct.png}
+  \caption{Punctuation Method: "It's wonderful, for computer gaming."}\label{fig:attention_punct}
+\endminipage
+\end{figure}
+
+It is important to note that this presentation only shows how the attention heads behave for the pre-trained BERT model, according to Clark et al. However, the complexity of the model does not allow 100\% conclusions to be drawn as to whether this is the reason for a changed prediction. 
+
+
+
 
 
 \section{Conclusion, Limitations \& further Research}
