@@ -9,3 +9,294 @@ One of the first attack methods on images is FGSM-based \cite{??}. Many follow-u
 Transformation
 
 Constraints
+
+
+
+typo
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width =.8\textwidth]{img/attention_typo_originalpng.png}
+    \caption{Original attention distribution}
+    \label{fig:attention_typo_original}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width =.8\textwidth]{img/attention_typo_modified.png}
+    \caption{Adversarial attention distribution}
+    \label{fig:attention_typo_modified}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+original sentence: 
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}|l|l|l|l|@{}}
+\toprule
+ & \multicolumn{1}{c|}{\textbf{Sentence}} & \multicolumn{1}{c|}{\textbf{Entity\#Attribute}} & \multicolumn{1}{c|}{\textbf{Sentiment}} \\ \midrule
+\textbf{Original} & I have not have any problems. & LAPTOP\#GENERAL & POS \\ \midrule
+\textbf{Adversarial} & {\color[HTML]{000000} 0: I have onot have any problems} & COMPANY\#GENERAL & NEG \\
+ & 1: I have nto have any problems & LAPTOP\#GENERAL & NEG \\ \bottomrule
+\end{tabular}%
+}
+\caption{Results Misspelling}
+\label{tab:my-table}
+\end{table}
+
+0: "I have onot have any problems."
+1: "I have nto have any problems."
+0
+    aspect: "LAPTOP#GENERAL"
+    sentiment: "NEG"
+1
+aspect: "COMPANY#GENERAL"
+sentiment: "NEG"
+aspect: "LAPTOP#GENERAL"
+sentiment: "NEG"
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+original_sentence: "I've haven't had any major problems with the laptop except that the plastic piece that covers the usb port wires have all come off."
+aspect: "LAPTOP#GENERAL"
+sentiment: "POS"
+aspect: "LAPTOP#QUALITY"
+sentiment: "NEG"
+
+    aspect: "PORTS#QUALITY"
+    sentiment: "NEG"
+
+0: "I've haven't had any major problems with the laptop exept that the plastic piece that covers the usb port wires have all come off."
+aspect: "LAPTOP#GENERAL"
+sentiment: "POS"
+aspect: "LAPTOP#QUALITY"
+sentiment: "POS"
+aspect: "PORTS#QUALITY"
+sentiment: "NEG"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+original_sentence: "i love ths notebook."
+
+    aspect: "LAPTOP#GENERAL"
+    sentiment: "POS"
+
+0: "i lvoe ths notebook."
+1: "i loev ths notebook."
+2: "i lveo ths notebook."
+
+    aspect: "LAPTOP#MISCELLANEOUS"
+    sentiment: "NEG"
+
+    aspect: "LAPTOP#MISCELLANEOUS"
+    sentiment: "NEG"
+
+aspect: "LAPTOP#MISCELLANEOUS"
+sentiment: "NEG"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+original_sentence: "great battery life."
+
+    aspect: "BATTERY#OPERATION_PERFORMANCE"
+    sentiment: "POS"
+
+0: "graet battery life."
+1: "gerat battery life."
+2: "grat battery life."
+
+    aspect: "BATTERY#OPERATION_PERFORMANCE"
+    sentiment: "NEG"
+
+    aspect: "BATTERY#OPERATION_PERFORMANCE"
+    sentiment: "NEG"
+
+aspect: "BATTERY#OPERATION_PERFORMANCE"
+sentiment: "NEG"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+original_sentence: "After a little more than a year of owning my MacBook Pro, the monitor has completely died."
+aspect: "DISPLAY#OPERATION_PERFORMANCE"
+sentiment: "NEG"
+
+    aspect: "DISPLAY#QUALITY"
+    sentiment: "NEG"
+
+0: "After a little more than a year of owning my MacBook Pro, tghe monitor has completely died."
+1: "After a little more than a year of owning my MacBook Pro, teh monitor has completely died."
+2: "After a little more than a year of owning my MacBook Pro, hten monitor has completely died."
+3: "After a little more than a year of owning my MacBook Pro, tjhe monitor has completely died."
+4: "After a little more than a year of owning my MacBook Pro, tje monitor has completely died."
+
+    aspect: "DISPLAY#QUALITY"
+    sentiment: "NEG"
+
+    aspect: "DISPLAY#QUALITY"
+    sentiment: "NEG"
+
+    aspect: "DISPLAY#QUALITY"
+    sentiment: "NEG"
+
+    aspect: "DISPLAY#QUALITY"
+    sentiment: "NEG"
+
+aspect: "DISPLAY#QUALITY"
+sentiment: "NEG"
+
+
+
+
+
+
+leet
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width =.8\textwidth]{img/attention_leet_origianl.png}
+    \caption{Original attention distribution.}
+    \label{fig:attention_leet_original}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width =.8\textwidth]{img/attention_leet_modified.png}
+    \caption{Adversarial attention distribution - Leet Speak}
+    \label{fig:attention_leet_modified}
+\end{figure}
+
+
+original_sentence: "I've been impressed with the battery life and the performance for such a small amount of memory."
+aspect: "BATTERY#OPERATION_PERFORMANCE"
+sentiment: "POS"
+aspect: "LAPTOP#OPERATION_PERFORMANCE"
+sentiment: "POS"
+
+    aspect: "MEMORY#DESIGN_FEATURES"
+    sentiment: "NEU"
+
+0: "I've been impressed with the b4tt3ry life and the performance for such a small amount of memory."
+1: "I've been impressed with the battery life and the p3rf0rm4nc3 for such a small amount of memory."
+2: "I've been impressed with the battery life and the performance for such a small amount of m3m0ry."
+aspect: "HARD_DISC#DESIGN_FEATURES"
+sentiment: "NEU"
+aspect: "LAPTOP#OPERATION_PERFORMANCE"
+sentiment: "POS"
+
+    aspect: "MEMORY#DESIGN_FEATURES"
+    sentiment: "NEU"
+
+aspect: "BATTERY#OPERATION_PERFORMANCE"
+sentiment: "POS"
+aspect: "HARD_DISC#DESIGN_FEATURES"
+sentiment: "POS"
+
+    aspect: "MEMORY#DESIGN_FEATURES"
+    sentiment: "NEU"
+
+aspect: "BATTERY#OPERATION_PERFORMANCE"
+sentiment: "POS"
+aspect: "LAPTOP#OPERATION_PERFORMANCE"
+sentiment: "POS"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+original_sentence: "I bought this laptop because of the performance to price ratio."
+aspect: "LAPTOP#OPERATION_PERFORMANCE"
+sentiment: "POS"
+
+    aspect: "LAPTOP#PRICE"
+    sentiment: "POS"
+
+0: "I bought this laptop because of the p3rf0rm4nc3 to price ratio."
+1: "I bought this laptop because of the performance to pric3 ratio."
+aspect: "LAPTOP#DESIGN_FEATURES"
+sentiment: "POS"
+
+    aspect: "LAPTOP#PRICE"
+    sentiment: "POS"
+
+aspect: "LAPTOP#OPERATION_PERFORMANCE"
+sentiment: "POS"
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+original_sentence: "I couldn't believe how long the battery lasted on a single charge."
+
+    aspect: "BATTERY#OPERATION_PERFORMANCE"
+    sentiment: "POS"
+
+0: "I couldn't b31i3v3 how long the battery lasted on a single charge."
+aspect: "BATTERY#OPERATION_PERFORMANCE"
+sentiment: "NEG"
+
+punct
+
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width =.8\textwidth]{img/attention_punctuation_original.png}
+    \caption{Original attention distribution.}
+    \label{fig:attention_punct_original}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width =.8\textwidth]{img/attention_punctuation_modified.png}
+    \caption{Adversarial attention distribution - Punctuation}
+    \label{fig:attention_punct_modified}
+\end{figure}
+
+
+original_sentence: "I'm all for saving money but Dell needs to step it up."
+
+    aspect: "COMPANY#GENERAL"
+    sentiment: "NEG"
+0: "I'm all for saving, money but Dell needs to step it up."
+aspect: "COMPANY#GENERAL"
+sentiment: "NEG"
+aspect: "LAPTOP#GENERAL"
+sentiment: "POS"
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+original_sentence: "It's wonderful for computer gaming."
+
+    aspect: "LAPTOP#MISCELLANEOUS"
+    sentiment: "POS"
+
+
+0: "It's wonderful, for computer gaming."
+
+
+aspect: "LAPTOP#GENERAL"
+sentiment: "POS"
+aspect: "LAPTOP#MISCELLANEOUS"
+sentiment: "POS"
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+original_sentence: "There is nothing to complain about the system."
+aspect: "LAPTOP#GENERAL"
+sentiment: "POS"
+
+    aspect: "OS#GENERAL"
+    sentiment: "POS"
+
+0: "There is nothing, to complain about the system."
+aspect: "LAPTOP#GENERAL"
+sentiment: "POS"
+aspect: "OS#GENERAL"
+sentiment: "NEG"
+aspect: "SUPPORT#QUALITY"
+sentiment: "NEG"

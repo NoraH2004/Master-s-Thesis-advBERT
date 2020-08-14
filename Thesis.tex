@@ -1,42 +1,68 @@
 %
-%% Define documentclass.
-\documentclass[
-    titlepage,
-    english
-]{mcitexpose}
-
-\usepackage{todonotes}
-\usepackage{placeins}
-\usepackage{url}
+% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[titlepage,english]{mcitthesis}
 
 %    
 % Author
-\author{Nora Hofer}
+\author{Me Myself}
+
+\title{This is my incredible awesome title of my master thesis written in \LaTeX}
+
+\advisor{FH-Prof. Dr. Max C. Who}
+
+\method{Just Science}
+
+\studentNumber{1710492031}
 
 %
-%% Title
-\title{On the robustness of a BERT model for ABSA against input-level adversarial examples}
-
-%
-%% Further document information
-%% \company{} is not needed. Delete if there is no commissioning company.
-\keywords{Natural Language Processing, BERT, Adversarial Examples}
-\method{Experiment}
-
-\advisor{Dr. Pascal Schöttle}
-\authoremail{nv.hofer@mci4me.at}
-
-
-%
-% End of the preamble, start of the document.
+% end of the preamble, start of the body of the document source.
 \begin{document}
-
 
 %
 %% Title or Titlepage
 \maketitle
 
-\input{document.tex}
 
+\pagenumbering{Roman}
+
+%% Abstract
+\input{abstract.tex}
+\newpage
+
+%% Tables
+\tableofcontents
+\newpage
+% Table of figures
+% Table of tables
+% Table of abbreviations
+\listoffigures
+\newpage
+
+\listoftables
+\newpage
+
+%% Main Document
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{document.tex}
+\clearpage
+\newpage
+
+%
+% The next two lines define the bibliography style to be used, and the bibliography file.
+%\bibliographystyle{apacite} %plain
+\bibliography{references}
+\newpage
+
+%% Affidavit
+\makeaffidavit
+\newpage
+
+%% Appendix
+\appendix
+\input{appendix}
 
 \end{document}
+\grid
+
