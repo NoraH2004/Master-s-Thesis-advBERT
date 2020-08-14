@@ -1464,9 +1464,9 @@ As described in their paper, it involves a great deal of effort to ensure (b) te
 By design we chose attacks that are supposed to fool the human prediction. The the
 
 \subsection{Results todo}
-We compare the results of three different attacks, described in seciton~\ref{sec:transformation}. To answer our research question, we can see the results of our experiments in table~\ref{tab:results-table} which show that the BERT model is \textbf{not} robust against adversarial input on character-level in the black box setting.
-The most successful method, according to our results is \textbf{Leet Speak}. With it we were able to achieve a success rate of 47.8\%. As described above, we applied our attack to 2232 sentences and were thus able to trigger a change in prediction for 1066 sentences. By using \textbf{misspellings}, we were able to generate an incorrect prediction for 420 out of 1354 modified sentences, giving a success rate of 31\%. By simply adding one comma behind the important word, we were able to change the prediction for 15\% of the sentences, using the p\textbf{unctuation method}.  Out of 2555 sentences we got a modified prediction of the model for 382 sentences.
-To look into our results in more detail table~\ref{tab:ex_sentence_gaming} shows an example sentence. In this case we were able to flip the model's prediction using each of the three proposed transformations.
+We compare the results of three different attacks, described in seciton~\ref{sec:transformation}. To answer our research question, we can see the results of our experiments in table~\ref{tab:results-table}, which show that the BERT model is \textbf{not} robust against adversarial input on character-level in the black-box setting.
+The most successful method, according to our results, is \textbf{Leet Speak}. With it, we were able to achieve a success rate of 47.8\%. As described above, we applied our attack to 2232 sentences and thus triggered a change in prediction for 1066 sentences. By using \textbf{misspellings}, we were able to generate an incorrect prediction for 420 out of 1354 modified sentences, giving a success rate of 31\%. By simply adding one comma behind the important word, we were able to change the prediction for 15\% of the sentences, using the p\textbf{unctuation method}.  Out of 2555 sentences, we got a modified prediction of the model for 382 sentences.
+To look into our results in more detail table~\ref{tab:ex_sentence_gaming} shows an example sentence. In this case, we were able to flip the model's prediction using each of the three proposed transformations.
 
 As described, our Aspect-Sentiment pairs look like this:
 
@@ -1533,34 +1533,121 @@ Success Rate                                             & 0.477599             
 \label{tab:ex_sentence_gaming}
 \end{table}
 
-\subsection{Entity}
-With the leet speak method we were able to change each entity at least once. Unlike the with the typo method, where we could not change the entities 'GRAPHICS', 'BATTERY', 'PORTS', 'SHIPPING', 'FANS\textunderscore COOLING', 'MEMORY', 'HARD\textunderscore DISC', 'KEYBOARD', and 'MOTHERBOARD'. With the punctuation method we were able to change all entities except the following ones: 'MULTIMEDIA\textunderscore DEVICES', 'KEYBOARD', 'SHIPPING', 'MEMORY', 'HARDWARE' and 'WARRANTY'. 
+\subsubsection{Entity}
+With the leet speak method, we were able to change each entity at least once. Unlike the typo method, we could not change the entities 'GRAPHICS', 'BATTERY', 'PORTS', 'SHIPPING', 'FANS\textunderscore COOLING', 'MEMORY', 'HARD\textunderscore DISC', 'KEYBOARD', and 'MOTHERBOARD'. With the punctuation method, we were able to change all entities except the following ones: 'MULTIMEDIA\textunderscore DEVICES', 'KEYBOARD', 'SHIPPING', 'MEMORY', 'HARDWARE' and 'WARRANTY'. 
 The ten entities that could be changed most often using the leet method are 'LAPTOP', 'DISPLAY', 'BATTERY', 'KEYBOARD', 'SOFTWARE', 'MOUSE', 'COMPANY', 'MULTIMEDIA\textunderscore DEVICES', 'GRAPHICS', 'SUPPORT'. For the misspelling method, these ten were 'SOFTWARE', 'SUPPORT', 'OS', 'LAPTOP', 'COMPANY', 'CPU', 'MULTIMEDIA\textunderscore DEVICES', 'POWER\textunderscore SUPPLY', 'DISPLAY' and HARDWARE', and for the punctuation method it was 'BATTERY', 'COMPANY', 'LAPTOP', 'SUPPORT', 'OS', 'POWER\textunderscore SUPPLY', 'DISPLAY', 'MOUSE', 'SOFTWARE' and 'HARD\textunderscore DISC'. The order of the enumerations gives indication of the frequency of the changes, with the first named entity being the most frequently changed. The corresponding graphics can be found in the appendix figures ~\ref{fig:entity_change_leet}, ~\ref{fig:entity_change_typo}, and ~\ref{fig:entity_change_punct}. 
-We can conclude from this that the entities have been changed at different times.  It is interesting that we cannot detect any entities that are equally robust or susceptible to all three methods. Only the entity 'LAPTOP' was changed most often by the leet method, fourth most often by the misspelling method, and third most often by the punctuation method. It is also noteworthy that the entity 'BATTERY' is seemingly very susceptible to method 3, punctuation, by which it was changed most frequently, while for the leet method the entity is changed only third most frequently and with the typo method the entity is not even among the 10 most frequently changed. This indicates a good robustness of this entity against method two, misspelling. 
+We can conclude from this that the entities have been changed at different times.  Interestingly, we cannot detect any entities that are equally robust or susceptible to all three methods. Only the entity 'LAPTOP' was changed most often by the leet method, fourth by the misspelling method, and third most often by the punctuation method. It is also noteworthy that the entity 'BATTERY' is seemingly very susceptible to method 3, punctuation, by which it was changed most frequently, while for the leet method the entity is changed only third most frequently and with the typo method the entity is not even among the ten most frequently changed. This indicates the good robustness of this entity against method two, misspelling. 
 
-\subsection{Entity-Attribute}
-These observations are similar when we add attributes to the analysis. Using the leet-speak method, were able to change all except 6 out of 184 possible entity-attribute pairs. This was considerably more challenging with the methods misspelling and punctuation. Here, the lists of entity-attribute pairs, that we were not able to change through modifications are longer. For misspellings we could not find any changes for 32 entity-attribute pairs. For punctuation we could not change the entity-attribute prediction of 24 pairs. The respective illustrations show the changes of entity-attribute pairs split respectively and can be found in the appendix figures ~\ref{fig:entity_attr_change_leet}, ~\ref{fig:entity_attr_change_typo}, and ~\ref{fig:entity_attr_change_punct}.
+\subsubsection{Entity-Attribute}
+These observations are similar when we add attributes to the analysis. Using the leet-speak method, we were able to change all except 6 out of 184 possible entity-attribute pairs. This was considerably more challenging with the methods misspelling and punctuation. Here, the lists of entity-attribute pairs that we could not change through modifications are longer. For misspellings, we could not find any changes for 32 entity-attribute pairs. For punctuation, we could not change the entity-attribute prediction of 24 pairs. The respective illustrations show the changes of entity-attribute pairs split respectively and can be found in the appendix figures ~\ref{fig:entity_attr_change_leet}, ~\ref{fig:entity_attr_change_typo}, and ~\ref{fig:entity_attr_change_punct}.
 
-\subsection{Entity-Attribute-Sentiment}
-Including the predicted sentiment in our evaluation, we see that some entity-attribute-sentiment sets are very susceptible to changes of any of our three methods. For example, the set 'LAPTOP#GENERAL POS' was changed 103 times by leet speak modifications, 48 times by misspellings and 14 times by added punctuation. This set appeared in the dataset of changed modifyable original sentences 134 times. We were not able to change all 552 possible combinations of entity, attribute and sentiment, whereby the first method is clearly the most efficient. When attacking with the leet method only 21 sets remained unchanged, while with typo and punctuation, the number of sets unchanged was 49 and 46, respectively. Some sets we were not change with any of our three attacking methods (e.g. SUPPORT#QUALITY - POS).
+\subsubsection{Entity-Attribute-Sentiment}
+Including the predicted sentiment in our evaluation, we see that some entity-attribute-sentiment sets are very susceptible to changes in any of our three methods. For example, the set 'LAPTOP#GENERAL POS' was changed 103 times by leet speak modifications, 48 times by misspellings, and 14 times by added punctuation. This set appeared in the dataset of changed modifiable original sentences 134 times. We could not change all 552 possible combinations of an entity, attribute, and sentiment, whereby the first method is the most efficient. When attacking with the leet method, only 21 sets remained unchanged, while with typo and punctuation, the number of sets unchanged was 49 and 46, respectively. Some sets we did not change with any of our three attacking methods (e.g., SUPPORT#QUALITY - POS). While most frequently changed entity-attribute sentiment sets are similar to the most frequently changed entity-attribute pairs, there are some outliers (e.g., LAPTOP#PORTABILITY-POS in the case of the misspelling attacks). The respective illustrations show the changes of entity-attribute sentiment sets split respectively and can be found in the appendix figures ~\ref{fig:entity_attr_sent_change_leet}, ~\ref{fig:entity_attr_sent_change_typo}, and ~\ref{fig:entity_attr_sent_change_punct}.
 
+\subsubsection{Detailed Results per Method}
 
-
-
-The graphics shown only contain the results of these sentences, which were changed by the modification. Furthermore, they only contain the modified results. We will use the following example for illustration:
-The sentence "It’s wonderful for computer gaming." is recorded in the graphic, since we were able to change it's prediction result through modifying the important word. However, the result LAPTOP#MISCELLANEOUS POS is not included in the graphic, since it was not changed by the modification and the same entity, attribute and sentiment was predicted for the modified sentence.
-
-
-
-
-
-
-\subsubsection{Typo}
-
-
-
+For a final visualization, we look at the results for each of the three methods in more detail.
+The graphics shown below only contain the results of these sentences, which were changed by the modification. Furthermore, they only contain the modified results. We will use the following example for illustration:
+The sentence "It's wonderful for computer gaming." is recorded in the graphic, since we were able to change it's prediction result through modifying the important word. However, the result LAPTOP#MISCELLANEOUS POS is not included in the graphics since the modification, and the same entity did not change it, attribute and sentiment were predicted for the modified sentence.
 
 \subsubsection{Leet}
+When only looking at the entities in figure~\ref{fig:entity_leet}, we see that LAPTOP, DISPLAY, and BATTERY were removed most often, whereas LAPTOP is remarkably much more likely to be added than other entities.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_leet.png}
+    \caption{Changes in entities - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_leet}
+\end{figure}
+
+
+In Figure~\ref{fig:entity_attr_leet}, we analyze the change of entity-attribute sets caused by the perturbation through leet speak. The attributes removed most often are GENERAL, QUALITY, and OPERATION\textunderscore PERFORMANCE. The attributes most often falsely predicted after perturbation are QUALITY, GENERAL, and DESIGN\textunderscore FEATURES.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_asp_leet.png}
+    \caption{Changes in entity-attribute pairs - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_attr_leet}
+\end{figure}
+
+In figure~\ref{fig:entity_attr_sent_leet}, we explore the flip of the entity-attribute sentiment set triggered by modifying a sentence using leat speak. The illustration shows that positive reviews are slightly less likely to be classified as such, while more reviews are falsely classified as negative when they are not.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_asp_sent_leet.png}
+    \caption{Changes in entity-attribute sentiment sets - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_attr_sent_leet}
+\end{figure}
+
+\subsubsection{Misspellings}
+
+When only looking at the entities in figure~\ref{fig:entity_typo}, we see that SOFTWARE, SUPPORT, and OS were removed most often, whereas LAPTOP and COMPANY are much more likely to be added than other entities.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_typo.png}
+    \caption{Changes in entities - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_typo}
+\end{figure}
+
+
+When analyzing figure~\ref{fig:entity_attr_typo}, the entity-attribute sets flipped by the use of the misspellings, the attributes most often removed are GENERAL, QUALITY and OPERATION\textunderscore PERFORMANCE, while the most often added attributes are GENERAL, QUALITY, MISCELLANEOUS and DESIGN\textunderscore FEATURES.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_asp_typo.png}
+    \caption{Changes in entity-attribute pairs - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_attr_typo}
+\end{figure}
+
+Figure~\ref{fig:entity_attr_sent_typo} shows that positive reviews are more likely to be not be classified as such through misspelling perturbations, while more reviews are falsely classified to be negative, while they are not.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_asp_sent_typo.png}
+    \caption{Changes in entity-attribute sentiment sets - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_attr_sent_typo}
+\end{figure}
+
+
+\subsubsection{Punctuation}
+
+Figure~\ref{fig:entity_punct} illustrates how the insertion of a punctuation mark after the determined important word reflects on the model's prediction of entities. We see that BATTERY, COMPANY, and LAPTOP were removed most often, whereas LAPTOP is remarkably more likely to be added than other entities. This means that content about the battery or the company is less likely to be detected in a sentence. Through adversarial punctuation, a sentence is more likely to be classified to contain information about a laptop or support subjects.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_punct.png}
+    \caption{Changes in entities - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_punct}
+\end{figure}
+
+
+In Figure~\ref{fig:entity_attr_punct}, we analyze the change of entity-attribute sets caused by inserting punctuation marks behind the important word. The attributes removed most often are QUALITY and OPERATION\textunderscore GENERAL. The attributes which were predicted for sentences, which do, in fact, not contain information about these attributes are QUALITY, GENERAL, and MISCELLANEOUS. 
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_asp_punct.png}
+    \caption{Changes in entity-attribute pairs - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_attr_punct}
+\end{figure}
+
+In figure~\ref{fig:entity_attr_sent_punct} we explore the flip of the entity-attribute sentiment set triggered through modifying a sentence using a additional punctuation mark. The figure illustrates that unlike the other two perturbation methods, positive reviews are slightly more likely to be classified as such. Like the two other methods, reviews were often falsely classified as negative when they are not.
+
+\begin{figure}
+    \centering
+    \includegraphics[ width = 1\textwidth]{img/entity_asp_sent_punct.png}
+    \caption{Changes in entity-attribute sentiment sets - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \label{fig:entity_attr_sent_punct}
+\end{figure}
+
+
+
+
+
+
+\section{Discussion}
+
+
 
 - meistens so, dass das veränderte Wort einfach nicht mehr erkannt wurde. Der Rest passt aber noch. Dadurch wurde die Attention auf was anderes gelegt. Der Rest bleibt gut.
 
@@ -1569,14 +1656,8 @@ The sentence "It’s wonderful for computer gaming." is recorded in the graphic,
 
 Generell: das important word scheint super wichtgi. Vergleiche mti Attentin auf huggingface
 
-
-\subsubsection{Punctuation}
-
-
 generell meistens mehr aspecte gefunden durch modfication
 
-
-\section{Discussion}
 
 \section{Conclusion, Limitations \& further Research}
 
