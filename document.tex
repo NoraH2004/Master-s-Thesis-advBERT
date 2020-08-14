@@ -519,12 +519,14 @@ Instead of using fixed embedding representations, like Word2vec or GloVe \cite{p
 \label{sec:attention}
 %Attention nochmal besser schreiben
 \todo{Attention nochmal besser beschreiben}
-In 2015 various papers described the concept of "attention" in training recurrent neural networks, allowing models to learn alignments between different modalities \cite{}. These models use information form learning to decide which parts of the input to pay attention to in order to draw global dependencies between input and output. 
+In 2015 various papers described the concept of "attention" in training recurrent neural networks, allowing models to learn alignments between different modalities \cite{mnih2014recurrent, bahdanau2014neural}. These models use information form learning to decide which parts of the input to pay attention to in order to draw global dependencies between input and output. 
 
 The models are based on an encoder-decoder structure, where the encoder maps the input sequence of character representations to a sequence of continuous representations. In the second step, the decoder creates an output, a sequence of characters. 
 
 The attention in the decoder allows it to look back at the hidden state of the source sequences, which are combined using a weighted average and then serve as an additional input to the decoder. 
-An advanced approach of attention is called self-attention, which allows for obtaining more contextually sensitive word representations by looking at nearby words in a sentence or paragraph.
+An advanced approach of attention is called self-attention, which allows for obtaining more contextually sensitive word representations by looking at nearby words in a sentence or paragraph. Google's machine translation team was the first in 2017 to use self-attention mechanisms in their paper "Attention is All You Need" to learn text representations \cite{vaswani2017attention}. To better understand self-attention one can imagine the human sight mechanism. While humans detect an object, say a banana, they will typically not scan the entire room, or scene to acquire information but rather focus on the respective object. Humans learn, that objects typically appear in a particular scene. E. g., bananas are typically in a fruit bowl. That way, they combine information from different fixations over time to build a representation and in the future, focus their attention on that particular scene, the bowl, when looking for the banana. 
+
+
 
 \textbf{Transformer Models}
 \label{sec:transformers}
@@ -1550,7 +1552,7 @@ For a final visualization, we look at the results for each of the three methods 
 The graphics shown below only contain the results of these sentences, which were changed by the modification. Furthermore, they only contain the modified results. We will use the following example for illustration:
 The sentence "It's wonderful for computer gaming." is recorded in the graphic, since we were able to change it's prediction result through modifying the important word. However, the result LAPTOP#MISCELLANEOUS POS is not included in the graphics since the modification, and the same entity did not change it, attribute and sentiment were predicted for the modified sentence.
 
-\subsubsection{Leet}
+\textbf{Leet}
 When only looking at the entities in figure~\ref{fig:entity_leet}, we see that LAPTOP, DISPLAY, and BATTERY were removed most often, whereas LAPTOP is remarkably much more likely to be added than other entities.
 
 \begin{figure}
@@ -1579,7 +1581,7 @@ In figure~\ref{fig:entity_attr_sent_leet}, we explore the flip of the entity-att
     \label{fig:entity_attr_sent_leet}
 \end{figure}
 
-\subsubsection{Misspellings}
+\textbf{Misspellings}
 
 When only looking at the entities in figure~\ref{fig:entity_typo}, we see that SOFTWARE, SUPPORT, and OS were removed most often, whereas LAPTOP and COMPANY are much more likely to be added than other entities.
 
@@ -1610,7 +1612,7 @@ Figure~\ref{fig:entity_attr_sent_typo} shows that positive reviews are more like
 \end{figure}
 
 
-\subsubsection{Punctuation}
+\textbf{Punctuation}
 
 Figure~\ref{fig:entity_punct} illustrates how the insertion of a punctuation mark after the determined important word reflects on the model's prediction of entities. We see that BATTERY, COMPANY, and LAPTOP were removed most often, whereas LAPTOP is remarkably more likely to be added than other entities. This means that content about the battery or the company is less likely to be detected in a sentence. Through adversarial punctuation, a sentence is more likely to be classified to contain information about a laptop or support subjects.
 
@@ -1646,15 +1648,58 @@ In figure~\ref{fig:entity_attr_sent_punct} we explore the flip of the entity-att
 
 
 \section{Discussion}
+In a direct comparison we can see that the Leet Speak method has been the most successful. The least successful was the method of punctuation. This could be attributable to several reasons.
 
+\subsection{Important Word Detection}
+
+If we compare the results of the three methods in detail, we can see that in many cases the change of a word is decisive. 
+This can best be demonstrated with an example. 
+The result of the classification of the sentence "i love this notebook." is LAPTOP#GENERAL - POS. The important word identified by the LOO method is 'love'. If we use our Wikipedia typo dictionary, we find three ways to change the word. This results in the three modified sentences: "i lvoe this notebook.", "i loev this notebook.", and "i lveo this notebook.".
+All three sentences result in the same false prediction:
+"LAPTOP#MISCELLANEOUS" "NEG".
+
+This indicates that it is not important how the important word is changed, but only that it has been changed and is therefore no longer recognized.
+This effect could also be seen across methods:
+
+Using the example in table ~\ref{tab:ex_sentence_gaming}, we see that regardless of the attack method, the entity attribute Sentiment set was incorrectly classified. 
+
+
+\subsection{Word Embedding}
+Let us recall the theory of word embedding of the BERT model:
+BERT has a fixed set of learned word embeddings, composed in a word embedding lookup table, consisting of 30,522 words and word parts. 
+
+To process sequences, BERT first transforms them into tokens. The token representation of the original sentence "It’s wonderful for computer gaming." is the following:
+
+
+{[}CLS{]}  ||  it  ||  '  ||  s  ||  wonderful  ||  for  ||  computer  ||  gaming  ||  .  ||  {[}SEP{]} 
+
+
+By changing the word 'wonderful' to w0nd3rfu1, as we do when attacking the model with the leed speak method, the token representation changes to:
+
+{[}CLS{]}  ||  it  ||  '  ||  s  ||  w  ||  \#\#0  ||  \#\#nd  ||  \#\#3  ||  \#\#rf  ||  \#\#u  ||  \#\#1  ||  for  ||  computer  ||  gaming  ||  .  ||  {[}SEP{]}.
+
+In this case BERT is no longer able to use the original word representation to assign semantic meaning to the word "wonderful", and will try to make sense of the remaining word pieces, being single letters, letter pairs and numbers.
+
+We compare this with the second perturbation method, misspellings. The token representation of the sentences is the following:
+
+{[}CLS{]}  ||  it  ||  '  ||  s  ||  wonderful  ||  \#\#l  ||  for  ||  computer  ||  gaming  ||  .  ||  {[}SEP{]}.
+
+Note, that compared to the original token representation, only one extra token was added and all other token representations remain the same. It is therefore less challenging for the model, to still understand the sentence. Another aspect, why BERT should be more robust against the misspelling method is the corpus it is pre-trained on. To recall, the BERT model is pre-trained on all available Wikipedia articles. The dictionary we used for our experiments is a gathering of common typos found in wikipedia articles. BERT should therefore have assigned meaning to, at least some of the common typos.
+
+
+In our third perturbation method, we added a comma after the important word "wonderful", resulting in a token representation looking like this:
+
+{[}CLS{]}  ||  it  ||  '  ||  s  ||  wonderful  || , ||  for  ||  computer  ||  gaming  ||  .  ||  {[}SEP{]}.
+
+There is still little literature available for the semantic representation of punctuation marks in BERT. In general, it can be said that it is difficult to attribute semantic meaning to a comma. Punctuation marks occur independently of context, sentiment, subject area and language style. Unlike, for example, the word "umbrella" which mostly occurs in the context of rain, this cannot be said about a comma. The only thing that recurs is that it usually occurs after the same words. For example after 'and' as well as at the beginning of sentences like 'Honestly', 'Lately' etc. But even these rules do not provide any information about the semantic meaning. This fact could be one explanation for the fact that the third method was not quite as effective as the perturbations through leet speak and misspellings.
+
+
+\subsection{Attention}
+In 
 
 
 - meistens so, dass das veränderte Wort einfach nicht mehr erkannt wurde. Der Rest passt aber noch. Dadurch wurde die Attention auf was anderes gelegt. Der Rest bleibt gut.
 
-
-
-
-Generell: das important word scheint super wichtgi. Vergleiche mti Attentin auf huggingface
 
 generell meistens mehr aspecte gefunden durch modfication
 
