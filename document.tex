@@ -387,7 +387,7 @@ The input layer is the first layer of a network, which receives the input and fo
 
 \end{tikzpicture}
 
-\caption{Deep neural network architecture with multiple layers.}
+\caption[A DNN architecture with multiple layers]{Deep neural network architecture with multiple layers.}
 \label{fig:DNN}
 \end{figure}
 
@@ -486,7 +486,7 @@ Moreover, they found that the training on huge corpora enabled them to automatic
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/Word2Vec_relations.png}
-    \caption{Word2Vec representations capturing relationships and similarities between words, such as gender relationships, tenses and country-capital relations. Illustrated by~\protect\cite{Bujokas:2020}}
+    \caption[Word2Vec capturing semantic word meaning]{Word2Vec representations capturing relationships and similarities between words, such as gender relationships, tenses and country-capital relations. Illustrated by~\protect\cite{Bujokas:2020}}
     \label{fig:Word2Vec}
 \end{figure}
 
@@ -497,7 +497,7 @@ For example, the word "Apple" has the same representation in "Apple Pie" and "Ap
 \begin{figure}
     \centering
     \includegraphics[ width = .7\textwidth]{img/Wod2Vec_representations_embedding.png}
-    \caption{A 2D t-SNE visualisation of Word2Vec embedding representations.~\protect\cite{Bogdan:2018}}
+    \caption[Word2vec embedding representation]{A 2D t-SNE visualisation of Word2Vec embedding representations.~\protect\cite{Bogdan:2018}}
     \label{fig:Word2Vec_bogdan}
 \end{figure}
 
@@ -531,7 +531,7 @@ In their paper "What Does BERT Look At?", Clark et al., propose methods for anal
 \begin{figure}
     \centering
     \includegraphics[ width = .7\textwidth]{img/attention_clarc.png}
-    \caption{Demonstration of substantial syntactic information found in BERT attention heads ~\protect\cite{clark2019does}.}
+    \caption[BERT attention heads]{Demonstration of substantial syntactic information found in BERT attention heads ~\protect\cite{clark2019does}.}
     \label{fig:attention_clark}
 \end{figure}
 
@@ -554,7 +554,7 @@ Figure ~\ref{fig:NLP-Tasks-Taxonomy} illustrates the categorization of different
 \begin{figure}
     \centering
     \includegraphics[ width = .7\textwidth]{img/NLP_tasks.jpg}
-    \caption{A taxonomy of popular NLP tasks~\protect\cite{ganegedara2018natural}}
+    \caption[NLP tasks taxonomy]{A taxonomy of popular NLP tasks~\protect\cite{ganegedara2018natural}}
     \label{fig:NLP-Tasks-Taxonomy}
 \end{figure}
 Examples for semantic tasks are SA and Aspect-based Sentiment Analysis (ABSA). 
@@ -719,7 +719,7 @@ In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BER
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/bert-pre-training_fine-tuning.png}
-    \caption{The BERT workflow consists of (1) pre-training: self-supervised training on a large amount of text (books and Wikipedia) and (2) fine-tuning: supervised training on a downstream task with labeled data. Illustration from~\protect\cite{alammar2018illustrated}.}
+    \caption[The BERT workflow]{The BERT workflow consists of (1) pre-training: self-supervised training on a large amount of text (books and Wikipedia) and (2) fine-tuning: supervised training on a downstream task with labeled data. Illustration from~\protect\cite{alammar2018illustrated}.}
     \label{fig:BERT}
 \end{figure}
 
@@ -814,7 +814,7 @@ BERT large has a vocabulary of 30,522 tokens and 786 features in its embedding. 
 
 
 \end{tikzpicture}
-\caption{The conversion of a sequence string into its word vector representations.}
+\caption[Word vector representations]{The conversion of a sequence string into its word vector representations.}
     \label{fig:word_embedding}
 
 \end{figure}
@@ -827,7 +827,7 @@ The words stored in the dictionary differs, depending on the corpus, used for vo
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/bert_input_representatino.png}
-    \caption{Three BERT embedding layers architecture: token, sequence, and positional embedding layers~\protect\cite{devlin2018bert}.}
+    \caption[BERT embedding layer architecture]{Three BERT embedding layers architecture: token, sequence, and positional embedding layers~\protect\cite{devlin2018bert}.}
     \label{fig:BERT_Layers}
 \end{figure}
 %----------------Token Embedding Layer------------------------------
@@ -899,7 +899,7 @@ The purpose of the token embedding layer is to transform the tokenized input (e.
         \draw[->,thick] (vectorized) -- ++(0,-2cm);
 
     \end{tikzpicture}
-\caption{BERTbase Token Embedding Layer.} 
+\caption{BERTbase Token Embedding Layer} 
 \label{fig:BERT_tokenEmbedding}
 \end{figure}
 
@@ -986,7 +986,7 @@ The segment embedding layer uses two indices 0 and 1 as vector representations t
         \draw[->,thick] (vectorized) -- ++(0,-2cm);
 
     \end{tikzpicture}
-    \caption{BERTbase Segment Embedding Layer.}
+    \caption{BERTbase Segment Embedding Layer}
     \label{fig:BERT_segmentEmbedding}
 \end{figure}
 
@@ -1016,7 +1016,7 @@ When solving the MLM task, 15\% of the words in a sequence are replaced with a [
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/BERT-MLM_3.png}
-    \caption{The first task of the self-supervised pre-training process of BERT: Masked Language Modelling. Illustration from~\protect\cite{alammar2018illustrated}}
+    \caption[Masked Language Modelling]{The first task of the self-supervised pre-training process of BERT: Masked Language Modelling. Illustration from~\protect\cite{alammar2018illustrated}}
     \label{fig:BERT_MLM}
 \end{figure}
 
@@ -1029,7 +1029,7 @@ To solve this task, a [CLS] token is inserted as the first token of the first se
 \begin{figure}
     \centering
     \includegraphics[ width = .9\textwidth]{img/BERT_NSP.png}
-    \caption{The second task of the self-supervised pre-training process of BERT: Next Sentence Prediction. Illustration from~\protect\cite{alammar2018illustrated}.}
+    \caption[Next Sentence Prediction]{The second task of the self-supervised pre-training process of BERT: Next Sentence Prediction. Illustration from~\protect\cite{alammar2018illustrated}.}
     \label{fig:BERT_NSP}
 \end{figure}
 
@@ -1057,7 +1057,7 @@ At the input, sentence A and B form the pre-training task NSP are comparable wit
 \begin{figure}
     \centering
     \includegraphics[ width = .9\textwidth]{img/BERT_downstream-tasks.png}
-    \caption{Fine-tuning the BERT model on multiple downstream tasks~\protect\cite{devlin2018bert}.}
+    \caption[BERT downstream tasks]{Fine-tuning the BERT model on multiple downstream tasks~\protect\cite{devlin2018bert}.}
     \label{fig:BERT_downstream}
 \end{figure}
 
@@ -1069,7 +1069,7 @@ For sequence tagging or question answering, the token representations are fed in
 \begin{figure}
     \centering
     \includegraphics[ width = .9\textwidth]{img/BERT-Finetuning.png}
-    \caption{Finetuning of BERT for a simple classification task detecting spam in E-Mails. Illustration from~\protect\cite{alammar2018illustrated}}
+    \caption[BERT finetuning on a classification task]{Finetuning of BERT for a simple classification task detecting spam in E-Mails. Illustration from~\protect\cite{alammar2018illustrated}}
     \label{fig:BERT_NSP}
 \end{figure}
 
@@ -1085,7 +1085,7 @@ See Figure \ref{fig:advEx} for an example of an applied adversarial perturbation
 \begin{figure}
     \centering
     \includegraphics[ width = .8\textwidth]{img/advExample.jpg}
-    \caption{Adversarial example in computer vision.~\protect\cite{papernot2016crafting}. Original image of a panda bear shown on the left side. The right side shows the misclassified image with the added perturbation, shown in the middle.}
+    \caption[Adversarial example in computer vision]{Adversarial example in computer vision.~\protect\cite{papernot2016crafting}. Original image of a panda bear shown on the left side. The right side shows the misclassified image with the added perturbation, shown in the middle.}
     \label{fig:advEx}
 \end{figure}
 
@@ -1313,7 +1313,7 @@ The three slots are linked to each other within tuples. For this thesis we decid
 \begin{figure}
     \centering
     \includegraphics[ width = .5\textwidth]{img/semeval.png}
-    \caption{Laptop Entity Aspect Categories~\protect\cite{pontiki2015semeval}.}
+    \caption[SemEval 2015 Dataset]{Laptop Entity Aspect Categories~\protect\cite{pontiki2015semeval}.}
     \label{fig:semeval}
 \end{figure}
 
@@ -1370,7 +1370,7 @@ In section ~\ref{sec:attacks_method} we proposed three attack methods and discus
 
 \textbf{Leet Speak}
 
-To generate leet speak, we take the important words of a sentence and apply the function below. That way we swap the letters a, e, l, o, and s with the numbers 4, 3, 1, 0, and 5 respectively. We limited ourselves to this 5 characters in order to preserve the readability. 
+To generate leet speak, we take the important words of a sentence and apply the function below. That way we swap the letters a, e, l, o, and s with the numbers 4, 3, 1, 0, and 5 respectively. We limited ourselves to this 5 characters in order to preserve the readability. Note that every letter of the important word, for which it is possible, is replaced by a number. A modified word can therefore contain $0$ \dots $n$ numbers.
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -1399,20 +1399,18 @@ def to_leet(word):
 \end{lstlisting}
 Of a total of 943 sequences, we were able to modify 897 resulting in 2232 cumulative modified sequences. This means, in 46 sentences, the important words did not contain the letters a, e, l, o, or s, and we therefore could not swap a letter with a number.
 After the modification, we predicted the modified sequences and compared the prediction with the prediction of the original sequences. 
+The modifications for the sentence "super fast processor and really nice graphics card.." look are:
 
-\texttt{original\_sentence: "super fast processor and really nice graphics card..",
-modified\_sentences: 
-"super f45t processor and really nice graphics card..", 
-"super fast pr0c3550r and really nice graphics card.."]}
+\textit{"super \textbf{f45t} processor and really nice graphics card.."}, and
+\textit{"super fast \textbf{pr0c3550r} and really nice graphics card.."}.
+
 
 \textbf{Spelling Mistakes}
 
 To generate adversarial examples containig spelling mistakes we used the Wikipedia corpus of typos described in section ~\ref{sec:attacks_method}. We went over the important words in a sequence and checked in the dictionary, if it contained one or more entries of it. For 369 of 943 sequences we were able to find at least one modification for at least one important word, resulting in 1354  modified sequences in total.
-The example below illustrates an example. The important word determined in this sentence is "condition". The typo list contains one entry for the word "condition", being "condidtion". 
+The example below illustrates an example. The important words determined in this sentence are "fast", and "processor". The typo list contains no entry for the word "fast" and one entry for the word "processor", being "processer". Therefore only one modified sentence is generated, being:
 
-\texttt{original\_sentence: "It is the best condition and has a really high quality.",
-modified\_sentence: "It is the best condidtion and has a really high quality.}
-
+\textit{"super fast \textbf{processer} and really nice graphics card.."}
 
 \textbf{Punctuation}
 
@@ -1444,7 +1442,12 @@ def to_punctuation(word):
 
 That way we were able to modify 943 out of 943 sequences, resulting in 2555 modified sequences in total. 
 
-\subsection{Constraints and Evaluation}
+There are two modifications for the original sentence "super fast processor and really nice graphics card.." since there were two words determined to be relevant for the model's prediction. They are the following:
+
+\textit{"super fast\textbf{,} processor and really nice graphics card.."}, and
+\textit{"super fast processor\textbf{,} and really nice graphics card.."}
+
+\subsection{Constraints}
     \label{sec:constraints_m}
 ~~~vage~~
 
@@ -1473,7 +1476,7 @@ As described in their paper, it involves a great deal of effort to ensure (b) te
 
 By design we chose attacks that are supposed to fool the human prediction. The the
 
-\subsection{Results todo}
+\subsection{Results and Evaluation}
 We compare the results of three different attacks, described in seciton~\ref{sec:transformation}. To answer our research question, we can see the results of our experiments in table~\ref{tab:results-table}, which show that the BERT model is \textbf{not} robust against adversarial input on character-level in the black-box setting.
 The most successful method, according to our results, is \textbf{Leet Speak}. With it, we were able to achieve a success rate of 47.8\%. As described above, we applied our attack to 2232 sentences and thus triggered a change in prediction for 1066 sentences. By using \textbf{misspellings}, we were able to generate an incorrect prediction for 420 out of 1354 modified sentences, giving a success rate of 31\%. By simply adding one comma behind the important word, we were able to change the prediction for 15\% of the sentences, using the p\textbf{unctuation method}.  Out of 2555 sentences, we got a modified prediction of the model for 382 sentences.
 To look into our results in more detail table~\ref{tab:ex_sentence_gaming} shows an example sentence. In this case, we were able to flip the model's prediction using each of the three proposed transformations.
@@ -1508,7 +1511,7 @@ Total number of changed predictions through modification & 1066                 
 Success Rate                                             & 0.477599             & 0.310192             & 0.149511             \\ \hline
 \end{tabular}%
 }
-\caption{Results of the three attack methods compared.}
+\caption[Result methods comparisson]{Results of the three attack methods compared}
 \label{tab:results-table}
 \end{table}
 % Please add the following required packages to your document preamble:
@@ -1539,7 +1542,7 @@ Success Rate                                             & 0.477599             
   \begin{tabular}[c]{@{}l@{}}POS\\ POS\end{tabular} \\ \hline
 \end{tabular}%
 }
-\caption{Example Sentence modified using the three attack methods leet speak, misspelling, and punctuation.}
+\caption[Illustration of successful example in all attack methods]{Example sentence modified using the three attack methods leet speak, misspelling, and punctuation.}
 \label{tab:ex_sentence_gaming}
 \end{table}
 
@@ -1566,7 +1569,7 @@ When only looking at the entities in figure~\ref{fig:entity_leet}, we see that L
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_leet.png}
-    \caption{Changes in entities - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity - Leet Speak]{Changes in entities - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_leet}
 \end{figure}
 
@@ -1576,7 +1579,7 @@ In Figure~\ref{fig:entity_attr_leet}, we analyze the change of entity-attribute 
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_asp_leet.png}
-    \caption{Changes in entity-attribute pairs - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity-Attribute - Leet Speak]{Changes in entity-attribute pairs - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_attr_leet}
 \end{figure}
 
@@ -1585,7 +1588,7 @@ In figure~\ref{fig:entity_attr_sent_leet}, we explore the flip of the entity-att
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_asp_sent_leet.png}
-    \caption{Changes in entity-attribute sentiment sets - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity-Attribute-Sentiment - Leet Speak]{Changes in entity-attribute sentiment sets - Attack Method: Leet Speak. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_attr_sent_leet}
 \end{figure}
 
@@ -1596,7 +1599,7 @@ When only looking at the entities in figure~\ref{fig:entity_typo}, we see that S
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_typo.png}
-    \caption{Changes in entities - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity - Misspelling]{Changes in entities - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_typo}
 \end{figure}
 
@@ -1606,7 +1609,7 @@ When analyzing figure~\ref{fig:entity_attr_typo}, the entity-attribute sets flip
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_asp_typo.png}
-    \caption{Changes in entity-attribute pairs - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity-Attribute - Misspelling]{Changes in entity-attribute pairs - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_attr_typo}
 \end{figure}
 
@@ -1615,7 +1618,7 @@ Figure~\ref{fig:entity_attr_sent_typo} shows that positive reviews are more like
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_asp_sent_typo.png}
-    \caption{Changes in entity-attribute sentiment sets - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity-Attribute-Sentiment - Misspelling]{Changes in entity-attribute sentiment sets - Attack Method: Misspellings. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_attr_sent_typo}
 \end{figure}
 
@@ -1627,7 +1630,7 @@ Figure~\ref{fig:entity_punct} illustrates how the insertion of a punctuation mar
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_punct.png}
-    \caption{Changes in entities - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity - Punctuation]{Changes in entities - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_punct}
 \end{figure}
 
@@ -1637,7 +1640,7 @@ In Figure~\ref{fig:entity_attr_punct}, we analyze the change of entity-attribute
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_asp_punct.png}
-    \caption{Changes in entity-attribute pairs - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity-Attribute - Punctuation]{Changes in entity-attribute pairs - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_attr_punct}
 \end{figure}
 
@@ -1646,7 +1649,7 @@ In figure~\ref{fig:entity_attr_sent_punct} we explore the flip of the entity-att
 \begin{figure}
     \centering
     \includegraphics[ width = 1\textwidth]{img/entity_asp_sent_punct.png}
-    \caption{Changes in entity-attribute sentiment sets - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
+    \caption[Changes in Entity-Attribute-Sentiment - Punctuation]{Changes in entity-attribute sentiment sets - Attack Method: Punctuation. Note that only results are displayed that have been changed and the ones that stay are hidden.}
     \label{fig:entity_attr_sent_punct}
 \end{figure}
 
@@ -1716,7 +1719,7 @@ Drawing on Clark et al., changed attention heads can have two reasons. Firstly, 
 \begin{figure}
     \centering
     \includegraphics[ width = .5\textwidth]{img/attention_originalpng.png}
-    \caption{Representation of BERTbase uncased attention heads for the original sentence "It's wonderful for computer gaming."\footnote{\url{https://huggingface.co/exbert/}}.}
+    \caption[BERTbase attention heads]{Representation of BERTbase uncased attention heads for the original sentence "It's wonderful for computer gaming."\footnote{\url{https://huggingface.co/exbert/}}.}
     \label{fig:attention_original}
     
 \end{figure}
@@ -1725,15 +1728,15 @@ Drawing on Clark et al., changed attention heads can have two reasons. Firstly, 
 \begin{figure}[!htb]
 \minipage{0.32\textwidth}
   \includegraphics[width=\linewidth]{img/attention_leet.png}
-  \caption{Leet Speak Method: "It's w0nd3rfu1 for computer gaming."}\label{fig:attention_leet}
+  \caption[BERTbase attention heads - Leet Speak]{Leet Speak Method: "It's w0nd3rfu1 for computer gaming."}\label{fig:attention_leet}
 \endminipage\hfill
 \minipage{0.32\textwidth}
   \includegraphics[width=\linewidth]{img/attention_typo.png}
-  \caption{Misspelling Method:"It's wonderfull for computer gaming."}\label{fig:attention_typo}
+  \caption[BERTbase attention heads - Misspelling]{Misspelling Method:"It's wonderfull for computer gaming."}\label{fig:attention_typo}
 \endminipage\hfill
 \minipage{0.32\textwidth}%
   \includegraphics[width=\linewidth]{img/attention_punct.png}
-  \caption{Punctuation Method: "It's wonderful, for computer gaming."}\label{fig:attention_punct}
+  \caption[BERTbase attention heads - Punctuation]{Punctuation Method: "It's wonderful, for computer gaming."}\label{fig:attention_punct}
 \endminipage
 \end{figure}
 
@@ -1756,6 +1759,8 @@ The idea is to implement the experiments in the running BERTbased ABSA Deep Lear
 \subsection{Limitations}
 
 - other domains hotels and restaurants
+- combine attacks
+- 
 
 %-------------------------------------------------------------------
 %---------------------------Further Research -----------------------
