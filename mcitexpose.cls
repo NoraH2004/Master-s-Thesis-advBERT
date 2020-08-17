@@ -110,8 +110,8 @@
     \newpage
 
     %% Main Document
-    \pagenumbering{arabic}
-    \setcounter{page}{1} 
+    %\pagenumbering{arabic}
+    %\setcounter{page}{1} 
 }
 
 \newcommand{\makeaffidavit}{

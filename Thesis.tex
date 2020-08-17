@@ -2,6 +2,15 @@
 % The first command in your LaTeX source must be the \documentclass command.
 \documentclass[titlepage,english]{mcitthesis}
 
+
+%FIXME
+%\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage[ruled, vlined, linesnumbered, setspace]{algorithm2e, setspace}
+\usepackage{changepage}
+\usepackage[utf8]{inputenc}
+
 %    
 % Author
 \author{Me Myself}
@@ -18,12 +27,14 @@
 % end of the preamble, start of the body of the document source.
 \begin{document}
 
+
+
 %
 %% Title or Titlepage
 \maketitle
 
+%\pagenumbering{Roman}
 
-\pagenumbering{Roman}
 
 %% Abstract
 \input{abstract.tex}
