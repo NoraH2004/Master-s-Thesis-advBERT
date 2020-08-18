@@ -23,7 +23,7 @@ In recent years, the research motivation to generate adversarial examples NLP ha
 In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BERT, a deep contextual language representation model. The authors showed how to leverage transfer-learning by pre-training the model on large corpora with subsequent fine-tuning on a variety of downstream-tasks like text-classification, question answering, sentiment analysis, and more \cite{devlin2018bert}. To this day, BERT is state-of-the-art for many tasks in natural language processing and applied in various use-cases like automatic translation, google search requests, and voice assistant prompts. 
 Given its increasing use in security-sensitive applications such as sentiment analysis \cite{prabowo2009sentiment} and toxic content detection \cite{singhania20173han}, the high reliance on the BERT model for such tasks is highly concerning, since the vulnerability of the model is still not yet fully researched.
 
-In this thesis we will explore the robustness of the BERT model, addressing the Aspect-Based Sentiment Analysis task. 
+In this thesis we will explore the robustness of the BERT model, addressing the Aspect-Based Sentiment Analysis task. While sentiment analysis aims to detect the sentiment polarity of a text sequence, ABSA is a more fine-grained task that extracts both the aspect mentioned and the sentiment associated with this aspect \cite{pavlopoulos2014aspect}.
 Our goal is to point out that commonly used state-of-the-art models for NLP are vulnerable against input level attacks and we should not rely solely on those automated algorithms for security and safety relevant tasks, such as, e.g. hate speech detection.
 
 
@@ -47,32 +47,35 @@ The following chapter gives a brief introduction to the key concepts of DNNs, wh
 DNNs are inspired by the biological neural network of a human brain to learn from examples and build knowledge. 
 DNNs perform a non-linear data transformation and can be used for multiple purposes, e.g., image-recognition, text-classification, audio-transcription, and more \cite{rawat2017deep}.
 The input of a DNN consists of multiple data points which are transformed to meaningful output by the model. The key concept is that DNNs learn the data distribution and identify meaningful features in this process automatically.
-In the training process of a DNN, a model is repeatedly fed with samples of a training-dataset $x \in X$ and the respective expected output $y$.
+In the training process of a DNN, a model is repeatedly fed with samples of a training dataset $x \in X$ and the respective expected output label $y$.
 
 \textbf{The Training Process}
 
 Neural networks consist of an input, an output, and $1\dots n$ hidden layers, as illustrated in Figure~\ref{fig:DNN}.
 The input layer is the first layer of a network, which receives the input and forwards it to the intermediate, so-called hidden layers within the network. These layers apply non-linear transformations to the input to generate output which they pass to the final layer of the network, the output layer. 
+
 \begin{figure}
 \centering
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
 \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1.5,xscale=1.5]
 %uncomment if require: \path (0,341); %set diagram left start at 0, and has height of 341
 
 %Shape: Circle [id:dp9036507142879056] 
-\draw [fill={rgb, 255:red, 208; green, 2; blue, 27 } ,fill opacity=1 ] (112.07,69.97) .. controls (112.07,64.46) and (116.53,60) .. (122.03,60) .. controls (127.54,60) and (132,64.46) .. (132,69.97) .. controls (132,75.47) and (127.54,79.93) .. (122.03,79.93) .. controls (116.53,79.93) and (112.07,75.47) .. (112.07,69.97) -- cycle ;
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,69.97) .. controls (112.07,64.46) and (116.53,60) .. (122.03,60) .. controls (127.54,60) and (132,64.46) .. (132,69.97) .. controls (132,75.47) and (127.54,79.93) .. (122.03,79.93) .. controls (116.53,79.93) and (112.07,75.47) .. (112.07,69.97) -- cycle ;
 %Shape: Circle [id:dp392140696827049] 
-\draw [fill={rgb, 255:red, 208; green, 2; blue, 27 } ,fill opacity=1 ] (112.07,159.97) .. controls (112.07,154.46) and (116.53,150) .. (122.03,150) .. controls (127.54,150) and (132,154.46) .. (132,159.97) .. controls (132,165.47) and (127.54,169.93) .. (122.03,169.93) .. controls (116.53,169.93) and (112.07,165.47) .. (112.07,159.97) -- cycle ;
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,159.97) .. controls (112.07,154.46) and (116.53,150) .. (122.03,150) .. controls (127.54,150) and (132,154.46) .. (132,159.97) .. controls (132,165.47) and (127.54,169.93) .. (122.03,169.93) .. controls (116.53,169.93) and (112.07,165.47) .. (112.07,159.97) -- cycle ;
 %Shape: Circle [id:dp5092562841379737] 
-\draw [fill={rgb, 255:red, 208; green, 2; blue, 27 } ,fill opacity=1 ] (112.07,129.97) .. controls (112.07,124.46) and (116.53,120) .. (122.03,120) .. controls (127.54,120) and (132,124.46) .. (132,129.97) .. controls (132,135.47) and (127.54,139.93) .. (122.03,139.93) .. controls (116.53,139.93) and (112.07,135.47) .. (112.07,129.97) -- cycle ;
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,129.97) .. controls (112.07,124.46) and (116.53,120) .. (122.03,120) .. controls (127.54,120) and (132,124.46) .. (132,129.97) .. controls (132,135.47) and (127.54,139.93) .. (122.03,139.93) .. controls (116.53,139.93) and (112.07,135.47) .. (112.07,129.97) -- cycle ;
 %Shape: Circle [id:dp741575646956142] 
-\draw [fill={rgb, 255:red, 208; green, 2; blue, 27 } ,fill opacity=1 ] (112.07,99.97) .. controls (112.07,94.46) and (116.53,90) .. (122.03,90) .. controls (127.54,90) and (132,94.46) .. (132,99.97) .. controls (132,105.47) and (127.54,109.93) .. (122.03,109.93) .. controls (116.53,109.93) and (112.07,105.47) .. (112.07,99.97) -- cycle ;
+\draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,99.97) .. controls (112.07,94.46) and (116.53,90) .. (122.03,90) .. controls (127.54,90) and (132,94.46) .. (132,99.97) .. controls (132,105.47) and (127.54,109.93) .. (122.03,109.93) .. controls (116.53,109.93) and (112.07,105.47) .. (112.07,99.97) -- cycle ;
 %Shape: Circle [id:dp8747893475728183] 
-\draw [fill={rgb, 255:red, 248; green, 206; blue, 28 } ,fill opacity=1 ] (152.07,49.97) .. controls (152.07,44.46) and (156.53,40) .. (162.03,40) .. controls (167.54,40) and (172,44.46) .. (172,49.97) .. controls (172,55.47) and (167.54,59.93) .. (162.03,59.93) .. controls (156.53,59.93) and (152.07,55.47) .. (152.07,49.97) -- cycle ;
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (152.07,49.97) .. controls (152.07,44.46) and (156.53,40) .. (162.03,40) .. controls (167.54,40) and (172,44.46) .. (172,49.97) .. controls (172,55.47) and (167.54,59.93) .. (162.03,59.93) .. controls (156.53,59.93) and (152.07,55.47) .. (152.07,49.97) -- cycle ;
 %Straight Lines [id:da7388391985482041] 
-\draw [line width=0.75]  (132,69.97) -- (152.07,49.97) ;
+\draw [line width=0.75]    (132,69.97) -- (152.07,49.97) ;
 %Straight Lines [id:da07594424125920374] 
-\draw [line width=0.75]  (132,69.97) -- (152.07,80.97) ;
+\draw [line width=0.75]    (132,69.97) -- (152.07,80.97) ;
 %Straight Lines [id:da32078114159480653] 
 \draw [line width=0.75]    (132,69.97) -- (152.07,110.97) ;
 %Straight Lines [id:da6110475522563447] 
@@ -343,40 +346,40 @@ The input layer is the first layer of a network, which receives the input and fo
 %Shape: Circle [id:dp6377234076663962] 
 \draw  [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (112.07,207.97) .. controls (112.07,202.46) and (116.53,198) .. (122.03,198) .. controls (127.54,198) and (132,202.46) .. (132,207.97) .. controls (132,213.47) and (127.54,217.93) .. (122.03,217.93) .. controls (116.53,217.93) and (112.07,213.47) .. (112.07,207.97) -- cycle ;
 %Shape: Circle [id:dp7982123873550026] 
-\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (211.07,204.97) .. controls (211.07,199.46) and (215.53,195) .. (221.03,195) .. controls (226.54,195) and (231,199.46) .. (231,204.97) .. controls (231,210.47) and (226.54,214.93) .. (221.03,214.93) .. controls (215.53,214.93) and (211.07,210.47) .. (211.07,204.97) -- cycle ;
+\draw  [fill={rgb, 255:red, 248; green, 206; blue, 28 }  ,fill opacity=1 ] (218.07,206.97) .. controls (218.07,201.46) and (222.53,197) .. (228.03,197) .. controls (233.54,197) and (238,201.46) .. (238,206.97) .. controls (238,212.47) and (233.54,216.93) .. (228.03,216.93) .. controls (222.53,216.93) and (218.07,212.47) .. (218.07,206.97) -- cycle ;
 %Shape: Circle [id:dp9175972472468675] 
-\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (331.73,205.63) .. controls (331.83,211.13) and (327.44,215.67) .. (321.94,215.76) .. controls (316.43,215.85) and (311.9,211.46) .. (311.8,205.96) .. controls (311.71,200.46) and (316.1,195.92) .. (321.6,195.83) .. controls (327.11,195.74) and (331.64,200.12) .. (331.73,205.63) -- cycle ;
+\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (337.73,205.63) .. controls (337.83,211.13) and (333.44,215.67) .. (327.94,215.76) .. controls (322.43,215.85) and (317.9,211.46) .. (317.8,205.96) .. controls (317.71,200.46) and (322.1,195.92) .. (327.6,195.83) .. controls (333.11,195.74) and (337.64,200.12) .. (337.73,205.63) -- cycle ;
 
 % Text Node
 \draw (90,59.4) node [anchor=north west][inner sep=0.75pt]    {$x_{1}$};
 % Text Node
 \draw (89,87.4) node [anchor=north west][inner sep=0.75pt]    {$x_{2}$};
 % Text Node
-\draw (89,116.4) node [anchor=north west][inner sep=0.75pt]    {$...$};
+\draw (89,122.4) node [anchor=north west][inner sep=0.75pt]    {$...$};
 % Text Node
 \draw (87,149.4) node [anchor=north west][inner sep=0.75pt]    {$x_{n}$};
 % Text Node
-\draw (98,220.8) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {${Input\ Layer\ L_{1}}$};
+\draw (87,220.8) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {${\textstyle Input\ Layer\ l_{1}}$};
 % Text Node
-\draw (179,219.8) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$Hidden\ Layers\ L_{2} \ ...\ L_{5}$};
+\draw (168,221.8) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$Hidden\ Layers\ l_{2} \ ...\ l_{5}_{\ }$};
 % Text Node
-\draw (293,219.8) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$Output\ Layer\ L_{6}$};
+\draw (293,219.8) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$Output\ Layer\ l_{6}$};
 % Text Node
 \draw (356,70.4) node [anchor=north west][inner sep=0.75pt]    {$y_{0}$};
 % Text Node
-\draw (358,97.4) node [anchor=north west][inner sep=0.75pt]    {$...$};
+\draw (358,104.4) node [anchor=north west][inner sep=0.75pt]    {$...$};
 % Text Node
 \draw (356,128.4) node [anchor=north west][inner sep=0.75pt]    {$y_{n}$};
 % Text Node
-\draw (126,44.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(1)}$};
+\draw (126,44.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$w\textsuperscript{(1)}$};
 % Text Node
-\draw (172,31.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(2)}$};
+\draw (172,31.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$w\textsuperscript{(2)}$};
 % Text Node
-\draw (212,32.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(3)}$};
+\draw (212,32.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$w\textsuperscript{(3)}$};
 % Text Node
-\draw (252,33.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(4)}$};
+\draw (252,33.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$w\textsuperscript{(4)}$};
 % Text Node
-\draw (303,55.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$W\textsuperscript{(5)}$};
+\draw (303,55.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$w\textsuperscript{(5)}$};
 % Text Node
 \draw (152,182.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(2)}$};
 % Text Node
@@ -387,25 +390,37 @@ The input layer is the first layer of a network, which receives the input and fo
 \draw (274,183.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(5)}$};
 % Text Node
 \draw (315,152.4) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize]  {$a\textsuperscript{(6)}$};
+% Text Node
+\draw (152,254.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {${\textstyle(x,y)}$};
+% Text Node
+\draw (152,271.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$l$};
+% Text Node
+\draw (193.12,255.2) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {${\textstyle ( input,\ output)}$};
+% Text Node
+\draw (193.12,271.2) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$layer$};
+% Text Node
+\draw (152,285.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$a$};
+% Text Node
+\draw (192.12,285.2) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$activation\ value$};
+% Text Node
+\draw (152,299.33) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$w$};
+% Text Node
+\draw (193.12,299.2) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$weight$};
 
 
 \end{tikzpicture}
-
 \caption[A DNN architecture with multiple layers]{A deep neural network architecture with an input layer, four hidden layers and an output layer.}
 \label{fig:DNN}
 \end{figure}
 
-\todo{math}
-Each layer consists of multiple neurons, which are connected to all neurons of the next layer. When training a neural network, neurons receive an input $x$, process it, and generate an output. The output is either a final output $y$ or fed to the next layer's neurons for further processing. When processing an input, the neuron multiplies it with a weight. Given an input $x$ and a weight $W\textsuperscript{(1)}$,the output of the first layer $L_1$ is $x*W\textsuperscript{(1)}$. Weights are initialized randomly before training and are adjusted during the training process of the model. After training, the network determines the importance of each single input feature and assigns weights accordingly. A weight of zero denotes an insignificant feature. Besides weights, biases are another linear component applied to the input. After the input is multiplied with the weight, the bias is added: $(a*W+bias)$.
+
+Each layer consists of multiple neurons, which are connected to all neurons of the next layer. When training a neural network, a neuron $i$ receive an input, processes it, and generates an output. The output is either a final output $y$ or fed to the next layer's neurons $j$ for further processing. When processing an input, the neuron multiplies it with a weight~$w$. Weights are initialized randomly before training and are adjusted during the training process of the model. After training, the network determines the importance of each single input feature and assigns weights accordingly. Besides weights, biases are another linear component applied to the input. After the input is multiplied with the weight, the bias $b$ is added: $(x*w+b)$.
 The bias is the final linear component of the input transformation. After the bias is added to the input, the non-linear activation function is applied to the linear combination. The activation function creates a new activation value forwarded to the connected neuron of the following layer until the output layer is reached. The activation function $f$ can be described in formal terms: 
-$f(a*$W\textsuperscript{(1)}$+bias)$.
+$f(x*w+b)$.
 For this work we overview three commonly used activation functions applied in state-of-the-art DNNs. The first one is the Sigmoid transformation function that generates a smooth range of values between 0 and 1 and can be denoted as $a = 1 / (1 + e^{-z})$. The sigmoid transformation makes it easy to observe changes in the output \cite{han1995influence}. The ReLU function (Rectified Linear Units) generates an output $x$ where $a = max(0, z)$. The ReLU function constantly derives values of all inputs greater than 0, which can help networks to train faster \cite{glorot2011deep}. 
 The third activation function is called Softmax and commonly used in the output layer of models trained on a classification task. It is comparable to the Sigmoid function, with the difference that it normalizes the output, to sum up to 1. While the Sigmoid function generates binary output, the Softmax function assigns values to each class representing the confidence levels as probabilities ~\protect\cite{jang2016categorical}.
 
-When training a network, it tries to predict the original label $y$ of a sample. The accuracy describes the percentage of correct matches between $y$ and $\hat{y}$, while the loss function quantifies the distance. It is used as a benchmark for model performance related to a set of samples. The goal is to increase the prediction accuracy during training to minimize the loss function. The more optimized a network, the smaller the value of the loss function. 
-In formal terms, the loss function can be described as 
-${C = 1/m sigmoid (y-a)\hat{2}}$ where $m$ refers to the number of inputs, a to the predicted value, and $y$ to the original label fed into the model.
-\todo{your math is wrong}
+When training a network, it tries to predict the original target label $y$ associated with an input sample $x$. The accuracy describes the percentage of correct matches between $y$ and the predicted output $\hat{y}$, while the loss function quantifies the distance. It is used as a benchmark for model performance related to a set of samples. The goal is to increase the prediction accuracy during training to minimize the loss function. The more optimized a network, the smaller the value of the loss function. 
 The learning process revolves around minimizing the loss function and improves by consciously adjusting the weights to transform the input $x$ to the output $y$. This process runs until the mapping from input to output no longer improves. 
 
 \textbf{The Optimization Function}
@@ -454,8 +469,8 @@ The first results in MT were disappointing as structural and lexical ambiguity o
 \label{sec:word_embeddings}
 
 Text consists of small units like words and characters that do not make sense to a computer program. Therefore, word embeddings represent textual input numerically, so that computer programs can process it. They are fixed-length, dense, real-valued vector representations of words.
-There exist different methods to generate word embeddings. One of the first proposed methods is one-hot encoding, a word-to-integer mapping. Given a vocabulary containing $N$ words, each word is assigned an integer index $i \in {1, \dots N}$. 
-This method results in $N$-dimensional sparse vectors of mostly zeros, except one entry at the position of the corresponding word it represents. Though, this method has two obvious disadvantages. Namely, the vector size increases with the size of the vocabulary. If $N$ increases, a higher amount of data, as well as computer power, is needed for processing. The second downside is that with this method, it is hardly possible to capture linguistic relationships between words. E.g. the vector representation of the word $cat$ is closer to the one of the word $car$ than to the word $dog$, even though the relationship between the words $cat$ and $dog$ seems to should be closer \cite{rodriguez2018beyond}.
+There exist different methods to generate word embeddings. One of the first proposed methods is one-hot encoding, a word-to-integer mapping. Given a vocabulary containing $n$ words, each word is assigned an integer index $i \in {1, \dots N}$. 
+This method results in $n$-dimensional sparse vectors of mostly zeros, except one entry at the position of the corresponding word it represents. Though, this method has two obvious disadvantages. Namely, the vector size increases with the size of the vocabulary. If $N$ increases, a higher amount of data, as well as computer power, is needed for processing. The second downside is that with this method, it is hardly possible to capture linguistic relationships between words. E.g. the vector representation of the word "cat" is closer to the one of the word "car" than to the word "dog", even though the relationship between the words "cat" and "dog" seems to should be closer \cite{rodriguez2018beyond}.
 Word embeddings have become an integral part of NLP since it was shown that the performance of models for a wide range of different downstream tasks\footnote{A downstream task is a supervised-learning task that utilizes a pre-trained language model \cite{alammar2018illustrated}.} could be enhanced by using pre-trained embeddings as initialization \cite{mikolov2013efficient, pennington2014glove}. 
 For that reason, more advanced word embedding methods were introduced, based on word count and prediction. Count based models work with the number of times certain words occur together in a text. These models give deep insights into statistical numbers but have shown to perform poorly in most NLP tasks \cite{neubig2016generalizing}.
 
@@ -903,8 +918,8 @@ The purpose of the token embedding layer is to transform the tokenized input (e.
 \label{fig:BERT_tokenEmbedding}
 \end{figure}
 
-Special tokens are needed for sentence classification. $"[CLS]"$ is added in front of every input example, and $"[SEP]"$ serves as a separator token.
-As mentioned before, the tokenization method WordPiece, is used, which in this case splits the word "strawberries" into "straw" and "\#\#berries". 
+Special tokens are needed for sentence classification. "[CLS]" is added in front of every input example, and "[SEP]" serves as a separator token.
+As mentioned before, the tokenization method WordPiece, is used, which in this case splits the word "strawberries" into $"straw"$ and $"\#\#berries"$. 
 
 %--------------Segment Embedding Layer------------------------------
 \textbf{Segment Embedding Layer}
@@ -1123,9 +1138,8 @@ Table~\ref{tab:loooong} categorizes important past work drawing on Morris' et al
 \label{sec:goal_funciton}
 The goal function determines if an attack is completed, given an input $x$. 
 Goal functions vary by task. The applied parameters are described in the previous sections and include e.g., the attacker's model knowledge and the target class.
-For example, when generating untargeted attacks on classification, the goal function can be denoted as follows:
-
-$G(x):= \{argmax$F(x)$ \neq $original\textunderscore class$\}$
+For example, when generating untargeted attacks on classification, the goal function $G(x)$ can be denoted as follows:
+$G(x):= C(x') \neq C(x)
 
 for the attack being completed if the prediction after the attack is unequal the original prediction. 
 
@@ -1151,7 +1165,8 @@ A search method's aim is to find a perturbation that generates a successful adve
 
             To determine the importance of a word in a sequence, the output label of the original sentence is compared with the output label of the same sentence, without the respective word. 
              
-            Given an input sentence $X$ containing n sentences $x$, each represented as a list of word tokens ${\textbf{x} = [x_token_1, x_token_2,}$ \dots${x_token_n]}$ and a predicted output label $y$, the important word is determined as covered in Algorithm~\ref{alg:loo}. 
+            Given an input sentence $s$ containing $n$ words $x$, each represented as a list of word tokens 
+            ${x = [x\textunderscore token_1, x\textunderscore token_2, \dots x\textunderscore token_n]}$ and a predicted output label $y$, the important word is determined as covered in Algorithm~\ref{alg:loo}. 
 
             \SetKwInput{KwInput}{Input}                % Set the Input
             \SetKwInput{KwOutput}{Output}  
@@ -1161,14 +1176,14 @@ A search method's aim is to find a perturbation that generates a successful adve
             \setstretch{1}
             \DontPrintSemicolon
             \Indm 
-            \KwInput{dataset $X$ with n sentences, classify function}
+            \KwInput{dataset $X$ with n sentences $s$, classify function}
             \KwResult{list of 0 ... n important words per sentence}
             \Indp
             initialize list important-words\;
             \For{sentence in X}{
             initialize list important-words-per-sentence\;
             original-classification = classify(sentence)\;
-            \For{word in sentence}{
+            \For{word in $s$}{
             leave-out = sentence without word\;
             modified-classification = classify(leave-out)\;
             }
@@ -1214,7 +1229,9 @@ A search method's aim is to find a perturbation that generates a successful adve
     When conducting modifications on a textual input sequence of an NLP model, it is likely to alter the semantic meaning or grammatical correctness. E.g.,  the FGSM method to generate modified input. There is no guarantee that words close in the embedding space are semantically similar. Therefore, this approach may replace words with semantically different others and might alter the whole sentence's semantics.
     
     An attack is considered valid if the input satisfies each of the attacker's constraints. 
-    Constraints include different approaches. One approach is to measure the edit distances, e.g., the maximum percentage of words changed \cite{ebrahimi2017hotflip} or maximum Levenshtein edit distance \cite{gao2018black}. Samanta et al. use saliency maps to ensure semantically meaningful adversarial examples\cite{samanta2017towards}. This approach, however, is difficult to perform automatically. Grammatically constraints are intended to prevent the attack from creating perturbations that introduce grammatical errors. Examples here are Part-of-speech consistency or a maximum number of grammatical errors \cite{ebrahimi2017hotflip, jin2019bert}. Semantics constraints aim to preserve the meaning between $x$ and $x\textunderscore adv$, e.g., maximum swapped word embedding distances, or using sentence encoders or language models \cite{cer2018universal, garg2020bae, jin2019bert, li2018textbugger, alzantot2018generating, ebrahimi2017hotflip}.
+    Constraints include different approaches. One approach is to measure the edit distances, e.g., the maximum percentage of words changed \cite{ebrahimi2017hotflip} or maximum Levenshtein edit distance \cite{gao2018black}. Samanta et al. use saliency maps to ensure semantically meaningful adversarial examples\cite{samanta2017towards}. This approach, however, is difficult to perform automatically. Grammatically constraints are intended to prevent the attack from creating perturbations that introduce grammatical errors. Examples here are Part-of-speech consistency or a maximum number of grammatical errors \cite{ebrahimi2017hotflip, jin2019bert}. Semantics constraints aim to preserve the meaning between 
+    
+    e.g., maximum swapped word embedding distances, or using sentence encoders or language models \cite{cer2018universal, garg2020bae, jin2019bert, li2018textbugger, alzantot2018generating, ebrahimi2017hotflip}.
 
 
 \begin{table}
@@ -1365,11 +1382,11 @@ To pre-train the BERT language model on the laptop domain, we use unlabeled Amaz
 \subsubsection{Attacks}
 \label{sec:attacks_method}
 As most existing approaches generate adversarial examples by finding a perturbation, having maximum effectiveness \cite{liang2017deep, ebrahimi2017hotflip, gao2018black, li2018textbugger, alzantot2018generating, jin2019bert, garg2020bae}, the attacks tend to be conspicuous and can easily be identified by humans. Moreover, the perturbations are not likely to appear naturally, making them less relevant in practical applications. Different variations of word-, or character-level-based perturbations have been proposed in the literature. 
-
 Examples include randomly replacing, deleting, swapping, or inserting characters. Perturbations on the word level basis use the same example approaches.  
 The disadvantage of word-level perturbations is that an unintentional change of the semantic meaning of a sentence is likely to happen. This means that the comparison of a sentence's prediction before and after the change of a word is no longer guaranteed, which poses a constraint. Various methods have been proposed to avoid this problem and are described in Section~\ref{sec:adversarial_exapmles_in_text}. 
 This phenomenon occurs less often when perturbing on the character level since the perturbed words remain the same. An exception is when the change of single characters randomly results in a new, existing word of the dictionary with a different semantic meaning. 
-To prevent humans from easily identifying our attacks as adversarial examples, we propose three character-level attack methods that are likely to occur in a practical scenario. The attacks can be subdivided into three attack methods:
+Design choices for our attacks are made considering the prevention of humans from easily identifying them as adversarial examples.
+We conduct three character-level attack methods that are likely to occur in a practical scenario. The attacks can be subdivided into three attack methods:
 
 
 \textbf{Leet Speak}
