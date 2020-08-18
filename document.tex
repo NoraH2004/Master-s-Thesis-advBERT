@@ -7,21 +7,24 @@
 
 \section{Introduction}
 
-To begin this thesis, we would like to invite the reader to a little thought experiment. Imagine that you entrust a smart voice assistant such as Google Home or Amazon Alexa with the safety of your house. What would you expect from your voice assistant to do when you say the following command:
+We would like to begin this thesis by inviting the reader to a little thought experiment. Imagine that you entrust a smart voice assistant such as Google Home or Amazon Alexa with the safety of your house. What would you expect from your voice assistant to do when you say the following command:
 
 "Hey Google, lock the door after I leave."
 
 Probably exactly that, to lock the door. The following work will illustrate how a state-of-the-art machine learning model used in many systems including voice assistants, can be fooled with simple methods so that your front door will be open all day. 
 
 With the integration of computer vision for self-driving cars, natural language processing for controlling our smart homes, and other applications of deep neural networks (DNN) in our daily lives, our reliance on technology increases and, with it, also the concerns about the security of neural networks. The security concerns grow as natural language processing (NLP) models are deployed in productive systems such as fake news detectors \cite{singhania20173han}, real-time translation \cite{zhang2015deep}, and speech recognition in voice assistants \cite{deng2013new}. NLP is a field of artificial intelligence that addresses the interaction between computers and humans using natural language.  
+In the age of the ever-increasing volume of the internet, millions of users have unlimited access to a vast amount of content, online shops and platforms. It has been shown that these freedoms encourage some users to promote offensive and hateful language. The extreme terrorist motive and the public nature of the murder of Drummer Lee Rigby in Woolwich led to an extensive public social media reaction, including hateful and antagonistic sentiment towards a particular race, ethnicity and religion \cite{burnap2014hate}.
+To prevent this happenings, online platform providers prohibit the spreading of hate speech and implement DNN models to detect hateful content \cite{badjatiya2017deep}.
 While significant improvements in performance have been achieved in model-based and classical approaches of machine learning, it is known that DNN systems are also vulnerable to various types of attacks, which reduces their reliability strongly \cite{papernot2018sok}. The most popular attacks are known as "adversarial examples" and were introduced by Szegedy et al. in 2013. The authors found that minimal, and often imperceptible perturbations of the input data can fool a DNN for computer vision into incorrect classifications \cite{szegedy2013intriguing}.
 Adversarial examples are a way to highlight model vulnerabilities and are useful for the evaluation and interpretation of DNNs. 
 In recent years, the research motivation to generate adversarial examples NLP has increased. Jia and Liang were the first to conduct adversarial attacks on textual DNNs and gained attention in the NLP community \cite{Jia2017AdversarialEF}. Since then, many studies have investigated the security of DNNs for NLP and proposed several attack methods for different target models. 
 
 In 2018, Google AI researchers achieved a breakthrough in NLP by introducing BERT, a deep contextual language representation model. The authors showed how to leverage transfer-learning by pre-training the model on large corpora with subsequent fine-tuning on a variety of downstream-tasks like text-classification, question answering, sentiment analysis, and more \cite{devlin2018bert}. To this day, BERT is state-of-the-art for many tasks in natural language processing and applied in various use-cases like automatic translation, google search requests, and voice assistant prompts. 
-Given its increasing use in security-sensitive applications such as sentiment analysis \cite{prabowo2009sentiment} and toxic content detection \cite{singhania20173han}, it is highly concerning that the BERT model's security vulnerabilities are still largely unknown and not a large field of research.
+Given its increasing use in security-sensitive applications such as sentiment analysis \cite{prabowo2009sentiment} and toxic content detection \cite{singhania20173han}, the high reliance on the BERT model for such tasks is highly concerning, since the vulnerability of the model is still not yet fully researched.
 
-This thesis will explore the robustness of the BERT model used for Aspect-Based Sentiment Analysis (ABSA), a task in NLP. 
+In this thesis we will explore the robustness of the BERT model, addressing the Aspect-Based Sentiment Analysis task. 
+Our goal is to point out that commonly used state-of-the-art models for NLP are vulnerable against input level attacks and we should not rely solely on those automated algorithms for security and safety relevant tasks, such as, e.g. hate speech detection.
 
 
 %-------------------------------------------------------------------
@@ -1266,6 +1269,8 @@ A search method's aim is to find a perturbation that generates a successful adve
 \midrule
 \textbf{\cite{li2018textbugger}} &Greedy-WIR &Character insertion, deletion, substitution, neighboring swap&Untargeted Classification &USE sentence encoding cosine similarity \\
 \midrule
+\textbf{\cite{sun2020adv}} &Beam Search &Gradient-Based Character Swap&Untargeted Classification &Limited maximal number of typos per sentence\\
+\midrule
 \textbf{This thesis} &Greedy-WIR &Character level attacks: Leet Speak, Misspellings, Punctuation &Untargeted classification for the ABSA task &Maximum number of words perturbed (one per sentence); Semantic remains the same by design \\
 \bottomrule
 \end{tabular}
@@ -1304,25 +1309,25 @@ Small modifications of image pixels are hardly recognized by human beings, as sh
 %-------------------------------------------------------------------
 %-------------------------------------------------------------------
 
-\section{Methodology}
+\section{Objectives and Methodology}
 \label{sec:methodology}
 
 Building on the theoretical foundations laid out in the previous section, we will now determine areas of the current state of research that have not yet been examined. Drawing on that we will develop the research question and explain the methodology used in the practical part of the work to answer the it. 
 
-
-
-\subsection{Objectives todo}
+\subsection{Objectives}
 \label{sec:objectives}
-- what objectives
-- rq
 
-In our thesis we want to determine the robustness of the famous BERT model and, hence find out if it can be fooled by minor changes. The aim of the work was to answer the following research question:
+Although adversarial examples originate in the computer vision domain and constitute the larger part of research in the field, adversarial examples in the text domain have gained attention in the NLP community in recent years. A lot of research has been carried out to study the robustness of various NLP models, including the state of the art BERT model. 
+However, much of this work is aimed at proving vulnerability or enhancing explaining of the model. 
+Since BERT is used in parts of our daily lives by all of us, for example in voice assistants or the Google search engine, it is of great importance to gain insight into how robust this model is against adversarial attacks. 
+This thesis aims to determine the robustness of the BERT model against minor changes of the input data, while focusing on the practical relevance of the attacks. Based on our results and insights, actions can be taken to make the BERT model more robust and increase the reliability. 
+This leads to the following research question:
 
-RQ1: How robust is BERT based NLP model for the task of ABSA against input level adversarial examples?
+\textit{RQ1: Is the pre-trained BERT model, fine tuned on the ABSA task robust against input level adversarial examples? }
 
-Our experiments result in datasets containing adversarial examples.
+In order to specify this general research question, we formulate a further question, which should provide information about the changed behaviour of the model, depending on the applied attacking method. 
 
-Later on, we will try to generate examples by modifying these words.
+\textit{RQ2: How does the robustness of the model behave when comparing the three different character level attacks.}
 
 
 %-------------------------------------------------------------------
@@ -1330,7 +1335,7 @@ Later on, we will try to generate examples by modifying these words.
 %------------------------------------------------------------------
 
 \subsection{Experimental Setup} 
-To answer our research question, we conducted three input character-level adversarial attacks against the prominent pre-trained BERT model introduced by Google in 2018. 
+To answer our research questions, we conducted three input character-level adversarial attacks against the prominent pre-trained BERT model introduced by Google in 2018. 
 Our goal is to make a socially relevant contribution with this thesis and to contribute to the security of DNNs applied for NLP. We have therefore decided to focus on character-level attacks, as they could occur in practice in the version we have conducted. By design, we have opted for perturbations that have no influence on the evaluation for the human observer, since the semantic meaning of a sequence is not changed by our attacks. 
 With the introduction of transfer learning and pre-trained language models in NLP, the application of transformers to various downstream NLP tasks has become the main trend of recent research progress. Leading language models include the BERT model, GPT-3 introduced by OpenAI in 2020 \cite{brown2020language}, XLNet \cite{yang2019xlnet}, and RoBERTa \cite{liu2019roberta}. As we are again aiming at practical relevance, we investigate the robustness of the BERT model. Since its introduction in 2018 the model is still state-of-the-art for the most used downstream tasks in NLP. Furthermore, the model is used in many areas, such as chat bots, analysis of customer reviews and information research, and the repository to implement BERT is available as open source on GitHub \cite{tum_2020}.  
 We evaluated the robustness of the model in the in-domain classification task, ABSA. To recall, the ABSA task refers to the prediction of an aspect mentioned in an input sequence and the corresponding sentiment. ABSA is considered a multilabel task, since $[0,1, \dots n]$ labels can be predicted for one input sequence. 
@@ -1631,7 +1636,6 @@ The entities that could be changed most often by all three methods include "LAPT
 The corresponding graphics can be found in the appendix Figures~\ref{fig:entity_change_leet},~\ref{fig:entity_change_typo}, and~\ref{fig:entity_change_punct}. 
 We can conclude from this that the entities have been changed at different times.  Interestingly, we cannot detect any entities that are equally robust or susceptible to all three methods. Only the entity "LAPTOP" was changed most often by the Leet Speak method, fourth by the misspelling method, and third most often by the Punctuation method. It is also noteworthy that the entity "BATTERY" is seemingly very susceptible to the Punctuation method, by which it was changed most frequently, while for the Leet Speak method the entity is changed only third most frequently and by the Misspellings method the entity is not even among the ten most frequently changed. This indicates the good robustness of this entity against method two, Misspellings. 
 
-\todo{check everything below - tired af!}
 \subsubsection{Entity-Attribute}
 These observations are similar when we add attributes to the analysis. Using the Leet Speak method, we were able to change all except 6 out of 184 possible entity-attribute pairs. This was considerably more challenging with the methods Misspellings and Punctuation. 32 entity-attribute pairs could not be changed by the generation of examples by using the Misspellings method. With the use of the Punctuation method, we could not change the entity-attribute prediction of 24 pairs. The respective illustrations show the changes of entity-attribute pairs split respectively and can be found in the appendix Figures~\ref{fig:entity_attr_change_leet},~\ref{fig:entity_attr_change_typo}, and~\ref{fig:entity_attr_change_punct}.
 
@@ -1736,37 +1740,39 @@ In Figure~\ref{fig:entity_attr_sent_punct} we explore the flip of the entity-att
 
 
 
-
-
-
 \section{Discussion}
-In a direct comparison we can see that the Leet Speak method has been the most successful. The least successful was the method of Punctuation. This could be attributable to several reasons.
-...elaborate
+In this chapter we will delve into the meaning of our results and show how it relates to the discussed literature. We will reiterate our research question and concisely summarize our major findings, to provide a clear statement of the overall result.  
 
+\textit{RQ1: Is the pre-trained BERT model, fine tuned on the ABSA task robust against input level adversarial examples? }
 
-As described in Chapter~\ref{sec:the_history_of_NLP} DNN-based text classification continuously gains importance for enhancing the safety of online communication e.g., in online discussion environments through toxic content detection and other methods \cite{kumar2011natural}. This are the environments where leet speak is used commonly. The investigation of what effects the character substitution has on the used BERT models could help to increase safety in such forums and other environments where users use this language. 
+Through our experiment we were able to show that the BERT model can be fooled by input modifications of the character level. All three experiments, in which different attacking methods were used, were successful and could cause the classifier to predict incorrect results. Thus we could show that the robustness of the BERT model can quite easily be affected by attacks, even in the black-box setting, without any further knowledge about the model's internal parameters or output label confidence levels.
+Some input sequences, we were able to achieve a changed prediction by applying any of the three attacking methods.
 
-As described, the BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. Since the model has seen at least some of the misspellings during the pre-training process, one can assume a "basic robustness". Moreover,  Since it is used for different use cases, of which many include the processing of user-generated data, the BERT model should be robust against spelling mistakes.
+\textit{RQ2: How does the robustness of the model behave when comparing the three different character level attacks.}
+
+The comparison of the three attack methods indicates, that there is a significant difference between the different method applied. The most successful method is Leet Speak, with which we were able to achieve a success rate of 47.8\%. The Misspellings method resulted in a successs rate of 31\% and through Punctuation modification we achieved a success rate of 15\%. While the experiments on Leet Speak produced a incorrect classification of each entity, we cannot detect any entities that are equally robust or susceptible to all three methods. Interestingly, certain classification labels are seemingly very susceptible to one attack method, while this is not the case for the two other attack methods. When analyzing the changed sentiment predictions, we found that for for one method, positive reviews were more likely to be classified as such, while by applying the other two methods, the same reviews were more often falsely classified as negative when they were not. 
+
+DNN-based text classification continuously gains importance for, inter alia, enhancing the safety of online communication e.g., in online discussion environments through toxic content detection and other methods \cite{kumar2011natural}. This are the environments where leet speak is used commonly. The findings of our experiments, that show the vulnerability of the BERT model against character substitution calls for actions to increase safety in such forums and other environments where users use this language. 
+
+A comparison of the success rates reveals that the Punctuation method was the least effective. However, 15\% is still a remarkable result if the following is taken into account:
+This method solely added one additional comma. Since the BERT Tokenizer separates punctuation marks from the preceding words, we have only added one token, but did not change the token representation of the determined important word. Contrary to Ek et al., we found that the BERT model is sensitive to irrelevant puncutaion marks, if positioned behind the important word. Thi deviate findings call for further research on the positioning of the punctuation marks. 
+
+As described, the BERT base model is pre-trained on Wikipedia and book corpus \cite{zhu2015aligning}, a dataset containing over 10,000 books of different genres. Since the model has seen at least some of the misspellings during the pre-training process, one can assume a "basic robustness". The typo dictionary we used for our experiments is a gathering of common typos found in Wikipedia articles. BERT should therefore have assigned meaning to, at least some of the common typos. Moreover, since we additionally pre-trained the BERT model using amazon reviews, of which many include the processing of user-generated data, the BERT model should be robust against spelling mistakes. A success rate of 31\% for the Misspellings methods shows that the opposite is true. Our findings fall in line with Sun et al., who investigated the robustness of the BERT model against different Typo Methods for the task of sentiment analysis and question answering \cite{sun2020adv}.
 
 \subsection{Important Word Detection}
 
-If we compare the results of the three methods in detail, we can see that in many cases the change of a word is decisive. 
-This can best be demonstrated with an example. 
+If we manually inspect the generated adversarial dataset in detail, we can see that in many cases the modification of a word is decisive. This can best be demonstrated with an example. 
 The result of the classification of the sentence "i love this notebook." is LAPTOP\#GENERAL - POS. The important word identified by the LOO method is "love". If we use our Wikipedia typo dictionary, we find three ways to change the word. This results in the three modified sentences: "i lvoe this notebook.", "i loev this notebook.", and "i lveo this notebook.".
 All three sentences result in the same false prediction:
 "LAPTOP\#MISCELLANEOUS" "NEG".
 
-This indicates that it is not important how the important word is changed, but only that it has been changed and is therefore no longer recognized.
-This effect could also be seen across methods:
-
-Using the example in Table~\ref{tab:ex_sentence_gaming}, we see that regardless of the attack method, the entity attribute Sentiment set was incorrectly classified. 
+This indicates that it is not important how the important word is changed, but only that it has been changed and is therefore no longer recognized. This effect could also be seen across methods: 
+Using the example in Table~\ref{tab:ex_sentence_gaming}, we see that regardless of the attack method, the entity attribute Sentiment set was classified incorrectly. 
 
 
 \subsection{Word Embedding}
 Let us recall the theory of word embedding of the BERT model:
-BERT has a fixed set of learned word embeddings, composed in a word embedding lookup table, consisting of 30,522 words and word parts. 
-
-To process sequences, BERT first transforms them into tokens. The token representation of the original sentence "It’s wonderful for computer gaming." is the following:
+BERT has a fixed set of learned word embeddings, composed in a word embedding lookup table, consisting of 30,522 words and word parts \cite{devlin2018bert}. To process sequences, BERT first transforms them into tokens. The token representation of the original sentence "It’s wonderful for computer gaming." is the following:
 
 
 {[}CLS{]}  ||  it  ||  '  ||  s  ||  wonderful  ||  for  ||  computer  ||  gaming  ||  .  ||  {[}SEP{]} 
@@ -1782,22 +1788,22 @@ We compare this with the second perturbation method, Misspellings. The token rep
 
 {[}CLS{]}  ||  it  ||  '  ||  s  ||  wonderful  ||  \#\#l  ||  for  ||  computer  ||  gaming  ||  .  ||  {[}SEP{]}.
 
-Note, that compared to the original token representation, only one extra token was added and all other token representations remain the same. It is therefore less challenging for the model, to still understand the sentence. Another aspect, why BERT should be more robust against the Misspellings method is the corpus it is pre-trained on. To recall, the BERT model is pre-trained on all available Wikipedia articles. The dictionary we used for our experiments is a gathering of common typos found in wikipedia articles. BERT should therefore have assigned meaning to, at least some of the common typos.
+Note, that compared to the original token representation, only one extra token was added and all other token representations remain the same. It is therefore less challenging for the model, to still understand the sentence. 
 
 
 In our third perturbation method, we added a comma after the important word "wonderful", resulting in a token representation looking like this:
 
 {[}CLS{]}  ||  it  ||  '  ||  s  ||  wonderful  || , ||  for  ||  computer  ||  gaming  ||  .  ||  {[}SEP{]}.
 
-There is still little literature available for the semantic representation of punctuation marks in BERT. In general, it can be said that it is difficult to attribute semantic meaning to a comma. Punctuation marks occur independently of context, sentiment, subject area and language style. Unlike, for example, the word "umbrella" which mostly occurs in the context of rain, this cannot be said about a comma. The only thing that recurs is that it usually occurs after the same words. For example after "and" as well as at the beginning of sentences like "Honestly", "Lately" etc. But even these rules do not provide any information about the semantic meaning. This fact could be one explanation for the fact that the third method was not quite as effective as the perturbations through Leet Speak and Misspellings.
+There is still little to no literature available on the semantic representation of punctuation marks in BERT. In general, it can be said that it is difficult to attribute semantic meaning to a comma. Punctuation marks occur independently of context, sentiment, subject area and language style. Unlike, for example, the word "umbrella" which mostly occurs in the context of rain, this cannot be said about a comma. The only thing that recurs is that it usually occurs after the same words. For example after "and" as well as at the beginning of sentences like "Honestly", "Lately" etc. But even these rules do not provide any information about the semantic meaning. This fact could be a explanation for the fact that the third method was not quite as effective as the perturbations through Leet Speak and Misspellings.
 
 
 \subsection{Attention}
-As stated earlier, BERT is based on the the self-attention mechanism described in Section~\ref{sec:attention}. This mechanism allows the language model to better learn contextual information about a word’s semantic meaning by determining the fixations relevant for the prediction. We use Clark et al.'s proposed attention-based probing classifier to demonstrate how our perturbations modified BERT's attention heads\footnote{\url{https://huggingface.co/exbert/}}\cite{clark2019does}. 
+As stated earlier, BERT is based on the the self-attention mechanism \cite{devlin2018bert}. This mechanism allows the language model to better learn contextual information about a word’s semantic meaning by determining the fixations relevant for the prediction \cite{vaswani2017attention}. We use Clark et al.'s proposed attention-based probing classifier to demonstrate how our perturbations modified BERT's attention heads\footnote{\url{https://huggingface.co/exbert/}}\cite{clark2019does}. 
 
 Figure~\ref{fig:attention_original} demonstrates how heads of BERT base model attend to tokens of the original sentence "It's wonderful for computer gaming.". For demonstration we chose the 8th layer, since we found that for all three attacks, the heads attended the adversarial part of the sentence most at this layer.
 The figure shows that the heads focus on the word "for" and "s"( meaning "is") when attending the word "wonderful". 
-Figures~\ref{fig:attention_leet},~\ref{fig:attention_typo}, and~\ref{fig:attention_punct} show the representation of the  BERTbase uncased model's attention heads for the modified sentences. We can see that the token representation of the word "wonderful" vanishes when using the Leet Speak method. We see that the model is disturbed and not able to "understand" the important word. Also other attention representations shift. When using the Misspellings and punctuation method, the BERT model puts much attention to the token added by our methods. This indicates that the additional token disturbs the model and therefore classifies wrong predictions.
+Figures~\ref{fig:attention_leet},~\ref{fig:attention_typo}, and~\ref{fig:attention_punct} show the representation of the  BERTbase uncased model's attention heads for the modified sentences. We can see that the token representation of the word "wonderful" vanishes when using the Leet Speak method. We see that the model is disturbed and not able to "understand" the important word. Also other attention representations shift. When using the Misspellings and Punctuation method, the BERT model puts much attention to the token added by our methods. This indicates that the additional token disturbs the model and therefore classifies wrong predictions.
 
 
 Drawing on Clark et al., changed attention heads can have two reasons. Firstly, the token composition in a certain context is unknown to the model, which causes the heads to produce nonsense when trying to determine sections to focus on. Secondly, the model has learned that the additional tokens are relevant in other contexts and therefore attention is put on it \cite{clark2019does}.
@@ -1832,14 +1838,14 @@ It is important to note that this presentation only shows how the attention head
 \section{Limitations}
 First and fare most, the obvious limitations of the study have to be stated. While the chosen approach has proved promising and has similarly been established in other studies on the subject, some restraints have to be kept in mind when interpreting the results. 
 
-\subsection{Sample size}
+\textbf{Sample size}
 The low number of samples in the SemEval-2015 dataset limits the reliability of a statement about patterns found in the changes in the aspects and has to be considered when making assumptions. The ratio of possible classes to occurrences of examples in the data set is disproportionate. It depends a lot on the semantic complexity of an aspect, yet typically a pre-trained BERT model needs at least 50 example sets during training to learn an aspect sufficiently. This was not the case in this dataset, since, for some of the Entity Attribute Sentiment sets, there were no examples in the training set at all. This could influence the robustness of the model against adversarial examples.
 Moreover, the classes are not evenly distributed, which means that some classes tend to be changed more often because they are represented more often in the dataset. 
 In literature, when the SemEval-2015 dataset is used, the three domains "restaurants", "laptops" and "hotels" are usually compared. We have neglected this in the thesis to keep the scope of the work small.
-\subsection{LOO as important word detection method}
+\textbf{LOO as important word detection method}
 We used LOO as an interpretation method to determine the words of a document that contribute most to the output of the model's prediction. However, it can never be said with 100\% certainty whether one particular word is decisive for the model's prediction since many influencing factors play a role. \todo{elaborate}
 
-\subsection{Model comparability}
+\textbf{Model comparability}
 Furthermore it would be important to understand the influence of the additional pre-training on the robustness of the BERT model. Although it is to be expected that the additional text understanding of the laptop domain, which is achieved by pre-training, increases the robustness, this would have to be measured and compared to an untrained BERT base model. 
 Furthermore, we have referred exclusively to the ABSA task, which is by nature a complex task \cite{pavlopoulos2014aspect}. Here, too, investigations would have to be carried out to find out what influence the task has on the robustness against our character- input-level perturbations.
 
@@ -1859,6 +1865,18 @@ Furthermore, one could easily measure the influence of pre-training on the robus
 
 
 \section{Conclusions}
+
+Through our experiments we determined the vulnerability of the widely used, state-of-the-art BERT model against input level adversarial examples. We conducted 
+
+- zusammenfassung eigenleistung
+- intro beispiel aufgreifen, welche Auswirkungen die Erkenntnisse auf das Beispiel haben
+- Angriffe so designt, dass sie die sielbe Bedeutung haben und von Menschen nicht leicht erkennt werden 
+- unterschiedliche Experiment gemacht
+- auffälligkeiten bei Beistrichen
+- warum das sein könnte
+- rq wiederholen und beantworten
+
+
 
 - answer rq
 - model
