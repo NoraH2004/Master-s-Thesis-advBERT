@@ -37,23 +37,25 @@
 %
 %% Basic packages
 %% ------------------------------------------
+
 \usepackage[utf8]{inputenc}         % utf8 chars
 \usepackage[\babellanguage]{babel}  % language
+\RequirePackage{cmap}
 \usepackage[T1]{fontenc}            % german Umlaute
 
 \RequirePackage{graphicx}           % Graphics
 \graphicspath{ {img/} }
-\RequirePackage{cmap}      
 
 \usepackage{listings}
 \usepackage{color}
-
+\usepackage[table,xcdraw]{xcolor} % searchable and copyable PDF files
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
 
 %
 %% Page Layout
 %% ------------------------------------------
-\usepackage[left=3.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[left=3.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,head=21.75pt]{geometry}
 
 %% Font
 \usepackage{times}                      % set font to Times
@@ -63,11 +65,11 @@
 
 
 % APA
+\usepackage{hyperref}
 \usepackage{apacite}
 
 % Additional packages
 \usepackage{booktabs}
-\usepackage[table,xcdraw]{xcolor}% searchable and copyable PDF files
 \usepackage{longtable}
 \usepackage{comment}
 \usepackage{listings}
@@ -76,13 +78,12 @@
 
 \usepackage{booktabs, multirow} % for borders and merged ranges
 \usepackage{soul}% for underlines
-\usepackage[table]{xcolor} % for cell colors
+%\usepackage[table]{xcolor} % for cell colors
 
 \usepackage{changepage,threeparttable}
 
 
 %\usepackage{relsize}
-%\usepackage{url}
 
 
 %
@@ -125,7 +126,11 @@
 
 %%
 
-\usepackage{scrpage2}
+%TK: I replaced the deprecated scrpage2 package, looks fine to me
+\usepackage{scrlayer-scrpage}
+%\usepackage{scrpage2}
+
+
 %\pagestyle{scrplain}
 \pagestyle{scrheadings}
 \clearscrheadfoot
@@ -147,7 +152,7 @@
 
 
 
-\documentclass[class=acmart,10pt,sigconf,letterpaper,anonymous]{standalone}
+%\documentclass[class=acmart,10pt,sigconf,letterpaper,anonymous]{standalone}
 \input{common}
 \usetikzlibrary{shapes.misc}
 \usepackage{rotating}
@@ -160,6 +165,6 @@ asymbrace/.style={decorate,decoration={brace,aspect=#1}},
 leaveout/.style={replace stretch={from 2.13cm to 2.82cm by {-,draw=none}}}
 }
 %\usepackage{todo}
-\usepackage{todonotes}
+%\usepackage{todonotes}
 \usepackage{wrapfig}
 \usepackage{float}

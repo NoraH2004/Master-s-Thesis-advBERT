@@ -3,19 +3,19 @@
 \documentclass[titlepage,english]{mcitthesis}
 
 
-%FIXME
-%\usepackage{hyperref}
 \usepackage{makecell}
 \usepackage{booktabs}
-\usepackage[ruled, vlined, linesnumbered, setspace]{algorithm2e, setspace}
+\usepackage[ruled, vlined, linesnumbered]{algorithm2e}
+\usepackage{setspace}
 \usepackage{changepage}
-\usepackage[utf8]{inputenc}
+
+\PassOptionsToPackage{hyphens}{url}
 
 %    
 % Author
 \author{Nora Hofer}
 
-\title{On the robustness of a BERT model for ABSA against input-level adversarial examples}
+\title{On the Robustness of a BERT Model for ABSA against Input Level Adversarial Examples}
 
 \advisor{Dr. Pascal Schöttle}
 
@@ -33,11 +33,15 @@
 %% Title or Titlepage
 \maketitle
 
-%\pagenumbering{Roman}
-
-
 %% Abstract
 \input{abstract.tex}
+\thispagestyle{empty}
+\newpage
+
+\pagenumbering{Roman}
+
+%% Table of Contents
+\tableofcontents
 \newpage
 
 %% Tables

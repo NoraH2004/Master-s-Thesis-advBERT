@@ -105,10 +105,6 @@
         \restoregeometry
     \end{titlepage}   
 
-    %% Table of Contents
-    \tableofcontents
-    \newpage
-
     %% Main Document
     %\pagenumbering{arabic}
     %\setcounter{page}{1} 
